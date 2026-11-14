@@ -497,7 +497,7 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                       <button
                         key={g.id}
                         onClick={() => handleGoalSelect(g.title)}
-                        className="group relative rounded-2xl overflow-hidden border border-white/10 hover:border-[#d4ff00] bg-void-card text-left transition-all hover:scale-[1.02] shadow-xl h-52 flex flex-col justify-end p-5"
+                        className="group relative rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 hover:border-[#d4ff00] bg-slate-100 dark:bg-void-card text-left transition-all hover:scale-[1.02] shadow-xl h-52 flex flex-col justify-end p-5"
                       >
                         <img
                           src={g.image}

@@ -12,7 +12,7 @@ export default function BookingPage() {
   const clubs = getClubs();
 
   return (
-    <main className="min-h-screen bg-void text-white flex flex-col">
+    <main className="min-h-screen bg-slate-50 dark:bg-void text-slate-900 dark:text-white flex flex-col transition-colors duration-300">
       <Header />
       <BookingTerminalClient clubs={clubs} />
       <Footer />

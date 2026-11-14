@@ -69,7 +69,7 @@ export function ClubDetailClient({ club }: { club: Club }) {
         </div>
 
         {/* Right Column: Sticky Booking & Info Card */}
-        <div className="lg:col-span-5 lg:sticky lg:top-32 rounded-3xl border border-white/10 bg-void-card p-6 sm:p-8 space-y-6 shadow-2xl">
+        <div className="lg:col-span-5 lg:sticky lg:top-32 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card p-6 sm:p-8 space-y-6 shadow-2xl">
           <div>
             <span className="telemetry-chip text-[#d4ff00] block mb-1">
               {club.categoryName.toUpperCase()} // СЕРТИФИЦИРОВАННЫЙ КЛУБ
@@ -156,7 +156,7 @@ export function ClubDetailClient({ club }: { club: Club }) {
                 {club.timetable.map((slot, sIdx) => (
                   <div
                     key={sIdx}
-                    className="p-4 rounded-2xl border border-white/10 bg-void-card flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-white/20 transition-all"
+                    className="p-4 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-white/20 transition-all"
                   >
                     <div className="flex items-center gap-4">
                       <span className="font-mono text-xs font-bold text-[#d4ff00] px-2.5 py-1 rounded-md bg-white/5">
@@ -195,7 +195,7 @@ export function ClubDetailClient({ club }: { club: Club }) {
             {club.coaches && club.coaches.map((coach) => (
               <div
                 key={coach.id}
-                className="p-5 rounded-2xl border border-white/10 bg-void-card space-y-3"
+                className="p-5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card space-y-3"
               >
                 <div className="flex items-center gap-3">
                   <img

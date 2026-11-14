@@ -66,7 +66,7 @@ export function DashboardClient({ clubs }: { clubs: Club[] }) {
   return (
     <div className="pt-36 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1 space-y-10">
       {/* User Header Profile */}
-      <div className="p-8 rounded-3xl border border-white/10 bg-void-card flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-2xl relative overflow-hidden">
+      <div className="p-8 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-2xl relative overflow-hidden">
         <div className="flex items-center gap-5">
           <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-[#d4ff00] to-green-400 text-black flex items-center justify-center font-black text-2xl shadow-lg shadow-[#d4ff00]/20 shrink-0">
             КР
@@ -99,13 +99,13 @@ export function DashboardClient({ clubs }: { clubs: Club[] }) {
 
       {/* KPI Stats Strip */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 font-mono">
-        <div className="p-5 rounded-2xl border border-white/10 bg-void-card flex flex-col justify-between">
+        <div className="p-5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card flex flex-col justify-between">
           <span className="telemetry-chip text-slate-400">ПОСЕЩЕНИЙ В МЕСЯЦ:</span>
           <div className="text-3xl font-black text-white mt-2">12</div>
           <span className="text-[10px] text-[#d4ff00] mt-1">+4 к прошлому месяцу</span>
         </div>
 
-        <div className="p-5 rounded-2xl border border-white/10 bg-void-card flex flex-col justify-between">
+        <div className="p-5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card flex flex-col justify-between">
           <span className="telemetry-chip text-slate-400">СОЖЖЕНО КАЛОРИЙ:</span>
           <div className="text-3xl font-black text-amber-400 mt-2 flex items-center gap-1">
             <Flame className="w-6 h-6" />
@@ -114,13 +114,13 @@ export function DashboardClient({ clubs }: { clubs: Club[] }) {
           <span className="text-[10px] text-slate-400 mt-1">~700 ккал / тренировка</span>
         </div>
 
-        <div className="p-5 rounded-2xl border border-white/10 bg-void-card flex flex-col justify-between">
+        <div className="p-5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card flex flex-col justify-between">
           <span className="telemetry-chip text-slate-400">КЛУБОВ ПАРТНЕРОВ:</span>
           <div className="text-3xl font-black text-white mt-2">4</div>
           <span className="text-[10px] text-slate-400 mt-1">Разные локации</span>
         </div>
 
-        <div className="p-5 rounded-2xl border border-white/10 bg-void-card flex flex-col justify-between">
+        <div className="p-5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card flex flex-col justify-between">
           <span className="telemetry-chip text-slate-400">РЕЙТИНГ ДИСЦИПЛИНЫ:</span>
           <div className="text-3xl font-black text-[#d4ff00] mt-2">100%</div>
           <span className="text-[10px] text-slate-400 mt-1">Без пропусков слотов</span>
@@ -172,7 +172,7 @@ export function DashboardClient({ clubs }: { clubs: Club[] }) {
           {upcomingBookings.map((b) => (
             <div
               key={b.id}
-              className="p-6 rounded-3xl border border-white/10 bg-void-card flex flex-col lg:flex-row lg:items-center justify-between gap-6 shadow-xl hover:border-[#d4ff00]/40 transition-all"
+              className="p-6 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card flex flex-col lg:flex-row lg:items-center justify-between gap-6 shadow-xl hover:border-[#d4ff00]/40 transition-all"
             >
               <div className="flex items-start gap-4">
                 <div className="p-3 rounded-2xl bg-white/5 border border-white/10 text-white shrink-0">
@@ -224,7 +224,7 @@ export function DashboardClient({ clubs }: { clubs: Club[] }) {
           {pastVisits.map((p) => (
             <div
               key={p.id}
-              className="p-5 rounded-2xl border border-white/10 bg-void-card flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+              className="p-5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card flex flex-col sm:flex-row sm:items-center justify-between gap-4"
             >
               <div>
                 <span className="text-xs text-slate-400">{p.date}</span>
@@ -247,7 +247,7 @@ export function DashboardClient({ clubs }: { clubs: Club[] }) {
       {activeTab === "saved" && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {clubs.slice(0, 3).map((club) => (
-            <div key={club.id} className="rounded-2xl border border-white/10 bg-void-card p-5 space-y-3">
+            <div key={club.id} className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card p-5 space-y-3">
               <img src={club.image} alt={club.name} className="w-full h-36 object-cover rounded-xl" />
               <h4 className="font-bold text-white uppercase text-base">{club.name}</h4>
               <p className="text-xs text-slate-400 font-mono">{club.metro} • от {club.priceMonthly.toLocaleString("ru-RU")} UZS</p>

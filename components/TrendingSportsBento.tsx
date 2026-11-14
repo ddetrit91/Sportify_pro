@@ -243,21 +243,21 @@ export function TrendingSportsBento({ sports }: TrendingSportsBentoProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.5 }}
-            className="md:col-span-2 relative rounded-3xl overflow-hidden border border-[#d4ff00]/40 p-6 sm:p-8 flex flex-col justify-between bg-gradient-to-br from-[#12161b] via-[#0d1014] to-black shadow-2xl"
+            className="md:col-span-2 relative rounded-3xl overflow-hidden border border-lime-500/30 dark:border-[#d4ff00]/40 p-6 sm:p-8 flex flex-col justify-between bg-gradient-to-br from-lime-50 via-white to-slate-100 dark:from-[#12161b] dark:via-[#0d1014] dark:to-black shadow-2xl transition-colors duration-300"
           >
             <div className="flex items-center justify-between">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#d4ff00]/10 border border-[#d4ff00]/30 text-[#d4ff00] text-xs font-semibold">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-lime-500/10 dark:bg-[#d4ff00]/10 border border-lime-500/30 dark:border-[#d4ff00]/30 text-lime-700 dark:text-[#d4ff00] text-xs font-semibold">
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>SPORTIFY NEURAL MATCHER</span>
               </div>
-              <span className="telemetry-chip text-slate-500">ACCURACY: 99.4%</span>
+              <span className="telemetry-chip text-slate-500 dark:text-slate-400">ACCURACY: 99.4%</span>
             </div>
 
             <div className="my-6 space-y-2">
-              <h3 className="text-2xl sm:text-3xl font-black text-white uppercase tracking-tight">
+              <h3 className="text-2xl sm:text-3xl font-black text-slate-950 dark:text-white uppercase tracking-tight">
                 Не знаешь, что выбрать в Ташкенте?
               </h3>
-              <p className="text-xs sm:text-sm text-slate-400 max-w-lg">
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-lg font-normal leading-relaxed">
                 Запусти интеллектуальный AI-синтезатор: нейросеть учтет уровень стресса, район Ташкента и бюджет, порекомендовав идеальный зал за 60 секунд.
               </p>
             </div>

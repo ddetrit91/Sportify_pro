@@ -31,20 +31,20 @@ export function AiMatcherTeaser({ clubs }: { clubs: Club[] }) {
   };
 
   return (
-    <section id="ai-matcher" className="py-24 relative overflow-hidden bg-void-pure text-white border-y border-white/10">
+    <section id="ai-matcher" className="py-24 relative overflow-hidden bg-slate-50 dark:bg-void-pure text-slate-900 dark:text-white border-y border-slate-200 dark:border-white/10 transition-colors duration-300">
       {/* Background Lighting */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[#d4ff00]/5 rounded-full blur-[180px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-lime-500/5 dark:bg-[#d4ff00]/5 rounded-full blur-[180px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 mb-3">
-            <Sparkles className="w-3.5 h-3.5 text-[#d4ff00]" />
-            <span className="telemetry-chip text-white/80">NEURAL ENGINE // TASHKENT SPORT SYNTHESIZER</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-300 dark:border-white/10 bg-white dark:bg-white/5 mb-3">
+            <Sparkles className="w-3.5 h-3.5 text-lime-600 dark:text-[#d4ff00]" />
+            <span className="telemetry-chip text-slate-700 dark:text-white/80">NEURAL ENGINE // TASHKENT SPORT SYNTHESIZER</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-black uppercase tracking-tight text-white leading-tight">
-            AI Sport Matcher <span className="text-[#d4ff00]">в Ташкенте</span>
+          <h2 className="text-3xl sm:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-tight">
+            AI Sport Matcher <span className="text-lime-600 dark:text-[#d4ff00]">в Ташкенте</span>
           </h2>
-          <p className="mt-2 text-sm sm:text-base text-slate-400">
+          <p className="mt-2 text-sm sm:text-base text-slate-600 dark:text-slate-400">
             Настройте ключевые параметры — нейросеть мгновенно рассчитает наиболее эффективную дисциплину и клуб поблизости.
           </p>
         </div>
@@ -52,7 +52,7 @@ export function AiMatcherTeaser({ clubs }: { clubs: Club[] }) {
         {/* Synthesizer Console Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-6xl mx-auto">
           {/* Left Column: Parameter Sliders & Goal Toggles */}
-          <div className="lg:col-span-7 rounded-3xl border border-white/10 bg-void-card p-6 sm:p-8 space-y-6 shadow-2xl">
+          <div className="lg:col-span-7 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card p-6 sm:p-8 space-y-6 shadow-2xl">
             {/* Goal Selector */}
             <div className="space-y-3">
               <label className="telemetry-chip text-[#d4ff00] block">
@@ -132,11 +132,11 @@ export function AiMatcherTeaser({ clubs }: { clubs: Club[] }) {
             <motion.div
               animate={{ opacity: isMatching ? 0.6 : 1, scale: isMatching ? 0.98 : 1 }}
               transition={{ duration: 0.2 }}
-              className="rounded-3xl border border-[#d4ff00]/40 bg-void-card p-6 sm:p-8 space-y-6 shadow-2xl relative overflow-hidden"
+              className="rounded-3xl border border-lime-500/30 dark:border-[#d4ff00]/40 bg-white dark:bg-void-card p-6 sm:p-8 space-y-6 shadow-2xl relative overflow-hidden"
             >
               {/* Top Match Tag */}
               <div className="flex items-center justify-between">
-                <span className="telemetry-chip text-[#d4ff00] block">
+                <span className="telemetry-chip text-lime-600 dark:text-[#d4ff00] block">
                   РЕЗУЛЬТАТ AI-СИНТЕЗА
                 </span>
                 <span className="px-2.5 py-1 rounded-lg bg-[#d4ff00] text-black font-mono font-black text-xs">
@@ -146,17 +146,17 @@ export function AiMatcherTeaser({ clubs }: { clubs: Club[] }) {
 
               {/* Matched Sport Preview */}
               <div>
-                <span className="text-xs uppercase font-mono text-slate-400">
+                <span className="text-xs uppercase font-mono text-slate-500 dark:text-slate-400">
                   Рекомендуемое направление:
                 </span>
-                <h3 className="text-2xl font-black text-white uppercase tracking-tight mt-1">
+                <h3 className="text-2xl font-black text-slate-950 dark:text-white uppercase tracking-tight mt-1">
                   {currentGoal.sport}
                 </h3>
               </div>
 
               {/* Matched Club Card Mini */}
               {matchedClub && (
-                <div className="rounded-2xl border border-white/10 bg-black/40 overflow-hidden">
+                <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-black/40 overflow-hidden">
                   <div className="relative h-36 w-full">
                     <img
                       src={matchedClub.image}
@@ -169,11 +169,11 @@ export function AiMatcherTeaser({ clubs }: { clubs: Club[] }) {
                     </span>
                   </div>
                   <div className="p-4 space-y-1">
-                    <h4 className="font-bold text-white text-base">{matchedClub.name}</h4>
-                    <p className="text-xs text-slate-400 line-clamp-1">{matchedClub.description}</p>
+                    <h4 className="font-bold text-slate-950 dark:text-white text-base">{matchedClub.name}</h4>
+                    <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-1">{matchedClub.description}</p>
                     <div className="pt-2 flex items-center justify-between text-xs font-mono">
-                      <span className="text-slate-400">Первое занятие:</span>
-                      <span className="text-[#d4ff00] font-bold">
+                      <span className="text-slate-500 dark:text-slate-400">Первое занятие:</span>
+                      <span className="text-lime-600 dark:text-[#d4ff00] font-bold">
                         {matchedClub.priceTrial === 0 ? "0 UZS (Бесплатно)" : `${matchedClub.priceTrial.toLocaleString("ru-RU")} UZS`}
                       </span>
                     </div>

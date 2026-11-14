@@ -28,7 +28,7 @@ export default async function SportDetailPage({ params }: SportDetailPageProps) 
   );
 
   return (
-    <main className="min-h-screen bg-void text-white flex flex-col">
+    <main className="min-h-screen bg-slate-50 dark:bg-void text-slate-900 dark:text-white flex flex-col transition-colors duration-300">
       <Header />
 
       <div className="pt-32 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1 space-y-16">
@@ -115,7 +115,7 @@ export default async function SportDetailPage({ params }: SportDetailPageProps) 
 
         {/* Benefits & Gear Breakdown */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 border-t border-white/10">
-          <div className="p-8 rounded-3xl border border-white/10 bg-void-card space-y-4">
+          <div className="p-8 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card space-y-4">
             <span className="telemetry-chip text-[#d4ff00] block">ФИЗИОЛОГИЯ И ПОЛЬЗА</span>
             <h3 className="text-2xl font-black uppercase tracking-tight text-white">
               Что развивают тренировки
@@ -130,7 +130,7 @@ export default async function SportDetailPage({ params }: SportDetailPageProps) 
             </ul>
           </div>
 
-          <div className="p-8 rounded-3xl border border-white/10 bg-void-card space-y-4">
+          <div className="p-8 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card space-y-4">
             <span className="telemetry-chip text-white block">ЭКИПИРОВКА И ПОДГОТОВКА</span>
             <h3 className="text-2xl font-black uppercase tracking-tight text-white">
               Что взять с собой
@@ -162,7 +162,7 @@ export default async function SportDetailPage({ params }: SportDetailPageProps) 
             {relatedClubs.map((club) => (
               <div
                 key={club.id}
-                className="rounded-3xl border border-white/10 bg-void-card overflow-hidden group hover:border-[#d4ff00]/40 transition-all flex flex-col justify-between shadow-2xl"
+                className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card overflow-hidden group hover:border-[#d4ff00]/40 transition-all flex flex-col justify-between shadow-2xl"
               >
                 <div className="relative h-52 w-full overflow-hidden bg-slate-900">
                   <img

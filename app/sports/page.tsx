@@ -13,7 +13,7 @@ export default function SportsCatalogPage() {
   const sports = getSports();
 
   return (
-    <main className="min-h-screen bg-void text-white flex flex-col">
+    <main className="min-h-screen bg-slate-50 dark:bg-void text-slate-900 dark:text-white flex flex-col transition-colors duration-300">
       <Header />
 
       <div className="pt-36 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1">
@@ -36,7 +36,7 @@ export default function SportsCatalogPage() {
           {sports.map((sport) => (
             <div
               key={sport.id}
-              className="rounded-3xl border border-white/10 bg-void-card overflow-hidden group hover:border-[#d4ff00]/40 transition-all flex flex-col justify-between shadow-2xl"
+              className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card overflow-hidden group hover:border-[#d4ff00]/40 transition-all flex flex-col justify-between shadow-2xl"
             >
               <div className="relative h-64 w-full overflow-hidden bg-slate-900">
                 <img

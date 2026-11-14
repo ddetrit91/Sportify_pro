@@ -1,313 +1,581 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { useEffect, useRef } from "react";
+
+interface Point3D {
+  x: number;
+  y: number;
+  z: number;
+}
+
+interface Edge {
+  a: number;
+  b: number;
+}
+
+interface Shape3D {
+  vertices: Point3D[];
+  edges: Edge[];
+  x: number; // base X (percentage of width: 0..1)
+  y: number; // base Y (percentage of height: 0..1)
+  z: number; // depth offset
+  size: number;
+  rx: number;
+  ry: number;
+  rz: number;
+  vrx: number;
+  vry: number;
+  vrz: number;
+  floatPhase: number;
+  floatSpeed: number;
+  type: "icosahedron" | "gyro" | "octahedron";
+}
 
 export function CinematicSportsAtmosphere() {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const [isReducedMotion, setIsReducedMotion] = useState(false);
-
-  // Global scroll progress across the entire page
-  const { scrollYProgress } = useScroll();
-
-  // Multi-plane parallax transforms with varied velocities
-  const platesParallaxSlow = useTransform(scrollYProgress, [0, 1], [0, -180]);
-  const platesParallaxMid = useTransform(scrollYProgress, [0, 1], [0, -320]);
-  const platesParallaxFast = useTransform(scrollYProgress, [0, 1], [0, -480]);
-  const auroraParallax1 = useTransform(scrollYProgress, [0, 1], [0, -220]);
-  const auroraParallax2 = useTransform(scrollYProgress, [0, 1], [0, -380]);
-  const vectorTrackRotate = useTransform(scrollYProgress, [0, 1], [0, 25]);
-
-  // Spring physics for subtle, luxurious interactive lighting on mouse move
-  const springConfig = { damping: 32, stiffness: 85, mass: 0.9 };
-  const smoothMouseX = useSpring(0, springConfig);
-  const smoothMouseY = useSpring(0, springConfig);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
-    // Respect user accessibility preference
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setIsReducedMotion(mediaQuery.matches);
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-    const handleMotionChange = (e: MediaQueryListEvent) => {
-      setIsReducedMotion(e.matches);
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animId: number;
+    let width = 0;
+    let height = 0;
+
+    // Theme state
+    let isDark = document.documentElement.classList.contains("dark");
+
+    const observer = new MutationObserver(() => {
+      isDark = document.documentElement.classList.contains("dark");
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+
+    // Handle Resize & Retina support
+    const handleResize = () => {
+      if (!canvas) return;
+      const rect = canvas.parentElement?.getBoundingClientRect() || canvas.getBoundingClientRect();
+      width = canvas.width = rect.width || window.innerWidth;
+      height = canvas.height = rect.height || window.innerHeight * 4;
     };
-    mediaQuery.addEventListener("change", handleMotionChange);
 
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    // Mouse coordinates for parallax tilt
+    const mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
     const handleMouseMove = (e: MouseEvent) => {
-      if (mediaQuery.matches) return;
-      const { innerWidth, innerHeight } = window;
-      const normX = (e.clientX / innerWidth - 0.5) * 2;
-      const normY = (e.clientY / innerHeight - 0.5) * 2;
-
-      // Subtle, high-end spotlight deflection (max 32px)
-      smoothMouseX.set(normX * 32);
-      smoothMouseY.set(normY * 32);
+      const normX = (e.clientX / window.innerWidth - 0.5) * 2;
+      const normY = (e.clientY / window.innerHeight - 0.5) * 2;
+      mouse.targetX = normX;
+      mouse.targetY = normY;
     };
-
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    return () => {
-      mediaQuery.removeEventListener("change", handleMotionChange);
-      window.removeEventListener("mousemove", handleMouseMove);
+
+    // Scroll parallax tracking
+    let scrollY = window.scrollY;
+    const handleScroll = () => {
+      scrollY = window.scrollY;
     };
-  }, [smoothMouseX, smoothMouseY]);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    // --- 1. BUILD 3D GEOMETRIES ---
+    // A. Icosahedron (12 vertices, 30 edges)
+    const phi = (1 + Math.sqrt(5)) / 2;
+    const rawIcoVerts: Point3D[] = [
+      { x: -1, y: phi, z: 0 },
+      { x: 1, y: phi, z: 0 },
+      { x: -1, y: -phi, z: 0 },
+      { x: 1, y: -phi, z: 0 },
+      { x: 0, y: -1, z: phi },
+      { x: 0, y: 1, z: phi },
+      { x: 0, y: -1, z: -phi },
+      { x: 0, y: 1, z: -phi },
+      { x: phi, y: 0, z: -1 },
+      { x: phi, y: 0, z: 1 },
+      { x: -phi, y: 0, z: -1 },
+      { x: -phi, y: 0, z: 1 },
+    ];
+    // Normalize vertices
+    const icoVerts: Point3D[] = rawIcoVerts.map((v) => {
+      const len = Math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+      return { x: v.x / len, y: v.y / len, z: v.z / len };
+    });
+    const icoEdges: Edge[] = [];
+    for (let i = 0; i < icoVerts.length; i++) {
+      for (let j = i + 1; j < icoVerts.length; j++) {
+        const dx = icoVerts[i].x - icoVerts[j].x;
+        const dy = icoVerts[i].y - icoVerts[j].y;
+        const dz = icoVerts[i].z - icoVerts[j].z;
+        const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+        // In normalized icosahedron, edge distance is ~1.051
+        if (Math.abs(dist - 1.051) < 0.15) {
+          icoEdges.push({ a: i, b: j });
+        }
+      }
+    }
+
+    // B. Octahedron (6 vertices, 12 edges)
+    const octVerts: Point3D[] = [
+      { x: 1, y: 0, z: 0 },
+      { x: -1, y: 0, z: 0 },
+      { x: 0, y: 1, z: 0 },
+      { x: 0, y: -1, z: 0 },
+      { x: 0, y: 0, z: 1 },
+      { x: 0, y: 0, z: -1 },
+    ];
+    const octEdges: Edge[] = [
+      { a: 0, b: 2 }, { a: 0, b: 3 }, { a: 0, b: 4 }, { a: 0, b: 5 },
+      { a: 1, b: 2 }, { a: 1, b: 3 }, { a: 1, b: 4 }, { a: 1, b: 5 },
+      { a: 2, b: 4 }, { a: 2, b: 5 }, { a: 3, b: 4 }, { a: 3, b: 5 },
+    ];
+
+    // C. Gyro Dual Rings (24 vertices, connecting edges)
+    const gyroVerts: Point3D[] = [];
+    const gyroEdges: Edge[] = [];
+    const ringSegments = 14;
+    // Ring 1 (XY plane)
+    for (let i = 0; i < ringSegments; i++) {
+      const angle = (i / ringSegments) * Math.PI * 2;
+      gyroVerts.push({ x: Math.cos(angle), y: Math.sin(angle), z: 0 });
+      gyroEdges.push({ a: i, b: (i + 1) % ringSegments });
+    }
+    // Ring 2 (YZ plane, slightly larger)
+    for (let i = 0; i < ringSegments; i++) {
+      const angle = (i / ringSegments) * Math.PI * 2;
+      gyroVerts.push({ x: 0, y: Math.cos(angle) * 1.15, z: Math.sin(angle) * 1.15 });
+      const currentIdx = ringSegments + i;
+      const nextIdx = ringSegments + ((i + 1) % ringSegments);
+      gyroEdges.push({ a: currentIdx, b: nextIdx });
+    }
+    // Connect subtle struts between the two perpendicular rings
+    for (let i = 0; i < 4; i++) {
+      gyroEdges.push({ a: (i * 3) % ringSegments, b: ringSegments + (i * 3) % ringSegments });
+    }
+
+    // --- 2. INSTANTIATE MOVING 3D FIGURES DISTRIBUTED ALONG PAGE HEIGHT ---
+    const shapes: Shape3D[] = [
+      // Top right (Bento section area)
+      {
+        vertices: icoVerts,
+        edges: icoEdges,
+        x: 0.88,
+        y: 0.08,
+        z: 320,
+        size: 95,
+        rx: 0.2,
+        ry: 0.4,
+        rz: 0.1,
+        vrx: 0.006,
+        vry: 0.009,
+        vrz: 0.004,
+        floatPhase: 0,
+        floatSpeed: 0.015,
+        type: "icosahedron",
+      },
+      // Mid-left (Featured Clubs area)
+      {
+        vertices: gyroVerts,
+        edges: gyroEdges,
+        x: 0.1,
+        y: 0.28,
+        z: 280,
+        size: 110,
+        rx: 0.5,
+        ry: 0.2,
+        rz: 0.3,
+        vrx: 0.008,
+        vry: 0.005,
+        vrz: 0.007,
+        floatPhase: 1.5,
+        floatSpeed: 0.018,
+        type: "gyro",
+      },
+      // Center-right (AI Quiz section area)
+      {
+        vertices: icoVerts,
+        edges: icoEdges,
+        x: 0.92,
+        y: 0.52,
+        z: 360,
+        size: 130,
+        rx: 0.1,
+        ry: 0.8,
+        rz: 0.4,
+        vrx: 0.005,
+        vry: 0.007,
+        vrz: 0.006,
+        floatPhase: 3.1,
+        floatSpeed: 0.012,
+        type: "icosahedron",
+      },
+      // Lower-left (Athlete Stories & Editorial area)
+      {
+        vertices: octVerts,
+        edges: octEdges,
+        x: 0.08,
+        y: 0.74,
+        z: 260,
+        size: 90,
+        rx: 0.4,
+        ry: 0.1,
+        rz: 0.5,
+        vrx: 0.009,
+        vry: 0.011,
+        vrz: 0.005,
+        floatPhase: 4.2,
+        floatSpeed: 0.02,
+        type: "octahedron",
+      },
+      // Bottom-right (Final Booking area)
+      {
+        vertices: gyroVerts,
+        edges: gyroEdges,
+        x: 0.86,
+        y: 0.92,
+        z: 300,
+        size: 105,
+        rx: 0.3,
+        ry: 0.6,
+        rz: 0.2,
+        vrx: 0.007,
+        vry: 0.008,
+        vrz: 0.005,
+        floatPhase: 2.2,
+        floatSpeed: 0.016,
+        type: "gyro",
+      },
+    ];
+
+    // --- 3. KINETIC ENERGY PARTICLES (Volt & Cyan) ---
+    const particleCount = 40;
+    const particles: Array<{
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      size: number;
+      colorDark: string;
+      colorLight: string;
+      alpha: number;
+    }> = [];
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random(),
+        y: Math.random(),
+        vx: (Math.random() - 0.5) * 0.0003,
+        vy: (Math.random() - 0.5) * 0.0003,
+        size: Math.random() * 2.2 + 1.2,
+        colorDark: i % 2 === 0 ? "#d4ff00" : "#00f0ff",
+        colorLight: i % 2 === 0 ? "#65a30d" : "#0284c7",
+        alpha: Math.random() * 0.4 + 0.2,
+      });
+    }
+
+    // --- 4. 3D TOPOGRAPHICAL TERRAIN ELEVATION MESH ---
+    const meshCols = 18;
+    const meshRows = 12;
+    let waveClock = 0;
+
+    // --- 5. RENDER LOOP ---
+    const fov = 450;
+
+    const render = () => {
+      waveClock += 0.014;
+      mouse.x += (mouse.targetX - mouse.x) * 0.05;
+      mouse.y += (mouse.targetY - mouse.y) * 0.05;
+
+      ctx.clearRect(0, 0, width, height);
+
+      // A. Ambient Radial Mouse Glow (Reactive to theme)
+      const mouseScreenX = (mouse.x * 0.5 + 0.5) * width;
+      const mouseScreenY = scrollY + (mouse.y * 0.5 + 0.5) * window.innerHeight;
+
+      const radial = ctx.createRadialGradient(
+        mouseScreenX,
+        mouseScreenY,
+        40,
+        mouseScreenX,
+        mouseScreenY,
+        Math.min(width, 900)
+      );
+      if (isDark) {
+        radial.addColorStop(0, "rgba(212, 255, 0, 0.045)");
+        radial.addColorStop(0.5, "rgba(0, 240, 255, 0.02)");
+        radial.addColorStop(1, "rgba(6, 7, 9, 0)");
+      } else {
+        radial.addColorStop(0, "rgba(101, 163, 13, 0.04)");
+        radial.addColorStop(0.5, "rgba(2, 132, 199, 0.015)");
+        radial.addColorStop(1, "rgba(248, 250, 252, 0)");
+      }
+      ctx.fillStyle = radial;
+      ctx.fillRect(0, 0, width, height);
+
+      // B. Render 3D Perspective Elevation Mesh (Upper & Lower waves)
+      const drawElevationMesh = (baseYPercent: number, rowCount: number) => {
+        const originX = width / 2 + mouse.x * 40;
+        const originY = height * baseYPercent + mouse.y * 25;
+        const meshPts: Array<Array<{ x: number; y: number; visible: boolean }>> = [];
+
+        for (let r = 0; r < rowCount; r++) {
+          meshPts[r] = [];
+          const zDepth = 180 + r * 50;
+          const scale = fov / zDepth;
+
+          for (let c = 0; c < meshCols; c++) {
+            const worldX = (c - meshCols / 2) * 110;
+            const waveY =
+              Math.sin(c * 0.4 + waveClock) * 30 +
+              Math.cos(r * 0.5 + waveClock * 1.1) * 20 +
+              Math.sin((c + r) * 0.25 + waveClock) * 15;
+
+            const projX = originX + worldX * scale;
+            const projY = originY + (waveY + r * 14) * scale;
+
+            meshPts[r][c] = {
+              x: projX,
+              y: projY,
+              visible: projX >= -100 && projX <= width + 100 && projY >= -100 && projY <= height + 100,
+            };
+          }
+        }
+
+        // Draw horizontal mesh lines
+        for (let r = 0; r < rowCount; r++) {
+          const rowProgress = r / rowCount;
+          ctx.lineWidth = 1;
+          if (isDark) {
+            ctx.strokeStyle = `rgba(212, 255, 0, ${rowProgress * 0.12})`;
+          } else {
+            ctx.strokeStyle = `rgba(100, 116, 139, ${rowProgress * 0.15})`;
+          }
+          ctx.beginPath();
+          let started = false;
+          for (let c = 0; c < meshCols; c++) {
+            const pt = meshPts[r][c];
+            if (!pt.visible) continue;
+            if (!started) {
+              ctx.moveTo(pt.x, pt.y);
+              started = true;
+            } else {
+              ctx.lineTo(pt.x, pt.y);
+            }
+          }
+          ctx.stroke();
+        }
+
+        // Draw vertical mesh lines
+        for (let c = 0; c < meshCols; c += 2) {
+          if (isDark) {
+            ctx.strokeStyle = "rgba(0, 240, 255, 0.06)";
+          } else {
+            ctx.strokeStyle = "rgba(2, 132, 199, 0.08)";
+          }
+          ctx.beginPath();
+          let started = false;
+          for (let r = 0; r < rowCount; r++) {
+            const pt = meshPts[r][c];
+            if (!pt.visible) continue;
+            if (!started) {
+              ctx.moveTo(pt.x, pt.y);
+              started = true;
+            } else {
+              ctx.lineTo(pt.x, pt.y);
+            }
+          }
+          ctx.stroke();
+        }
+      };
+
+      // Draw elevation mesh near upper section (25%) and lower section (75%)
+      drawElevationMesh(0.18, meshRows);
+      drawElevationMesh(0.65, meshRows);
+
+      // C. Render Kinetic Energy Particles & Dynamic Constellations
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0) p.x = 1;
+        if (p.x > 1) p.x = 0;
+        if (p.y < 0) p.y = 1;
+        if (p.y > 1) p.y = 0;
+
+        const px = p.x * width;
+        const py = p.y * height;
+        const color = isDark ? p.colorDark : p.colorLight;
+
+        // Draw particle node
+        ctx.beginPath();
+        ctx.arc(px, py, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = color;
+        ctx.globalAlpha = p.alpha;
+        if (isDark) {
+          ctx.shadowColor = color;
+          ctx.shadowBlur = 8;
+        }
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        // Connect nearby particles within 130px
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dx = px - p2.x * width;
+          const dy = py - p2.y * height;
+          const distSq = dx * dx + dy * dy;
+
+          if (distSq < 16900) {
+            const dist = Math.sqrt(distSq);
+            const lineAlpha = (1 - dist / 130) * (isDark ? 0.16 : 0.14);
+            ctx.beginPath();
+            ctx.moveTo(px, py);
+            ctx.lineTo(p2.x * width, p2.y * height);
+            ctx.strokeStyle = color;
+            ctx.globalAlpha = lineAlpha;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
+        }
+      }
+      ctx.globalAlpha = 1.0;
+
+      // D. RENDER MOVING 3D FIGURES (POLYHEDRA & GYRO RINGS)
+      shapes.forEach((shape) => {
+        // Continuous rotation on 3 axes
+        shape.rx += shape.vrx;
+        shape.ry += shape.vry;
+        shape.rz += shape.vrz;
+        shape.floatPhase += shape.floatSpeed;
+
+        // Floating offset calculation
+        const floatOffsetY = Math.sin(shape.floatPhase) * 25;
+        const floatOffsetX = Math.cos(shape.floatPhase * 0.8) * 15;
+
+        // Mouse deflection on shape position
+        const centerScreenX = shape.x * width + floatOffsetX + mouse.x * 25;
+        const centerScreenY = shape.y * height + floatOffsetY + mouse.y * 20;
+
+        // Precompute trigonometric matrices for 3D rotation
+        const cx = Math.cos(shape.rx + mouse.y * 0.2);
+        const sx = Math.sin(shape.rx + mouse.y * 0.2);
+        const cy = Math.cos(shape.ry + mouse.x * 0.2);
+        const sy = Math.sin(shape.ry + mouse.x * 0.2);
+        const cz = Math.cos(shape.rz);
+        const sz = Math.sin(shape.rz);
+
+        // Project all vertices
+        const projected = shape.vertices.map((v) => {
+          // Scale base vertex by shape size
+          const x0 = v.x * shape.size;
+          const y0 = v.y * shape.size;
+          const z0 = v.z * shape.size;
+
+          // Rotate around X
+          const y1 = y0 * cx - z0 * sx;
+          const z1 = y0 * sx + z0 * cx;
+
+          // Rotate around Y
+          const x2 = x0 * cy + z1 * sy;
+          const z2 = -x0 * sy + z1 * cy;
+
+          // Rotate around Z
+          const x3 = x2 * cz - y1 * sz;
+          const y3 = x2 * sz + y1 * cz;
+          const z3 = z2;
+
+          // 3D perspective projection
+          const totalDepth = Math.max(shape.z + z3, 100);
+          const scale = fov / totalDepth;
+          const projX = centerScreenX + x3 * scale;
+          const projY = centerScreenY + y3 * scale;
+
+          return { x: projX, y: projY, z: z3, scale };
+        });
+
+        // Determine shape color based on theme and type
+        let edgeColor = isDark ? "rgba(212, 255, 0, 0.45)" : "rgba(101, 163, 13, 0.45)";
+        let glowColor = isDark ? "#d4ff00" : "#65a30d";
+        let nodeColor = isDark ? "#ffffff" : "#0f172a";
+
+        if (shape.type === "gyro") {
+          edgeColor = isDark ? "rgba(0, 240, 255, 0.4)" : "rgba(2, 132, 199, 0.45)";
+          glowColor = isDark ? "#00f0ff" : "#0284c7";
+          nodeColor = isDark ? "#00f0ff" : "#0284c7";
+        } else if (shape.type === "octahedron") {
+          edgeColor = isDark ? "rgba(255, 255, 255, 0.35)" : "rgba(71, 85, 105, 0.45)";
+          glowColor = isDark ? "#ffffff" : "#475569";
+          nodeColor = isDark ? "#d4ff00" : "#65a30d";
+        }
+
+        // Draw 3D wireframe edges
+        ctx.lineWidth = 1.25;
+        ctx.strokeStyle = edgeColor;
+        if (isDark) {
+          ctx.shadowColor = glowColor;
+          ctx.shadowBlur = 6;
+        }
+
+        shape.edges.forEach((edge) => {
+          const p1 = projected[edge.a];
+          const p2 = projected[edge.b];
+          if (!p1 || !p2) return;
+
+          ctx.beginPath();
+          ctx.moveTo(p1.x, p1.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.stroke();
+        });
+        ctx.shadowBlur = 0;
+
+        // Draw vertex nodes
+        projected.forEach((pt) => {
+          const nodeRadius = Math.max(pt.scale * 1.8, 1.2);
+          ctx.beginPath();
+          ctx.arc(pt.x, pt.y, nodeRadius, 0, Math.PI * 2);
+          ctx.fillStyle = nodeColor;
+          if (isDark) {
+            ctx.shadowColor = glowColor;
+            ctx.shadowBlur = 5;
+          }
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        });
+      });
+
+      animId = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      cancelAnimationFrame(animId);
+      observer.disconnect();
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <div
-      ref={containerRef}
       aria-hidden="true"
       className="absolute inset-0 pointer-events-none overflow-hidden select-none z-0"
     >
-      {/* =========================================================================
-          LAYER 0: FOUNDATION GRADIENT MESH
-          Smooth seamless transition directly from Hero bottom edge into deep carbon / slate
-          ========================================================================= */}
-      <div className="absolute inset-0 bg-slate-100 dark:bg-[#060709] transition-colors duration-500" />
+      {/* Dynamic Background Base: Slate-50 in light mode, deep #060709 in dark mode */}
+      <div className="absolute inset-0 bg-slate-50 dark:bg-[#060709] transition-colors duration-500" />
 
-      {/* Top Transition Mask: Dissolves perfectly from Hero Section */}
-      <div className="absolute top-0 left-0 right-0 h-48 bg-gradient-to-b from-[#08090b] via-slate-200/50 to-transparent dark:from-[#08090b] dark:via-[#07080a]/90 z-10" />
+      {/* Canvas rendering moving 3D geometric figures, elevation mesh wave, and kinetic particles */}
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full block" />
 
-      {/* =========================================================================
-          LAYER 1: CINEMATIC SPORTS IMAGERY PLATES (PARALLAX + CHIAROSCURO)
-          High-end sports moments with dramatic directional lighting & soft DoF
-          ========================================================================= */}
+      {/* Top Transition Soft Gradient: Seamlessly dissolves from Hero Section into the 3D atmosphere */}
+      <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#08090b] via-transparent to-transparent pointer-events-none z-10" />
 
-      {/* Plate 1: Night Stadium Running Track & Athletic Curves (Behind Trending Sports Bento) */}
-      <motion.div
-        style={{ y: isReducedMotion ? 0 : platesParallaxSlow }}
-        className="absolute top-[2%] -left-[8%] w-[115%] lg:w-[75%] h-[900px] pointer-events-none"
-      >
-        <div className="relative w-full h-full">
-          <img
-            src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?q=80&w=1600&auto=format&fit=crop"
-            alt=""
-            className="w-full h-full object-cover filter brightness-[0.85] contrast-[1.1] opacity-20 dark:brightness-[0.18] dark:contrast-[1.3] dark:saturate-[0.75] dark:opacity-40"
-            style={{
-              maskImage:
-                "radial-gradient(ellipse 75% 65% at 45% 45%, black 20%, transparent 75%)",
-              WebkitMaskImage:
-                "radial-gradient(ellipse 75% 65% at 45% 45%, black 20%, transparent 75%)",
-            }}
-          />
-          {/* Subtle directional floodlight beam over track */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-[#d4ff00]/10 via-transparent to-transparent mix-blend-screen opacity-60" />
-        </div>
-      </motion.div>
-
-      {/* Plate 2: Padel Court Glass & Boxing Ring Atmospheric Mist (Behind Featured Clubs) */}
-      <motion.div
-        style={{ y: isReducedMotion ? 0 : platesParallaxMid }}
-        className="absolute top-[26%] -right-[10%] w-[120%] lg:w-[80%] h-[1050px] pointer-events-none"
-      >
-        <div className="relative w-full h-full">
-          <img
-            src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&w=1600&auto=format&fit=crop"
-            alt=""
-            className="w-full h-full object-cover filter brightness-[0.85] contrast-[1.1] opacity-15 dark:brightness-[0.16] dark:contrast-[1.35] dark:saturate-[0.7] dark:opacity-35"
-            style={{
-              maskImage:
-                "radial-gradient(ellipse 70% 60% at 55% 50%, black 15%, transparent 80%)",
-              WebkitMaskImage:
-                "radial-gradient(ellipse 70% 60% at 55% 50%, black 15%, transparent 80%)",
-            }}
-          />
-          {/* Subtle Emerald-Volt court rim glow */}
-          <div className="absolute inset-0 bg-gradient-to-bl from-[#10b981]/10 via-[#d4ff00]/5 to-transparent mix-blend-screen opacity-50" />
-        </div>
-      </motion.div>
-
-      {/* Plate 3: Modern High-Performance Studio & Reformer Architecture (Behind AI Matcher / Quiz) */}
-      <motion.div
-        style={{ y: isReducedMotion ? 0 : platesParallaxSlow }}
-        className="absolute top-[50%] -left-[10%] w-[120%] lg:w-[75%] h-[1000px] pointer-events-none"
-      >
-        <div className="relative w-full h-full">
-          <img
-            src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1600&auto=format&fit=crop"
-            alt=""
-            className="w-full h-full object-cover filter brightness-[0.85] contrast-[1.1] opacity-15 dark:brightness-[0.15] dark:contrast-[1.25] dark:saturate-[0.8] dark:opacity-35"
-            style={{
-              maskImage:
-                "radial-gradient(ellipse 75% 65% at 45% 45%, black 20%, transparent 80%)",
-              WebkitMaskImage:
-                "radial-gradient(ellipse 75% 65% at 45% 45%, black 20%, transparent 80%)",
-            }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-[#00f0ff]/10 via-[#d4ff00]/5 to-transparent mix-blend-screen opacity-50" />
-        </div>
-      </motion.div>
-
-      {/* Plate 4: Olympic 50m Pool Caustics & Training Stadium (Behind Advantages & Athlete Stories) */}
-      <motion.div
-        style={{ y: isReducedMotion ? 0 : platesParallaxMid }}
-        className="absolute top-[70%] -right-[8%] w-[115%] lg:w-[70%] h-[950px] pointer-events-none"
-      >
-        <div className="relative w-full h-full">
-          <img
-            src="https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?q=80&w=1600&auto=format&fit=crop"
-            alt=""
-            className="w-full h-full object-cover filter brightness-[0.85] contrast-[1.1] opacity-20 dark:brightness-[0.17] dark:contrast-[1.3] dark:saturate-[0.85] dark:opacity-40"
-            style={{
-              maskImage:
-                "radial-gradient(ellipse 75% 60% at 50% 50%, black 20%, transparent 75%)",
-              WebkitMaskImage:
-                "radial-gradient(ellipse 75% 60% at 50% 50%, black 20%, transparent 75%)",
-            }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-tl from-[#00f0ff]/12 via-transparent to-transparent mix-blend-screen opacity-60" />
-        </div>
-      </motion.div>
-
-      {/* =========================================================================
-          LAYER 2: VOLUMETRIC STADIUM AURORAS & NEON LIME LIGHTING
-          Rich, noticeable, diffused spotlights that shift smoothly with the cursor
-          ========================================================================= */}
-      <motion.div
-        style={{ y: isReducedMotion ? 0 : auroraParallax1 }}
-        className="absolute inset-0 w-full h-[125%]"
-      >
-        {/* Aurora 1: Neon Lime Stadium Flare (Top Left - Behind Sports Bento) */}
-        <motion.div
-          style={{
-            x: isReducedMotion ? 0 : smoothMouseX,
-            y: isReducedMotion ? 0 : smoothMouseY,
-          }}
-          className="absolute top-[4%] -left-[10%] w-[800px] h-[800px] rounded-full bg-gradient-to-br from-[#d4ff00]/[0.14] via-[#10b981]/[0.06] to-transparent blur-[160px]"
-        />
-
-        {/* Aurora 2: Emerald-Volt Arena Aura (Middle Right - Behind Clubs & AI Quiz) */}
-        <motion.div
-          style={{
-            x: isReducedMotion ? 0 : useTransform(smoothMouseX, (v) => -v * 1.3),
-            y: isReducedMotion ? 0 : useTransform(smoothMouseY, (v) => -v * 1.3),
-          }}
-          className="absolute top-[32%] -right-[12%] w-[900px] h-[900px] rounded-full bg-gradient-to-bl from-[#d4ff00]/[0.15] via-[#00f0ff]/[0.07] to-transparent blur-[175px]"
-        />
-
-        {/* Aurora 3: Electric Stadium Frost Flare (Center Left - Behind Advantages & Stories) */}
-        <motion.div
-          style={{
-            x: isReducedMotion ? 0 : smoothMouseX,
-            y: isReducedMotion ? 0 : smoothMouseY,
-          }}
-          className="absolute top-[58%] -left-[12%] w-[850px] h-[850px] rounded-full bg-gradient-to-tr from-[#00f0ff]/[0.12] via-[#d4ff00]/[0.08] to-transparent blur-[165px]"
-        />
-
-        {/* Aurora 4: Finish Line Stadium Horizon Flare (Bottom - Behind Final Booking Terminal) */}
-        <motion.div
-          style={{
-            x: isReducedMotion ? 0 : useTransform(smoothMouseX, (v) => v * 0.8),
-          }}
-          className="absolute bottom-[6%] left-1/2 -translate-x-1/2 w-[1100px] h-[750px] rounded-full bg-gradient-to-t from-[#d4ff00]/[0.18] via-[#d4ff00]/[0.05] to-transparent blur-[190px]"
-        />
-      </motion.div>
-
-      {/* =========================================================================
-          LAYER 3: ATHLETIC STADIUM RUNNING TRACK CONTOURS & VECTOR VELOCITY ARCS
-          Precision geometric speed curves (No dots, no particles)
-          ========================================================================= */}
-      <motion.div
-        style={{
-          y: isReducedMotion ? 0 : platesParallaxFast,
-          rotate: isReducedMotion ? 0 : vectorTrackRotate,
-        }}
-        className="absolute inset-0 w-full h-[145%] opacity-[0.06] dark:opacity-[0.09]"
-      >
-        <svg
-          className="w-full h-full"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1600 3800"
-          preserveAspectRatio="none"
-        >
-          <defs>
-            <linearGradient id="voltTrackGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.8" />
-              <stop offset="50%" stopColor="#d4ff00" stopOpacity="0.95" />
-              <stop offset="100%" stopColor="#00f0ff" stopOpacity="0.1" />
-            </linearGradient>
-            <linearGradient id="cyanTrackGrad" x1="100%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#d4ff00" stopOpacity="0.8" />
-              <stop offset="100%" stopColor="#00f0ff" stopOpacity="0.3" />
-            </linearGradient>
-          </defs>
-
-          {/* Running Track Lane Curves (Upper Section - Behind Bento) */}
-          <path
-            d="M -200 450 C 450 320, 1150 720, 1850 540"
-            fill="none"
-            stroke="url(#voltTrackGrad)"
-            strokeWidth="1.5"
-            strokeDasharray="10 14"
-          />
-          <path
-            d="M -150 530 C 500 400, 1200 800, 1900 620"
-            fill="none"
-            stroke="url(#voltTrackGrad)"
-            strokeWidth="1"
-          />
-
-          {/* Mid-Section Dynamic Velocity Swoop (Behind Clubs & Quiz) */}
-          <path
-            d="M 1850 1450 C 1100 1280, 350 1750, -200 1580"
-            fill="none"
-            stroke="url(#cyanTrackGrad)"
-            strokeWidth="2"
-            strokeDasharray="8 16"
-          />
-          <path
-            d="M 1900 1530 C 1150 1360, 400 1830, -150 1660"
-            fill="none"
-            stroke="url(#voltTrackGrad)"
-            strokeWidth="1"
-          />
-
-          {/* Lower Stadium Turn Arc (Behind Advantages & Stories) */}
-          <path
-            d="M -300 2450 Q 800 2150, 1900 2550"
-            fill="none"
-            stroke="url(#voltTrackGrad)"
-            strokeWidth="1.5"
-          />
-          <path
-            d="M -250 2530 Q 800 2230, 1950 2630"
-            fill="none"
-            stroke="url(#cyanTrackGrad)"
-            strokeWidth="1"
-            strokeDasharray="6 12"
-          />
-
-          {/* Finish Line Telemetry Axis (Behind Final Booking Terminal) */}
-          <line
-            x1="-200"
-            y1="3300"
-            x2="1800"
-            y2="3300"
-            stroke="url(#voltTrackGrad)"
-            strokeWidth="1.5"
-            strokeDasharray="16 20"
-          />
-        </svg>
-      </motion.div>
-
-      {/* =========================================================================
-          LAYER 4: HIGH-END ARCHITECTURAL TEXTURE & EDGE VIGNETTES
-          Soft luxury diagonal micro-grain and lateral depth focusing
-          ========================================================================= */}
-      <div
-        className="absolute inset-0 w-full h-full opacity-[0.025] dark:opacity-[0.045] pointer-events-none"
-        style={{
-          backgroundImage: `repeating-linear-gradient(
-            -45deg,
-            transparent,
-            transparent 64px,
-            rgba(255, 255, 255, 0.3) 64px,
-            rgba(255, 255, 255, 0.3) 65px
-          )`,
-        }}
-      />
-
-      {/* Lateral Feathered Vignettes (keeps focus on center content cards in both light & dark themes) */}
-      <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-slate-100 to-transparent dark:from-[#07080a] z-10 pointer-events-none hidden lg:block transition-colors duration-500" />
-      <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-slate-100 to-transparent dark:from-[#07080a] z-10 pointer-events-none hidden lg:block transition-colors duration-500" />
+      {/* Subtle athletic dot grid texture */}
+      <div className="absolute inset-0 bg-[radial-gradient(#64748b_1px,transparent_1px)] dark:bg-[radial-gradient(#d4ff00_1px,transparent_1px)] [background-size:48px_48px] opacity-[0.035] pointer-events-none" />
     </div>
   );
 }

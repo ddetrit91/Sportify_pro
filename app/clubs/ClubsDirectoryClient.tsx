@@ -61,7 +61,7 @@ export function ClubsDirectoryClient({ initialClubs }: { initialClubs: Club[] })
       </div>
 
       {/* Filter & Search Bar */}
-      <div className="p-6 rounded-3xl border border-white/10 bg-void-card shadow-2xl mb-10 space-y-6">
+      <div className="p-6 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card shadow-2xl mb-10 space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
           <div className="md:col-span-6 relative">
             <Search className="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
@@ -81,7 +81,7 @@ export function ClubsDirectoryClient({ initialClubs }: { initialClubs: Club[] })
               className="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/10 text-white text-xs outline-none focus:border-[#d4ff00]/60 font-mono"
             >
               {metros.map((m) => (
-                <option key={m} value={m} className="bg-black text-white">
+                <option key={m} value={m} className="bg-white dark:bg-black text-slate-900 dark:text-white">
                   {m === "all" ? "Все станции метро" : m}
                 </option>
               ))}
@@ -94,9 +94,9 @@ export function ClubsDirectoryClient({ initialClubs }: { initialClubs: Club[] })
               onChange={(e) => setSortBy(e.target.value as any)}
               className="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/10 text-white text-xs outline-none focus:border-[#d4ff00]/60 font-mono"
             >
-              <option value="rating" className="bg-black text-white">По рейтингу (топ)</option>
-              <option value="price_asc" className="bg-black text-white">Сначала доступные</option>
-              <option value="price_desc" className="bg-black text-white">Сначала премиум</option>
+              <option value="rating" className="bg-white dark:bg-black text-slate-900 dark:text-white">По рейтингу (топ)</option>
+              <option value="price_asc" className="bg-white dark:bg-black text-slate-900 dark:text-white">Сначала доступные</option>
+              <option value="price_desc" className="bg-white dark:bg-black text-slate-900 dark:text-white">Сначала премиум</option>
             </select>
           </div>
         </div>
@@ -144,7 +144,7 @@ export function ClubsDirectoryClient({ initialClubs }: { initialClubs: Club[] })
         {filtered.map((club) => (
           <div
             key={club.id}
-            className="rounded-3xl border border-white/10 bg-void-card overflow-hidden group hover:border-[#d4ff00]/40 transition-all flex flex-col justify-between shadow-2xl"
+            className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card overflow-hidden group hover:border-[#d4ff00]/40 transition-all flex flex-col justify-between shadow-2xl"
           >
             <div className="relative h-60 w-full overflow-hidden bg-slate-900">
               <img

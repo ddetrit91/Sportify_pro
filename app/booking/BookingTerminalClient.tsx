@@ -83,7 +83,7 @@ export function BookingTerminalClient({ clubs }: { clubs: Club[] }) {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Column: Form */}
-        <div className="lg:col-span-7 rounded-3xl border border-white/10 bg-void-card p-6 sm:p-8 shadow-2xl">
+        <div className="lg:col-span-7 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card p-6 sm:p-8 shadow-2xl">
           {!isSuccess ? (
             <form onSubmit={handleSubmit} className="space-y-5">
               {errorMessage && (
@@ -103,7 +103,7 @@ export function BookingTerminalClient({ clubs }: { clubs: Club[] }) {
                   className="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/10 text-white text-xs outline-none focus:border-[#d4ff00] font-mono"
                 >
                   {clubs.map((c) => (
-                    <option key={c.id} value={c.id} className="bg-black text-white">
+                    <option key={c.id} value={c.id} className="bg-white dark:bg-black text-slate-900 dark:text-white">
                       {c.name} ({c.metro}) — {c.priceTrial === 0 ? "0 UZS Пробное" : `${Number(c.priceTrial).toLocaleString("ru-RU")} UZS`}
                     </option>
                   ))}
@@ -135,10 +135,10 @@ export function BookingTerminalClient({ clubs }: { clubs: Club[] }) {
                     onChange={(e) => setTimeSlot(e.target.value)}
                     className="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/10 text-white text-xs outline-none focus:border-[#d4ff00] font-mono"
                   >
-                    <option className="bg-black">08:00 - 09:30 (Утренний заряд)</option>
-                    <option className="bg-black">12:30 - 14:00 (Дневной WOD)</option>
-                    <option className="bg-black">19:00 - 20:30 (Вечерний пик)</option>
-                    <option className="bg-black">20:30 - 22:00 (Поздний релакс)</option>
+                    <option className="bg-white dark:bg-black text-slate-900 dark:text-white">08:00 - 09:30 (Утренний заряд)</option>
+                    <option className="bg-white dark:bg-black text-slate-900 dark:text-white">12:30 - 14:00 (Дневной WOD)</option>
+                    <option className="bg-white dark:bg-black text-slate-900 dark:text-white">19:00 - 20:30 (Вечерний пик)</option>
+                    <option className="bg-white dark:bg-black text-slate-900 dark:text-white">20:30 - 22:00 (Поздний релакс)</option>
                   </select>
                 </div>
               </div>
@@ -232,7 +232,7 @@ export function BookingTerminalClient({ clubs }: { clubs: Club[] }) {
         </div>
 
         {/* Right Column: Live Pass Preview */}
-        <div className="lg:col-span-5 rounded-3xl border border-[#d4ff00]/40 bg-gradient-to-b from-[#13161c] to-black p-6 sm:p-8 space-y-6 shadow-2xl relative overflow-hidden">
+        <div className="lg:col-span-5 rounded-3xl border border-[#d4ff00]/40 bg-gradient-to-b from-lime-50 to-white dark:from-[#13161c] dark:to-black text-slate-900 dark:text-white p-6 sm:p-8 space-y-6 shadow-2xl relative overflow-hidden">
           <div className="flex items-center justify-between">
             <span className="telemetry-chip text-[#d4ff00]">DIGITAL PASS // SPORTIFY</span>
             <span className="px-2 py-0.5 rounded bg-[#d4ff00] text-black font-mono font-bold text-[10px]">

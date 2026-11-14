@@ -198,7 +198,7 @@ export function MatcherClient({ clubs }: { clubs: Club[] }) {
       </div>
 
       {mode === "quiz" ? (
-        <div className="rounded-3xl border border-white/10 bg-void-card p-6 sm:p-10 shadow-2xl">
+        <div className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card p-6 sm:p-10 shadow-2xl">
           {step < 5 && (
             <div className="mb-8">
               <div className="flex justify-between text-[11px] font-mono text-slate-400 mb-2">
@@ -413,7 +413,7 @@ export function MatcherClient({ clubs }: { clubs: Club[] }) {
           </AnimatePresence>
         </div>
       ) : (
-        <div className="rounded-3xl border border-white/10 bg-void-card p-6 sm:p-8 flex flex-col h-[580px] shadow-2xl">
+        <div className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card p-6 sm:p-8 flex flex-col h-[580px] shadow-2xl">
           <div className="flex-1 overflow-y-auto space-y-4 pr-2">
             {messages.map((m, idx) => (
               <div key={idx} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>

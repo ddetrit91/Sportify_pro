@@ -232,8 +232,8 @@ export default function AdminPage() {
   // Login Screen
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4 bg-void text-white">
-        <div className="w-full max-w-md rounded-3xl p-8 border border-white/10 bg-void-card shadow-2xl space-y-6">
+      <div className="min-h-screen flex items-center justify-center p-4 bg-slate-50 dark:bg-void text-slate-900 dark:text-white transition-colors duration-300">
+        <div className="w-full max-w-md rounded-3xl p-8 border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card shadow-2xl space-y-6">
           <div className="w-14 h-14 rounded-2xl bg-[#d4ff00] text-black flex items-center justify-center font-black mx-auto shadow-lg shadow-[#d4ff00]/25">
             <Lock className="w-7 h-7" />
           </div>
@@ -286,7 +286,7 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-void text-white flex flex-col">
+    <div className="min-h-screen bg-slate-50 dark:bg-void text-slate-900 dark:text-white flex flex-col transition-colors duration-300">
       {/* Top Bar */}
       <header className="border-b border-white/10 bg-black/80 backdrop-blur-md sticky top-0 z-40 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
@@ -334,7 +334,7 @@ export default function AdminPage() {
       <main className="flex-1 max-w-7xl w-full mx-auto p-6 space-y-6">
         {/* KPI Strip */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-mono">
-          <div className="p-5 rounded-2xl border border-white/10 bg-void-card flex items-center justify-between">
+          <div className="p-5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card flex items-center justify-between">
             <div>
               <span className="telemetry-chip text-slate-400">ВСЕГО ЗАЯВОК:</span>
               <div className="text-3xl font-black text-white mt-1">{totalLeads}</div>
@@ -344,7 +344,7 @@ export default function AdminPage() {
             </div>
           </div>
 
-          <div className="p-5 rounded-2xl border border-white/10 bg-void-card flex items-center justify-between">
+          <div className="p-5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card flex items-center justify-between">
             <div>
               <span className="telemetry-chip text-slate-400">НОВЫЕ ЛИДЫ:</span>
               <div className="text-3xl font-black text-[#d4ff00] mt-1">{newLeads}</div>
@@ -354,7 +354,7 @@ export default function AdminPage() {
             </div>
           </div>
 
-          <div className="p-5 rounded-2xl border border-white/10 bg-void-card flex items-center justify-between">
+          <div className="p-5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card flex items-center justify-between">
             <div>
               <span className="telemetry-chip text-slate-400">ЗАПИСАНЫ В КЛУБ:</span>
               <div className="text-3xl font-black text-emerald-400 mt-1">{enrolledLeads}</div>
@@ -364,7 +364,7 @@ export default function AdminPage() {
             </div>
           </div>
 
-          <div className="p-5 rounded-2xl border border-white/10 bg-void-card flex items-center justify-between">
+          <div className="p-5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card flex items-center justify-between">
             <div>
               <span className="telemetry-chip text-slate-400">КОНВЕРСИЯ В ВИЗИТ:</span>
               <div className="text-3xl font-black text-white mt-1">{conversionRate}%</div>
@@ -376,7 +376,7 @@ export default function AdminPage() {
         </div>
 
         {/* Neon Cloud Infrastructure Terminal */}
-        <div className="p-5 rounded-2xl border border-white/10 bg-void-card flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="p-5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
               <Database className="w-4 h-4 text-[#d4ff00]" />
@@ -420,7 +420,7 @@ export default function AdminPage() {
         </div>
 
         {/* Telegram Diagnostics Terminal */}
-        <div className="p-5 rounded-2xl border border-white/10 bg-void-card flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="p-5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
               <Send className="w-4 h-4 text-[#d4ff00]" />
@@ -495,7 +495,7 @@ export default function AdminPage() {
         </div>
 
         {/* Leads Table */}
-        <div className="rounded-2xl border border-white/10 bg-void-card overflow-hidden shadow-2xl">
+        <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card overflow-hidden shadow-2xl">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs font-mono">
               <thead className="bg-black/60 text-slate-400 uppercase tracking-wider font-semibold border-b border-white/10">
@@ -545,7 +545,7 @@ export default function AdminPage() {
                         onChange={(e) =>
                           handleStatusChange(lead.id, e.target.value as LeadStatus)
                         }
-                        className="px-2.5 py-1 rounded-lg bg-black border border-white/10 text-xs font-mono outline-none focus:border-[#d4ff00]"
+                        className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-black border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white text-xs font-mono outline-none focus:border-[#d4ff00]"
                       >
                         <option value="new">Новая</option>
                         <option value="contacted">В обработке</option>
@@ -586,7 +586,7 @@ export default function AdminPage() {
       {/* Details Modal */}
       {selectedLead && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-          <div className="rounded-3xl p-6 sm:p-8 max-w-lg w-full border border-white/15 bg-void-card space-y-5">
+          <div className="rounded-3xl p-6 sm:p-8 max-w-lg w-full border border-slate-200 dark:border-white/15 bg-white dark:bg-void-card space-y-5">
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
               <div>
                 <span className="telemetry-chip text-[#d4ff00]">ДЕТАЛИ ЛИДА</span>
@@ -636,7 +636,7 @@ export default function AdminPage() {
                 defaultValue={selectedLead.notes || ""}
                 onBlur={(e) => handleSaveNotes(selectedLead.id, e.target.value)}
                 placeholder="Заметка куратора..."
-                className="w-full px-3 py-2 rounded-xl bg-black border border-white/10 text-xs text-white outline-none focus:border-[#d4ff00] font-mono"
+                className="w-full px-3 py-2 rounded-xl bg-slate-100 dark:bg-black border border-slate-300 dark:border-white/10 text-xs text-slate-900 dark:text-white outline-none focus:border-[#d4ff00] font-mono"
               />
             </div>
 
