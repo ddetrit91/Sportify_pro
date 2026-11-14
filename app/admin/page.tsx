@@ -62,15 +62,27 @@ export default function AdminPage() {
     }
   }, []);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (passwordInput === "admin123") {
-      setIsAuthenticated(true);
-      sessionStorage.setItem("spotify-admin-auth", "true");
-      setAuthError("");
-      fetchLeads();
-    } else {
-      setAuthError("Неверный пароль администратора. По умолчанию: admin123");
+    setAuthError("");
+    try {
+      const res = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: passwordInput }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setIsAuthenticated(true);
+        sessionStorage.setItem("spotify-admin-auth", "true");
+        setAuthError("");
+        fetchLeads();
+        fetchNeonHealth();
+      } else {
+        setAuthError(data.error || "Неверный пароль администратора. Попробуйте снова.");
+      }
+    } catch {
+      setAuthError("Ошибка подключения к серверу авторизации.");
     }
   };
 
@@ -248,14 +260,11 @@ export default function AdminPage() {
               <input
                 type="password"
                 required
-                placeholder="admin123"
+                placeholder="••••••••••••"
                 value={passwordInput}
                 onChange={(e) => setPasswordInput(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/10 text-white outline-none focus:border-[#d4ff00] text-sm font-mono"
+                className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/10 text-white outline-none focus:border-[#d4ff00] text-sm tracking-widest"
               />
-              <span className="text-[10px] text-slate-500 font-mono mt-1 block">
-                Дефолтный пароль: <code>admin123</code> (.env.local)
-              </span>
             </div>
 
             <button
