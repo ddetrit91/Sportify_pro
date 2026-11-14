@@ -1,0 +1,252 @@
+[
+  {
+    "id": "club-1",
+    "slug": "apex-fitness",
+    "name": "Apex Performance Tashkent",
+    "category": "fitness",
+    "categoryName": "Фитнес & Кроссфит",
+    "address": "Мирабадский р-н, ул. Нукусская, 29",
+    "metro": "м. Ойбек",
+    "metroColor": "#00A550",
+    "priceMonthly": 850000,
+    "priceTrial": 0,
+    "rating": 4.92,
+    "reviewCount": 164,
+    "image": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1200&auto=format&fit=crop",
+    "gallery": [
+      "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=800&auto=format&fit=crop"
+    ],
+    "tags": ["Кроссфит Rogue", "Бассейн 25м", "Финская сауна", "Зона свободных весов"],
+    "schedule": "Пн-Вс: 07:00 – 23:00",
+    "description": "Флагманский спортивный комплекс 3 200 м² в центре Ташкента. Сертифицированная арена кроссфита Rogue, тяжелая атлетика Eleiko, 25-метровый бассейн и зона спа-восстановления.",
+    "amenities": ["Охраняемая парковка", "Бассейн 25м", "Финская сауна", "Фитнес-бар", "Полотенца", "Смарт-шкафчики"],
+    "features": {
+      "sqMeters": 3200,
+      "yearOpened": 2023,
+      "freeParking": true,
+      "poolLengthMeters": 25
+    },
+    "coaches": [
+      {
+        "id": "c1",
+        "name": "Сардор Рахимов",
+        "role": "Главный тренер CrossFit Level 2",
+        "experience": "9 лет",
+        "image": "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?q=80&w=400&auto=format&fit=crop",
+        "achievements": ["Чемпион Узбекистана по тяжелой атлетике", "Сертификат CrossFit L2"]
+      }
+    ],
+    "timetable": [
+      { "time": "07:30 - 08:30", "activity": "Morning Cardio & Core", "coach": "Сардор Рахимов", "intensity": "Medium", "availableSpots": 5 },
+      { "time": "19:00 - 20:00", "activity": "CrossFit WOD: Power Clean", "coach": "Сардор Рахимов", "intensity": "Extreme", "availableSpots": 3 }
+    ]
+  },
+  {
+    "id": "club-2",
+    "slug": "buka-fight-academy",
+    "name": "Buka Fight Academy Tashkent",
+    "category": "martial_arts",
+    "categoryName": "Бокс & Единоборства",
+    "address": "Шайхантахурский р-н, ул. Абая, 4",
+    "metro": "м. Пахтакор / Алишер Навои",
+    "metroColor": "#D92B2F",
+    "priceMonthly": 950000,
+    "priceTrial": 0,
+    "rating": 4.96,
+    "reviewCount": 182,
+    "image": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&w=1200&auto=format&fit=crop",
+    "gallery": [
+      "https://images.unsplash.com/photo-1517438322307-e67111335449?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1599058917212-d750089bc07e?q=80&w=800&auto=format&fit=crop"
+    ],
+    "tags": ["Узбекская школа бокса", "Тайский бокс", "ММА & Грэпплинг", "2 олимпийских ринга"],
+    "schedule": "Пн-Сб: 08:00 – 22:30",
+    "description": "Легендарная академия единоборств в Ташкенте. Тренировки по методикам знаменитой узбекской школы бокса, завоевавшей мировой олимп. Группы для новичков и подготовка к соревнованиям.",
+    "amenities": ["2 ринга и октагон", "Экипировка Buka Boxing", "Душевые и сауна", "Зона функциональной подготовки"],
+    "features": {
+      "sqMeters": 1900,
+      "yearOpened": 2022,
+      "freeParking": true
+    },
+    "coaches": [
+      {
+        "id": "c2",
+        "name": "Джасур Умаров",
+        "role": "Заслуженный тренер по боксу",
+        "experience": "15 лет",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop",
+        "achievements": ["Мастер спорта международного класса", "Воспитал 3 чемпионов Азии"]
+      }
+    ],
+    "timetable": [
+      { "time": "09:00 - 10:30", "activity": "Бокс: Школа техники для начинающих", "coach": "Джасур Умаров", "intensity": "Medium", "availableSpots": 6 },
+      { "time": "19:00 - 20:30", "activity": "Ударная мощь и спарринги", "coach": "Джасур Умаров", "intensity": "Extreme", "availableSpots": 4 }
+    ]
+  },
+  {
+    "id": "club-3",
+    "slug": "aquaterra-tashkent",
+    "name": "Aquaterra Swim & Spa Tashkent",
+    "category": "swimming",
+    "categoryName": "Бассейн & Плавание",
+    "address": "Яккасарайский р-н, ул. Бабура, 77",
+    "metro": "м. Космонавтов",
+    "metroColor": "#00A550",
+    "priceMonthly": 1200000,
+    "priceTrial": 0,
+    "rating": 4.9,
+    "reviewCount": 140,
+    "image": "https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?q=80&w=1200&auto=format&fit=crop",
+    "gallery": [
+      "https://images.unsplash.com/photo-1530549387789-4c1017266635?q=80&w=800&auto=format&fit=crop"
+    ],
+    "tags": ["Олимпийский 50м", "Озоновая очистка воды", "Турецкий хаммам", "Аквааэробика"],
+    "schedule": "Ежедневно: 06:30 – 23:00",
+    "description": "Премиальный водный центр Ташкента с 50-метровой чашей на 8 дорожек. Вода очищается многоступенчатым озонированием без хлорного запаха. Банный комплекс с джакузи и массажем.",
+    "amenities": ["Бассейн 50м", "Хаммам", "Финская сауна", "Джакузи", "Кафе со свежевыжатыми соками"],
+    "features": {
+      "sqMeters": 3800,
+      "yearOpened": 2023,
+      "freeParking": true,
+      "poolLengthMeters": 50
+    },
+    "coaches": [
+      {
+        "id": "c3",
+        "name": "Тимур Касымов",
+        "role": "Тренер высшей категории по плаванию",
+        "experience": "11 лет",
+        "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop",
+        "achievements": ["Мастер спорта Республики Узбекистан", "Призер Игр Исламской Солидарности"]
+      }
+    ],
+    "timetable": [
+      { "time": "08:00 - 09:00", "activity": "Кроль с нуля: Правильное дыхание", "coach": "Тимур Касымов", "intensity": "Medium", "availableSpots": 6 },
+      { "time": "19:30 - 20:30", "activity": "Speed & Endurance Swim", "coach": "Тимур Касымов", "intensity": "High", "availableSpots": 3 }
+    ]
+  },
+  {
+    "id": "club-4",
+    "slug": "padel-arena-tashkent",
+    "name": "Padel & Tennis Arena Tashkent",
+    "category": "rackets",
+    "categoryName": "Теннис & Падел",
+    "address": "Юнусабадский р-н, массив Юнусабад-4, 12",
+    "metro": "м. Шахристан",
+    "metroColor": "#00A550",
+    "priceMonthly": 1500000,
+    "priceTrial": 0,
+    "rating": 4.95,
+    "reviewCount": 115,
+    "image": "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?q=80&w=1200&auto=format&fit=crop",
+    "gallery": [
+      "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?q=80&w=800&auto=format&fit=crop"
+    ],
+    "tags": ["6 крытых кортов падел", "4 корта хард", "Прокат ракеток бесплатно", "Турниры по выходным"],
+    "schedule": "Пн-Вс: 07:00 – 00:00",
+    "description": "Первая профессиональная падел-арена в Ташкенте. Высокие 12-метровые потолки, итальянское стекло, профессиональное неслепящее освещение, лаунж-бар и комьюнити увлеченных спортсменов.",
+    "amenities": ["Панорамные падел-корты", "Pro Shop", "Lounge-кафе", "Раздевалки с сауной", "Парковка"],
+    "features": {
+      "sqMeters": 2800,
+      "yearOpened": 2024,
+      "freeParking": true
+    },
+    "coaches": [
+      {
+        "id": "c4",
+        "name": "Азиз Камалов",
+        "role": "Сертифицированный тренер по паделу FIP",
+        "experience": "6 лет",
+        "image": "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=400&auto=format&fit=crop",
+        "achievements": ["Сертификат Международной Федерации Падел FIP", "Победитель турнира Tashkent Open"]
+      }
+    ],
+    "timetable": [
+      { "time": "10:00 - 11:30", "activity": "Padel Intro: Удары у стекла и тактика", "coach": "Азиз Камалов", "intensity": "Medium", "availableSpots": 4 },
+      { "time": "19:00 - 20:30", "activity": "Evening Matchplay & Social Mix", "coach": "Азиз Камалов", "intensity": "High", "availableSpots": 2 }
+    ]
+  },
+  {
+    "id": "club-5",
+    "slug": "prana-pilates-tashkent",
+    "name": "Prana Pilates & Reformer Studio",
+    "category": "yoga",
+    "categoryName": "Йога & Пилатес",
+    "address": "Мирзо-Улугбекский р-н, ул. Мустакиллик, 15",
+    "metro": "м. Амир Темур Хиёбони",
+    "metroColor": "#D92B2F",
+    "priceMonthly": 1100000,
+    "priceTrial": 0,
+    "rating": 4.98,
+    "reviewCount": 195,
+    "image": "https://images.unsplash.com/photo-1545205597-3d9d02c29597?q=80&w=1200&auto=format&fit=crop",
+    "gallery": [
+      "https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=800&auto=format&fit=crop"
+    ],
+    "tags": ["Реформеры Allegro 2", "Хатха & Аэройога", "Звукотерапия гонгами", "Медитации"],
+    "schedule": "Пн-Вс: 08:00 – 22:00",
+    "description": "Эстетичная студия пилатеса и осознанного движения в сердце Ташкента. Американские реформеры Balanced Body Allegro 2, персональные наставники и чайные церемонии после тренировок.",
+    "amenities": ["Реформеры Allegro 2", "Чайная комната", "Эко-коврики Manduka", "Ароматерапия"],
+    "features": {
+      "sqMeters": 580,
+      "yearOpened": 2023,
+      "freeParking": true
+    },
+    "coaches": [
+      {
+        "id": "c5",
+        "name": "Нигора Закирова",
+        "role": "Шеф-инструктор Polestar Pilates",
+        "experience": "8 лет",
+        "image": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400&auto=format&fit=crop",
+        "achievements": ["Международная сертификация Polestar Pilates", "Специалист по женскому здоровью"]
+      }
+    ],
+    "timetable": [
+      { "time": "09:00 - 10:00", "activity": "Reformer Flow: Здоровая спина и пресс", "coach": "Нигора Закирова", "intensity": "Medium", "availableSpots": 3 },
+      { "time": "18:30 - 19:45", "activity": "Yin Yoga & Звуковая ванна с поющими чашами", "coach": "Нигора Закирова", "intensity": "Low", "availableSpots": 5 }
+    ]
+  },
+  {
+    "id": "club-6",
+    "slug": "climbing-hub-tashkent",
+    "name": "Tashkent Climbing & Boulder Hub",
+    "category": "extreme",
+    "categoryName": "Скалолазание & Боулдеринг",
+    "address": "Чиланзарский р-н, проспект Бунёдкор, 27",
+    "metro": "м. Новза / Чиланзар",
+    "metroColor": "#D92B2F",
+    "priceMonthly": 650000,
+    "priceTrial": 0,
+    "rating": 4.89,
+    "reviewCount": 92,
+    "image": "https://images.unsplash.com/photo-1522163182402-834f871fd851?q=80&w=1200&auto=format&fit=crop",
+    "gallery": [
+      "https://images.unsplash.com/photo-1564769662533-4f00a87b4056?q=80&w=800&auto=format&fit=crop"
+    ],
+    "tags": ["Стены высотой 14м", "Боулдеринг 700м²", "200+ трасс от 5a до 8b", "Автостраховка"],
+    "schedule": "Пн-Вс: 08:00 – 23:00",
+    "description": "Крупнейший скалодром Ташкента для взрослых и детей. Трассы на трудность и скорость, огромный боулдер-зал, прокат скальной обуви и уютное кафе.",
+    "amenities": ["Прокат скальников", "Кампусборд", "Кафе со спешелти кофе", "Сауна в раздевалке", "Парковка"],
+    "features": {
+      "sqMeters": 1600,
+      "yearOpened": 2023,
+      "freeParking": true
+    },
+    "coaches": [
+      {
+        "id": "c6",
+        "name": "Фарход Назиров",
+        "role": "Мастер спорта по спортивному скалолазанию",
+        "experience": "12 лет",
+        "image": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400&auto=format&fit=crop",
+        "achievements": ["Чемпион Узбекистана по боулдерингу", "Сертифицированный подготовщик трасс"]
+      }
+    ],
+    "timetable": [
+      { "time": "11:00 - 12:30", "activity": "Боулдеринг: Основы техники и хваты", "coach": "Фарход Назиров", "intensity": "Medium", "availableSpots": 5 },
+      { "time": "19:00 - 20:30", "activity": "Сила пальцев и динамические движения", "coach": "Фарход Назиров", "intensity": "High", "availableSpots": 3 }
+    ]
+  }
+]

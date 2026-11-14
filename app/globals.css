@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-base: #f6f8fa;
+    --text-primary: #090a0f;
+    --card-surface: #ffffff;
+    --card-border: #e2e8f0;
+    --accent-volt: #d4ff00;
+  }
+
+  .dark {
+    --bg-base: #08090b;
+    --text-primary: #f6f8fa;
+    --card-surface: #111418;
+    --card-border: rgba(255, 255, 255, 0.08);
+    --accent-volt: #d4ff00;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+}
+
+/* Athletic Grid Pattern */
+.athletic-grid {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+.light .athletic-grid,
+:root:not(.dark) .athletic-grid {
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+}
+
+/* High-End Glassmorphism */
+.glass-athletic {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.dark .glass-athletic {
+  background: rgba(14, 17, 22, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Card Surface Elevation */
+.card-athletic {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+}
+
+.dark .card-athletic {
+  background: #111418;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0 8px 30px -4px rgba(0, 0, 0, 0.6);
+}
+
+/* Volt Energy Glow */
+.glow-volt {
+  box-shadow: 0 0 35px -5px rgba(212, 255, 0, 0.35);
+}
+
+.glow-volt-sm {
+  box-shadow: 0 0 16px -2px rgba(212, 255, 0, 0.25);
+}
+
+/* Athletic Tag / Telemetry */
+.telemetry-chip {
+  font-family: var(--font-display), var(--font-sans), sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 9999px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d4ff00;
+}
+
+/* Athletic Text Outline */
+.text-stroke {
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.2);
+  color: transparent;
+}
+:root:not(.dark) .text-stroke {
+  -webkit-text-stroke: 1.5px rgba(0, 0, 0, 0.2);
+}
