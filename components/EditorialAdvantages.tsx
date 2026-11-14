@@ -32,7 +32,7 @@ export function EditorialAdvantages() {
   ];
 
   return (
-    <section id="advantages" className="py-24 relative overflow-hidden bg-slate-100/90 dark:bg-void/80 text-slate-900 dark:text-white backdrop-blur-sm transition-colors duration-300">
+    <section id="advantages" className="py-24 relative overflow-hidden bg-transparent text-slate-900 dark:text-white transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           {/* Left Column: Sticky Editorial Statement */}

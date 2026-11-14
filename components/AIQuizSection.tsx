@@ -393,7 +393,7 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
   };
 
   return (
-    <section id="ai-matcher" className="py-24 relative overflow-hidden bg-slate-50/90 dark:bg-void/80 text-slate-900 dark:text-white border-y border-slate-200 dark:border-white/10 backdrop-blur-sm transition-colors duration-300">
+    <section id="ai-matcher" className="py-24 relative overflow-hidden bg-transparent text-slate-900 dark:text-white border-y border-slate-200 dark:border-white/10 transition-colors duration-300">
       <div id="ai-quiz" className="sr-only">AI Quiz Anchor</div>
 
       {/* Background Lighting */}

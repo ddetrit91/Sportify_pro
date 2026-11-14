@@ -31,7 +31,7 @@ export function InteractiveFaq() {
   ];
 
   return (
-    <section id="faq" className="py-24 relative overflow-hidden bg-slate-100/90 dark:bg-void/80 text-slate-900 dark:text-white backdrop-blur-sm transition-colors duration-300">
+    <section id="faq" className="py-24 relative overflow-hidden bg-transparent text-slate-900 dark:text-white transition-colors duration-300">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-300 dark:border-white/10 bg-white dark:bg-white/5 mb-3">

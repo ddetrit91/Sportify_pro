@@ -80,7 +80,7 @@ export function FinalBookingTerminal() {
   };
 
   return (
-    <section id="booking" className="py-24 relative overflow-hidden bg-slate-50/90 dark:bg-void/80 text-slate-900 dark:text-white border-t border-slate-200 dark:border-white/10 backdrop-blur-sm transition-colors duration-300">
+    <section id="booking" className="py-24 relative overflow-hidden bg-transparent text-slate-900 dark:text-white border-t border-slate-200 dark:border-white/10 transition-colors duration-300">
       {/* Background volt light */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#d4ff00]/5 rounded-full blur-[200px] pointer-events-none -z-10" />
 

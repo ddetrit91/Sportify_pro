@@ -9,7 +9,7 @@ import { AthleteStories } from "@/components/AthleteStories";
 import { InteractiveFaq } from "@/components/InteractiveFaq";
 import { FinalBookingTerminal } from "@/components/FinalBookingTerminal";
 import { Footer } from "@/components/Footer";
-import { Athletic3DBackground } from "@/components/Athletic3DBackground";
+import { CinematicSportsAtmosphere } from "@/components/CinematicSportsAtmosphere";
 import { FloatingAiWidget } from "@/components/FloatingAiWidget";
 
 export default function Home() {
@@ -18,19 +18,24 @@ export default function Home() {
 
   return (
     <main className="relative flex-1 flex flex-col bg-slate-50 dark:bg-void text-slate-900 dark:text-white min-h-screen transition-colors duration-300">
-      {/* 3D Kinetic Athletic Wireframe & Particle Stream Background across the entire page */}
-      <Athletic3DBackground />
-
+      {/* Header and Hero Section: 100% Intact & Untouched */}
       <Header />
       <HeroSection />
-      <TrendingSportsBento sports={sports} />
-      <FeaturedClubsSection clubs={clubs} />
-      <AIQuizSection clubs={clubs} />
-      <EditorialAdvantages />
-      <AthleteStories />
-      <InteractiveFaq />
-      <FinalBookingTerminal />
-      <Footer />
+
+      {/* Cinematic Sports Atmosphere & Parallax Experience (Strictly Below Hero) */}
+      <div className="relative w-full overflow-hidden bg-slate-50 dark:bg-[#07080a] transition-colors duration-500">
+        <CinematicSportsAtmosphere />
+        <div className="relative z-10">
+          <TrendingSportsBento sports={sports} />
+          <FeaturedClubsSection clubs={clubs} />
+          <AIQuizSection clubs={clubs} />
+          <EditorialAdvantages />
+          <AthleteStories />
+          <InteractiveFaq />
+          <FinalBookingTerminal />
+          <Footer />
+        </div>
+      </div>
 
       {/* Floating Interactive AI Assistant (Bottom-Right Chat Widget) */}
       <FloatingAiWidget />

@@ -10,7 +10,7 @@ interface TrendingSportsBentoProps {
 
 export function TrendingSportsBento({ sports }: TrendingSportsBentoProps) {
   return (
-    <section id="sports" className="py-24 relative overflow-hidden bg-slate-50/90 dark:bg-void/80 text-slate-900 dark:text-white backdrop-blur-sm transition-colors duration-300">
+    <section id="sports" className="py-24 relative overflow-hidden bg-transparent text-slate-900 dark:text-white transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">

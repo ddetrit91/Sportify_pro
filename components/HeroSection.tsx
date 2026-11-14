@@ -208,19 +208,19 @@ export function HeroSection() {
               </div>
             </motion.div>
 
-            {/* Sleek Floating AI Assistant Badge (Top Left of Card - Zero Overlap) */}
+            {/* Sleek Floating AI Assistant Badge (Floats Cleanly Above Card — 100% Zero Text Overlap) */}
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.6 }}
-              className="hidden sm:flex absolute -top-5 -left-4 sm:-left-6 p-3 rounded-2xl glass-athletic border border-[#d4ff00]/40 shadow-2xl items-center gap-3 bg-black/85 backdrop-blur-xl z-20"
+              className="hidden sm:flex absolute -top-12 right-2 sm:right-6 px-3.5 py-2 rounded-2xl border border-[#d4ff00]/40 shadow-2xl items-center gap-2.5 bg-black/80 backdrop-blur-xl z-20 pointer-events-none"
             >
-              <div className="w-8 h-8 rounded-xl bg-[#d4ff00]/20 flex items-center justify-center text-[#d4ff00] shadow-sm">
-                <Flame className="w-4 h-4 fill-[#d4ff00]" />
+              <div className="w-7 h-7 rounded-lg bg-[#d4ff00]/20 flex items-center justify-center text-[#d4ff00] shadow-sm">
+                <Flame className="w-3.5 h-3.5 fill-[#d4ff00]" />
               </div>
               <div>
-                <span className="telemetry-chip text-[#d4ff00] block text-[9px] tracking-wider">AI ПОДБОР</span>
-                <span className="text-xs font-black text-white">Умный ИИ-помощник</span>
+                <span className="telemetry-chip text-[#d4ff00] block text-[8px] tracking-wider leading-none">AI ПОДБОР</span>
+                <span className="text-[11px] font-black text-white leading-tight">Умный ИИ-помощник</span>
               </div>
             </motion.div>
           </div>
