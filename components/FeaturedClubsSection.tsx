@@ -100,7 +100,8 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.08 }}
-              className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card flex flex-col group hover:border-[#d4ff00]/60 transition-all hover:-translate-y-1 shadow-lg dark:shadow-2xl"
+              whileHover={{ y: -6 }}
+              className="relative rounded-3xl border border-slate-200/90 dark:border-white/15 bg-white/90 dark:bg-[#0c0e14]/85 backdrop-blur-2xl flex flex-col group hover:border-[#d4ff00]/70 dark:hover:border-[#d4ff00]/80 transition-all duration-300 shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.25)] before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent before:z-20 overflow-hidden"
             >
               {/* Photo & Overlays */}
               <div className="relative h-60 w-full overflow-hidden bg-slate-900 rounded-t-3xl">
@@ -182,7 +183,7 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
 
                   <button
                     onClick={() => setBookingClub(club)}
-                    className="px-4 py-2.5 rounded-xl bg-[#d4ff00] hover:bg-[#bbf200] text-slate-950 font-black text-xs uppercase tracking-wider flex items-center gap-1.5 shadow-md shadow-[#d4ff00]/20 transition-all active:scale-95"
+                    className="px-4.5 py-2.5 rounded-xl bg-gradient-to-r from-[#d4ff00] to-[#bbf200] hover:from-[#bbf200] hover:to-[#a3e635] text-slate-950 font-black text-xs uppercase tracking-wider flex items-center gap-1.5 shadow-[0_4px_16px_rgba(212,255,0,0.3),inset_0_1px_2px_rgba(255,255,255,0.6)] hover:shadow-[0_6px_22px_rgba(212,255,0,0.5)] transition-all active:scale-95"
                   >
                     <span>Записаться</span>
                     <ArrowRight className="w-3.5 h-3.5" />

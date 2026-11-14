@@ -86,7 +86,8 @@ export function EditorialAdvantages() {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="p-8 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card hover:border-[#d4ff00]/60 transition-all group shadow-xl"
+                whileHover={{ y: -6 }}
+                className="relative p-8 rounded-3xl border border-slate-200/90 dark:border-white/15 bg-white/90 dark:bg-[#0c0e14]/85 backdrop-blur-2xl hover:border-[#d4ff00]/70 dark:hover:border-[#d4ff00]/80 transition-all duration-300 group shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.25)] before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent overflow-hidden"
               >
                 <div className="flex items-start justify-between mb-4">
                   <span className="font-display text-3xl sm:text-4xl font-black text-lime-600 dark:text-[#d4ff00]/80 group-hover:text-black dark:group-hover:text-[#d4ff00] transition-colors">

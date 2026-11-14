@@ -457,7 +457,7 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
             TAB 1: INTERACTIVE 4-STEP QUIZ WITH VISUAL SPORTS PHOTO CARDS
            ========================================================================= */}
         {activeTab === "quiz" && (
-          <div className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white/95 dark:bg-void-card/90 backdrop-blur-md p-6 sm:p-10 shadow-xl dark:shadow-2xl relative text-slate-900 dark:text-white">
+          <div className="relative rounded-3xl border border-slate-200/90 dark:border-white/15 bg-white/90 dark:bg-[#0c0e14]/85 backdrop-blur-2xl p-6 sm:p-10 shadow-[0_16px_50px_-15px_rgba(0,0,0,0.12)] dark:shadow-[0_24px_60px_-15px_rgba(0,0,0,0.85)] before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent text-slate-900 dark:text-white overflow-hidden">
             {/* Progress Bar */}
             {step < 5 && (
               <div className="mb-8">
@@ -497,7 +497,7 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                       <button
                         key={g.id}
                         onClick={() => handleGoalSelect(g.title)}
-                        className="group relative rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 hover:border-[#d4ff00] bg-slate-100 dark:bg-void-card text-left transition-all hover:scale-[1.02] shadow-xl h-52 flex flex-col justify-end p-5"
+                        className="group relative rounded-2xl overflow-hidden border border-slate-200/90 dark:border-white/15 hover:border-[#d4ff00] dark:hover:border-[#d4ff00] bg-slate-100 dark:bg-[#0c0e14]/85 text-left transition-all duration-300 hover:-translate-y-1.5 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.1)] dark:shadow-[0_15px_35px_-10px_rgba(0,0,0,0.8)] hover:shadow-[0_20px_45px_-10px_rgba(212,255,0,0.25)] h-52 flex flex-col justify-end p-5 before:absolute before:inset-x-4 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/25 before:to-transparent before:z-20"
                       >
                         <img
                           src={g.image}
@@ -596,7 +596,7 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                       <button
                         key={sp.id}
                         onClick={() => handleSportSelect(sp.title)}
-                        className="group relative rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 hover:border-[#d4ff00] bg-slate-100 dark:bg-void-card text-left transition-all hover:scale-[1.02] shadow-xl h-48 flex flex-col justify-between p-4"
+                        className="group relative rounded-2xl overflow-hidden border border-slate-200/90 dark:border-white/15 hover:border-[#d4ff00] dark:hover:border-[#d4ff00] bg-slate-100 dark:bg-[#0c0e14]/85 text-left transition-all duration-300 hover:-translate-y-1.5 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.1)] dark:shadow-[0_15px_35px_-10px_rgba(0,0,0,0.8)] hover:shadow-[0_20px_45px_-10px_rgba(212,255,0,0.25)] h-48 flex flex-col justify-between p-4 before:absolute before:inset-x-4 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/25 before:to-transparent before:z-20"
                       >
                         <img
                           src={sp.image}

@@ -85,7 +85,7 @@ export function FinalBookingTerminal() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#d4ff00]/5 rounded-full blur-[200px] pointer-events-none -z-10" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="rounded-3xl border border-slate-200 dark:border-white/15 bg-white dark:bg-void-card p-8 sm:p-14 shadow-2xl relative overflow-hidden text-slate-900 dark:text-white">
+        <div className="relative rounded-3xl border border-slate-200/90 dark:border-white/20 bg-white/90 dark:bg-[#0c0e14]/85 backdrop-blur-2xl p-8 sm:p-14 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.12)] dark:shadow-[0_24px_70px_-15px_rgba(0,0,0,0.9)] before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/25 before:to-transparent overflow-hidden text-slate-900 dark:text-white">
           {/* Subtle volt top border */}
           <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#d4ff00] via-lime-400 to-[#d4ff00]" />
 
@@ -215,7 +215,7 @@ export function FinalBookingTerminal() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full py-4 rounded-xl bg-[#d4ff00] hover:bg-[#bbf200] text-slate-950 font-black text-sm uppercase tracking-wider flex items-center justify-center gap-3 shadow-xl shadow-[#d4ff00]/25 transition-all active:scale-95"
+                      className="w-full py-4 rounded-xl bg-[#d4ff00] hover:bg-[#bbf200] text-slate-950 font-black text-sm uppercase tracking-wider flex items-center justify-center gap-3 shadow-[0_4px_25px_rgba(212,255,0,0.4),inset_0_1px_2px_rgba(255,255,255,0.6)] hover:shadow-[0_6px_30px_rgba(212,255,0,0.55),inset_0_1px_2px_rgba(255,255,255,0.8)] transition-all active:scale-95"
                     >
                       {isSubmitting ? (
                         <Loader2 className="w-5 h-5 animate-spin" />
