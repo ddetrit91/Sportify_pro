@@ -80,44 +80,44 @@ export function FinalBookingTerminal() {
   };
 
   return (
-    <section id="booking" className="py-24 relative overflow-hidden bg-void/80 text-white border-t border-white/10 backdrop-blur-sm">
+    <section id="booking" className="py-24 relative overflow-hidden bg-slate-50/90 dark:bg-void/80 text-slate-900 dark:text-white border-t border-slate-200 dark:border-white/10 backdrop-blur-sm transition-colors duration-300">
       {/* Background volt light */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#d4ff00]/5 rounded-full blur-[200px] pointer-events-none -z-10" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="rounded-3xl border border-white/15 bg-void-card p-8 sm:p-14 shadow-2xl relative overflow-hidden">
+        <div className="rounded-3xl border border-slate-200 dark:border-white/15 bg-white dark:bg-void-card p-8 sm:p-14 shadow-2xl relative overflow-hidden text-slate-900 dark:text-white">
           {/* Subtle volt top border */}
-          <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#d4ff00] via-white to-[#d4ff00]" />
+          <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#d4ff00] via-lime-400 to-[#d4ff00]" />
 
           {!isSuccess ? (
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
               {/* Left Column: Offer Details */}
               <div className="lg:col-span-5 space-y-6">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#d4ff00]/10 border border-[#d4ff00]/30 text-[#d4ff00] text-xs font-bold">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-lime-500/10 dark:bg-[#d4ff00]/10 border border-lime-500/30 dark:border-[#d4ff00]/30 text-lime-700 dark:text-[#d4ff00] text-xs font-bold">
                   <Gift className="w-3.5 h-3.5" />
                   <span>СПЕЦПРЕДЛОЖЕНИЕ ДНЯ // 0 UZS</span>
                 </div>
 
-                <h3 className="font-display text-3xl sm:text-5xl font-black uppercase tracking-tight text-white leading-[1.05]">
+                <h3 className="font-display text-3xl sm:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-[1.05]">
                   Активируй свой{" "}
-                  <span className="text-[#d4ff00]">пропуск</span> в любой клуб
+                  <span className="text-lime-600 dark:text-[#d4ff00]">пропуск</span> в любой клуб
                 </h3>
 
-                <p className="text-sm text-slate-300 leading-relaxed font-normal">
+                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
                   Оставьте контакты: система мгновенно зарезервирует бесплатный вводный слот (60–90 мин) в Ташкенте у топ-тренера и зафиксирует клубные привилегии.
                 </p>
 
-                <div className="space-y-3 pt-2 text-xs font-medium text-slate-300">
+                <div className="space-y-3 pt-2 text-xs font-medium text-slate-600 dark:text-slate-300">
                   <div className="flex items-center gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-[#d4ff00] shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-lime-600 dark:text-[#d4ff00] shrink-0" />
                     <span>Электронный QR-пропуск в Telegram / SMS</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-[#d4ff00] shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-lime-600 dark:text-[#d4ff00] shrink-0" />
                     <span>Персональный инструктаж мастера спорта</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-[#d4ff00] shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-lime-600 dark:text-[#d4ff00] shrink-0" />
                     <span>Без звонков и навязчивых предложений</span>
                   </div>
                 </div>
@@ -127,14 +127,14 @@ export function FinalBookingTerminal() {
               <div className="lg:col-span-7">
                 <form onSubmit={handleSubmit} className="space-y-4">
                   {errorMessage && (
-                    <div className="p-3.5 rounded-xl bg-red-500/15 border border-red-500/30 text-red-400 text-xs font-semibold">
+                    <div className="p-3.5 rounded-xl bg-red-500/15 border border-red-500/30 text-red-600 dark:text-red-400 text-xs font-semibold">
                       {errorMessage}
                     </div>
                   )}
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="telemetry-chip text-slate-300 block mb-1.5">
+                      <label className="telemetry-chip text-slate-700 dark:text-slate-300 block mb-1.5">
                         Ваше имя:
                       </label>
                       <input
@@ -143,12 +143,12 @@ export function FinalBookingTerminal() {
                         placeholder="Сардор"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/10 text-white placeholder-slate-500 text-sm outline-none focus:border-[#d4ff00]/60 transition-colors"
+                        className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-black/50 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 text-sm outline-none focus:border-[#d4ff00] transition-colors font-medium"
                       />
                     </div>
 
                     <div>
-                      <label className="telemetry-chip text-slate-300 block mb-1.5">
+                      <label className="telemetry-chip text-slate-700 dark:text-slate-300 block mb-1.5">
                         Телефон / Telegram (+998):
                       </label>
                       <input
@@ -157,23 +157,23 @@ export function FinalBookingTerminal() {
                         placeholder="+998 (90) 123-45-67"
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/10 text-white placeholder-slate-500 text-sm outline-none focus:border-[#d4ff00]/60 transition-colors"
+                        className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-black/50 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 text-sm outline-none focus:border-[#d4ff00] transition-colors font-medium"
                       />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="telemetry-chip text-slate-300 block mb-1.5">
+                      <label className="telemetry-chip text-slate-700 dark:text-slate-300 block mb-1.5">
                         Дисциплина:
                       </label>
                       <select
                         value={formData.sportInterest}
                         onChange={(e) => setFormData({ ...formData, sportInterest: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/10 text-white text-xs outline-none focus:border-[#d4ff00]/60"
+                        className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-black/50 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white text-xs outline-none focus:border-[#d4ff00]"
                       >
                         {sportOptions.map((opt) => (
-                          <option key={opt} value={opt} className="bg-black text-white">
+                          <option key={opt} value={opt} className="bg-white dark:bg-black text-slate-900 dark:text-white">
                             {opt}
                           </option>
                         ))}
@@ -181,16 +181,16 @@ export function FinalBookingTerminal() {
                     </div>
 
                     <div>
-                      <label className="telemetry-chip text-slate-300 block mb-1.5">
+                      <label className="telemetry-chip text-slate-700 dark:text-slate-300 block mb-1.5">
                         Район Ташкента:
                       </label>
                       <select
                         value={formData.district}
                         onChange={(e) => setFormData({ ...formData, district: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/10 text-white text-xs outline-none focus:border-[#d4ff00]/60"
+                        className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-black/50 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white text-xs outline-none focus:border-[#d4ff00]"
                       >
                         {districtOptions.map((dist) => (
-                          <option key={dist} value={dist} className="bg-black text-white">
+                          <option key={dist} value={dist} className="bg-white dark:bg-black text-slate-900 dark:text-white">
                             {dist}
                           </option>
                         ))}
@@ -199,7 +199,7 @@ export function FinalBookingTerminal() {
                   </div>
 
                   <div>
-                    <label className="telemetry-chip text-slate-300 block mb-1.5">
+                    <label className="telemetry-chip text-slate-700 dark:text-slate-300 block mb-1.5">
                       Комментарий или ограничения (опционально):
                     </label>
                     <input
@@ -207,7 +207,7 @@ export function FinalBookingTerminal() {
                       placeholder="Например: удобны тренировки после 19:00, болит поясница"
                       value={formData.notes}
                       onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/10 text-white placeholder-slate-500 text-xs outline-none focus:border-[#d4ff00]/60"
+                      className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-black/50 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 text-xs outline-none focus:border-[#d4ff00]"
                     />
                   </div>
 
@@ -229,8 +229,8 @@ export function FinalBookingTerminal() {
                     </button>
                   </div>
 
-                  <div className="flex items-center justify-center gap-2 text-[11px] text-slate-400 font-medium text-center pt-2">
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#d4ff00]" />
+                  <div className="flex items-center justify-center gap-2 text-[11px] text-slate-500 dark:text-slate-400 font-medium text-center pt-2">
+                    <ShieldCheck className="w-3.5 h-3.5 text-lime-600 dark:text-[#d4ff00]" />
                     <span>Бронирование бесплатное. Ваши данные защищены.</span>
                   </div>
                 </form>
@@ -245,10 +245,10 @@ export function FinalBookingTerminal() {
               <div className="w-16 h-16 mx-auto rounded-2xl bg-[#d4ff00] text-black flex items-center justify-center shadow-xl shadow-[#d4ff00]/40">
                 <Check className="w-8 h-8 stroke-[3]" />
               </div>
-              <h3 className="text-3xl font-black uppercase tracking-tight text-white">
+              <h3 className="text-3xl font-black uppercase tracking-tight text-slate-950 dark:text-white">
                 Пропуск успешно оформлен!
               </h3>
-              <p className="text-sm text-slate-300 font-normal leading-relaxed">
+              <p className="text-sm text-slate-600 dark:text-slate-300 font-normal leading-relaxed">
                 Спасибо, <b>{formData.name}</b>! Электронный пропуск на <b>{formData.sportInterest}</b> отправлен в обработку. Наш координатор свяжется с вами по номеру <b>{formData.phone}</b> в течение 10 минут.
               </p>
               <button
@@ -256,7 +256,7 @@ export function FinalBookingTerminal() {
                   setIsSuccess(false);
                   setFormData({ name: "", phone: "", sportInterest: "Падел & Большой теннис", district: "Мирабадский р-н (ул. Нукусская / Шевченко)", notes: "" });
                 }}
-                className="mt-4 px-6 py-2.5 rounded-xl border border-white/10 hover:bg-white/5 text-slate-300 font-bold text-xs uppercase tracking-wider transition-all"
+                className="mt-4 px-6 py-2.5 rounded-xl border border-slate-300 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/5 text-slate-700 dark:text-slate-300 font-bold text-xs uppercase tracking-wider transition-all"
               >
                 Оформить еще один пропуск
               </button>

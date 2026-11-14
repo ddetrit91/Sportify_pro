@@ -47,19 +47,19 @@ export function AthleteStories() {
   ];
 
   return (
-    <section id="reviews" className="py-24 relative overflow-hidden bg-void/80 text-white border-b border-white/10 backdrop-blur-sm">
+    <section id="reviews" className="py-24 relative overflow-hidden bg-slate-50/90 dark:bg-void/80 text-slate-900 dark:text-white border-b border-slate-200 dark:border-white/10 backdrop-blur-sm transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 mb-3">
-              <Activity className="w-3.5 h-3.5 text-[#d4ff00]" />
-              <span className="telemetry-chip text-white/80">ATHLETE COMMUNITY STORIES</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-300 dark:border-white/10 bg-white dark:bg-white/5 mb-3">
+              <Activity className="w-3.5 h-3.5 text-lime-600 dark:text-[#d4ff00]" />
+              <span className="telemetry-chip text-slate-700 dark:text-white/80">ATHLETE COMMUNITY STORIES</span>
             </div>
-            <h2 className="font-display text-3xl sm:text-5xl font-black uppercase tracking-tight text-white leading-tight">
-              Реальные истории <span className="text-[#d4ff00]">атлетов Ташкента</span>
+            <h2 className="font-display text-3xl sm:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-tight">
+              Реальные истории <span className="text-lime-600 dark:text-[#d4ff00]">атлетов Ташкента</span>
             </h2>
           </div>
-          <p className="text-sm text-slate-400 max-w-md font-normal leading-relaxed">
+          <p className="text-sm text-slate-600 dark:text-slate-400 max-w-md font-normal leading-relaxed">
             Более 14 800 жителей Ташкента нашли свой спорт со SPORTIFY и тренируются в топовых клубах столицы.
           </p>
         </div>
@@ -72,12 +72,12 @@ export function AthleteStories() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.05 }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="rounded-3xl border border-white/10 bg-void-card p-6 sm:p-7 flex flex-col justify-between group hover:border-[#d4ff00]/40 transition-all shadow-xl"
+              className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card p-6 sm:p-7 flex flex-col justify-between group hover:border-[#d4ff00]/60 transition-all shadow-xl"
             >
               <div>
                 {/* User Portrait & Credentials */}
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="relative w-14 h-14 rounded-2xl overflow-hidden border border-white/20 shrink-0">
+                  <div className="relative w-14 h-14 rounded-2xl overflow-hidden border border-slate-200 dark:border-white/20 shrink-0">
                     <img
                       src={story.image}
                       alt={story.name}
@@ -85,45 +85,45 @@ export function AthleteStories() {
                     />
                   </div>
                   <div>
-                    <h4 className="font-bold text-white text-base leading-tight">
+                    <h4 className="font-bold text-slate-950 dark:text-white text-base leading-tight">
                       {story.name}
                     </h4>
-                    <p className="text-xs text-slate-400 font-medium mt-0.5">{story.role}</p>
-                    <span className="text-[11px] text-[#d4ff00] font-bold block mt-0.5">
+                    <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">{story.role}</p>
+                    <span className="text-[11px] text-lime-700 dark:text-[#d4ff00] font-bold block mt-0.5">
                       {story.discipline}
                     </span>
                   </div>
                 </div>
 
                 {/* Key Metric Highlight */}
-                <div className="p-4 rounded-2xl bg-white/5 border border-white/5 mb-5 flex items-center justify-between">
+                <div className="p-4 rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/5 mb-5 flex items-center justify-between">
                   <div>
-                    <span className="text-xl font-black text-white block">
+                    <span className="text-xl font-black text-slate-950 dark:text-white block">
                       {story.metric}
                     </span>
-                    <span className="text-xs text-slate-400 font-medium">
+                    <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
                       {story.metricLabel}
                     </span>
                   </div>
-                  <div className="text-right text-xs font-semibold text-slate-400">
+                  <div className="text-right text-xs font-semibold text-slate-500 dark:text-slate-400">
                     <div>{story.stats.sessions} тренировок</div>
-                    <div className="text-[#d4ff00] font-bold">100% регулярность</div>
+                    <div className="text-lime-700 dark:text-[#d4ff00] font-bold">100% регулярность</div>
                   </div>
                 </div>
 
                 {/* Quote */}
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed italic">
+                <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed italic">
                   "{story.quote}"
                 </p>
               </div>
 
               {/* Footer: Club verified badge */}
-              <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-400 font-medium">
-                <span className="flex items-center gap-1.5 text-white">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#d4ff00]" />
+              <div className="mt-6 pt-4 border-t border-slate-200 dark:border-white/10 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-medium">
+                <span className="flex items-center gap-1.5 text-slate-900 dark:text-white">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-lime-600 dark:text-[#d4ff00]" />
                   {story.club}
                 </span>
-                <span className="text-amber-400 font-bold">5.0 ★</span>
+                <span className="text-amber-500 dark:text-amber-400 font-bold">5.0 ★</span>
               </div>
             </motion.div>
           ))}

@@ -68,44 +68,44 @@ export function BookingModal({ club, isOpen, onClose }: BookingModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg rounded-3xl p-6 sm:p-8 bg-void-card border border-white/15 text-white shadow-2xl overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-in fade-in duration-200">
+      <div className="relative w-full max-w-lg rounded-3xl p-6 sm:p-8 bg-white dark:bg-void-card border border-slate-200 dark:border-white/15 text-slate-900 dark:text-white shadow-2xl overflow-hidden">
         {/* Subtle Volt Top Line */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-[#d4ff00]" />
 
         {/* Close Button */}
         <button
           onClick={handleClose}
-          className="absolute top-5 right-5 p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+          className="absolute top-5 right-5 p-2 rounded-xl text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
 
         {!isSuccess ? (
           <div>
-            <div className="flex items-center gap-2 text-[#d4ff00] telemetry-chip mb-2">
+            <div className="flex items-center gap-2 text-lime-600 dark:text-[#d4ff00] telemetry-chip mb-2">
               <Sparkles className="w-3.5 h-3.5" />
               <span>ОНЛАЙН-РЕЗЕРВИРОВАНИЕ СЛОТА</span>
             </div>
 
-            <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white">
+            <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-slate-950 dark:text-white">
               Запись в {club.name}
             </h3>
 
-            <div className="flex items-center gap-3 text-xs text-slate-300 font-medium mt-1 mb-6">
-              <span className="flex items-center gap-1 text-white">
-                <MapPin className="w-3.5 h-3.5 text-[#d4ff00]" />
+            <div className="flex items-center gap-3 text-xs text-slate-600 dark:text-slate-300 font-medium mt-1 mb-6">
+              <span className="flex items-center gap-1 text-slate-900 dark:text-white">
+                <MapPin className="w-3.5 h-3.5 text-lime-600 dark:text-[#d4ff00]" />
                 {club.metro}
               </span>
               <span>•</span>
-              <span className="text-[#d4ff00] font-bold">
+              <span className="text-lime-600 dark:text-[#d4ff00] font-bold">
                 Вводный визит: {club.priceTrial === 0 ? "0 UZS (Бесплатно)" : `${Number(club.priceTrial).toLocaleString("ru-RU")} UZS`}
               </span>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="telemetry-chip text-slate-300 block mb-1.5">
+                <label className="telemetry-chip text-slate-700 dark:text-slate-300 block mb-1.5">
                   Ваше имя: *
                 </label>
                 <input
@@ -114,12 +114,12 @@ export function BookingModal({ club, isOpen, onClose }: BookingModalProps) {
                   placeholder="Сардор"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/10 text-white placeholder-slate-500 text-sm outline-none focus:border-[#d4ff00]/60 transition-colors font-medium"
+                  className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-black/50 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 text-sm outline-none focus:border-[#d4ff00] transition-colors font-medium"
                 />
               </div>
 
               <div>
-                <label className="telemetry-chip text-slate-300 block mb-1.5">
+                <label className="telemetry-chip text-slate-700 dark:text-slate-300 block mb-1.5">
                   Номер телефона / Telegram (+998): *
                 </label>
                 <input
@@ -128,37 +128,37 @@ export function BookingModal({ club, isOpen, onClose }: BookingModalProps) {
                   placeholder="+998 (90) 123-45-67"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/10 text-white placeholder-slate-500 text-sm outline-none focus:border-[#d4ff00]/60 transition-colors font-medium"
+                  className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-black/50 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 text-sm outline-none focus:border-[#d4ff00] transition-colors font-medium"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="telemetry-chip text-slate-300 block mb-1.5 flex items-center gap-1">
-                    <Calendar className="w-3 h-3 text-[#d4ff00]" />
+                  <label className="telemetry-chip text-slate-700 dark:text-slate-300 block mb-1.5 flex items-center gap-1">
+                    <Calendar className="w-3 h-3 text-lime-600 dark:text-[#d4ff00]" />
                     Дата визита
                   </label>
                   <input
                     type="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
-                    className="w-full px-3 py-2.5 rounded-xl bg-black/50 border border-white/10 text-white text-xs outline-none focus:border-[#d4ff00]/60 font-medium"
+                    className="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-black/50 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white text-xs outline-none focus:border-[#d4ff00] font-medium"
                   />
                 </div>
                 <div>
-                  <label className="telemetry-chip text-slate-300 block mb-1.5 flex items-center gap-1">
-                    <Clock className="w-3 h-3 text-[#d4ff00]" />
+                  <label className="telemetry-chip text-slate-700 dark:text-slate-300 block mb-1.5 flex items-center gap-1">
+                    <Clock className="w-3 h-3 text-lime-600 dark:text-[#d4ff00]" />
                     Слот времени
                   </label>
                   <select
                     value={time}
                     onChange={(e) => setTime(e.target.value)}
-                    className="w-full px-3 py-2.5 rounded-xl bg-black/50 border border-white/10 text-white text-xs outline-none focus:border-[#d4ff00]/60 font-medium"
+                    className="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-black/50 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white text-xs outline-none focus:border-[#d4ff00] font-medium"
                   >
-                    <option className="bg-black">08:00 - Утренний слот</option>
-                    <option className="bg-black">12:30 - Дневной слот</option>
-                    <option className="bg-black">19:00 - Вечерний слот</option>
-                    <option className="bg-black">20:30 - Поздний слот</option>
+                    <option className="bg-white dark:bg-black">08:00 - Утренний слот</option>
+                    <option className="bg-white dark:bg-black">12:30 - Дневной слот</option>
+                    <option className="bg-white dark:bg-black">19:00 - Вечерний слот</option>
+                    <option className="bg-white dark:bg-black">20:30 - Поздний слот</option>
                   </select>
                 </div>
               </div>
@@ -177,8 +177,8 @@ export function BookingModal({ club, isOpen, onClose }: BookingModalProps) {
                 </button>
               </div>
 
-              <div className="flex items-center justify-center gap-1.5 text-xs text-slate-400 font-medium text-center pt-1">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#d4ff00]" />
+              <div className="flex items-center justify-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 font-medium text-center pt-1">
+                <ShieldCheck className="w-3.5 h-3.5 text-lime-600 dark:text-[#d4ff00]" />
                 <span>Бронирование бесплатное. QR-пропуск придет в Telegram.</span>
               </div>
             </form>
@@ -188,16 +188,16 @@ export function BookingModal({ club, isOpen, onClose }: BookingModalProps) {
             <div className="w-16 h-16 mx-auto rounded-2xl bg-[#d4ff00] text-black flex items-center justify-center shadow-xl shadow-[#d4ff00]/40">
               <Check className="w-8 h-8 stroke-[3]" />
             </div>
-            <h3 className="text-2xl font-black uppercase tracking-tight text-white">
+            <h3 className="text-2xl font-black uppercase tracking-tight text-slate-950 dark:text-white">
               Слот зарезервирован!
             </h3>
-            <p className="text-xs text-slate-300 font-normal leading-relaxed">
+            <p className="text-xs text-slate-600 dark:text-slate-300 font-normal leading-relaxed">
               Вы успешно записаны в <b>{club.name}</b>. Наш координатор свяжется с вами по номеру{" "}
               <b>{phone}</b> для отправки электронного пропуска и инструктажа.
             </p>
             <button
               onClick={handleClose}
-              className="mt-4 px-6 py-2.5 rounded-xl border border-white/10 hover:bg-white/5 text-slate-300 font-semibold text-xs uppercase"
+              className="mt-4 px-6 py-2.5 rounded-xl border border-slate-300 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/5 text-slate-700 dark:text-slate-300 font-semibold text-xs uppercase"
             >
               Отлично, закрыть
             </button>

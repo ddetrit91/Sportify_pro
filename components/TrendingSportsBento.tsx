@@ -10,26 +10,26 @@ interface TrendingSportsBentoProps {
 
 export function TrendingSportsBento({ sports }: TrendingSportsBentoProps) {
   return (
-    <section id="sports" className="py-24 relative overflow-hidden bg-void/80 text-white backdrop-blur-sm">
+    <section id="sports" className="py-24 relative overflow-hidden bg-slate-50/90 dark:bg-void/80 text-slate-900 dark:text-white backdrop-blur-sm transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div className="space-y-3">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-300 dark:border-white/10 bg-white dark:bg-white/5">
               <Activity className="w-3.5 h-3.5 text-[#d4ff00]" />
-              <span className="telemetry-chip text-white/80">ДИСЦИПЛИНЫ ТАШКЕНТА // 2026</span>
+              <span className="telemetry-chip text-slate-700 dark:text-white/80">ДИСЦИПЛИНЫ ТАШКЕНТА // 2026</span>
             </div>
-            <h2 className="font-display text-3xl sm:text-5xl font-black uppercase tracking-tight text-white leading-tight">
+            <h2 className="font-display text-3xl sm:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-tight">
               Популярные виды спорта <span className="text-[#d4ff00]">в Ташкенте</span>
             </h2>
-            <p className="text-sm sm:text-base text-slate-400 max-w-xl">
+            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-xl">
               Исследуйте ключевые спортивные направления с доказанной эффективностью. Узнайте энергозатраты и выберите подходящий клуб для первого бесплатного визита.
             </p>
           </div>
 
           <a
             href="#clubs"
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-white/10 hover:border-[#d4ff00]/60 bg-white/5 hover:bg-white/10 text-xs font-bold uppercase tracking-wider text-slate-200 hover:text-white transition-all self-start md:self-end"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-300 dark:border-white/10 hover:border-[#d4ff00] bg-white dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 hover:text-black dark:hover:text-white transition-all self-start md:self-end shadow-sm"
           >
             <span>Смотреть все локации</span>
             <ArrowUpRight className="w-4 h-4 text-[#d4ff00]" />
@@ -43,7 +43,7 @@ export function TrendingSportsBento({ sports }: TrendingSportsBentoProps) {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="md:col-span-2 lg:col-span-2 relative rounded-3xl overflow-hidden border border-white/10 group min-h-[380px] sm:min-h-[440px] flex flex-col justify-between p-6 sm:p-8 bg-void-card shadow-2xl"
+            className="md:col-span-2 lg:col-span-2 relative rounded-3xl overflow-hidden border border-slate-200 dark:border-white/10 group min-h-[380px] sm:min-h-[440px] flex flex-col justify-between p-6 sm:p-8 bg-white dark:bg-void-card shadow-xl dark:shadow-2xl"
           >
             <img
               src="https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?q=80&w=1200&auto=format&fit=crop"
@@ -91,7 +91,7 @@ export function TrendingSportsBento({ sports }: TrendingSportsBentoProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="relative rounded-3xl overflow-hidden border border-white/10 group min-h-[380px] sm:min-h-[440px] flex flex-col justify-between p-6 sm:p-7 bg-void-card shadow-2xl"
+            className="relative rounded-3xl overflow-hidden border border-slate-200 dark:border-white/10 group min-h-[380px] sm:min-h-[440px] flex flex-col justify-between p-6 sm:p-7 bg-white dark:bg-void-card shadow-xl dark:shadow-2xl"
           >
             <img
               src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&w=900&auto=format&fit=crop"
@@ -131,7 +131,7 @@ export function TrendingSportsBento({ sports }: TrendingSportsBentoProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="relative rounded-3xl overflow-hidden border border-white/10 group min-h-[380px] sm:min-h-[440px] flex flex-col justify-between p-6 sm:p-7 bg-void-card shadow-2xl"
+            className="relative rounded-3xl overflow-hidden border border-slate-200 dark:border-white/10 group min-h-[380px] sm:min-h-[440px] flex flex-col justify-between p-6 sm:p-7 bg-white dark:bg-void-card shadow-xl dark:shadow-2xl"
           >
             <img
               src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?q=80&w=900&auto=format&fit=crop"
@@ -171,7 +171,7 @@ export function TrendingSportsBento({ sports }: TrendingSportsBentoProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
-            className="relative rounded-3xl overflow-hidden border border-white/10 group min-h-[320px] flex flex-col justify-between p-6 bg-void-card shadow-2xl"
+            className="relative rounded-3xl overflow-hidden border border-slate-200 dark:border-white/10 group min-h-[320px] flex flex-col justify-between p-6 bg-white dark:bg-void-card shadow-xl dark:shadow-2xl"
           >
             <img
               src="https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?q=80&w=900&auto=format&fit=crop"
@@ -207,7 +207,7 @@ export function TrendingSportsBento({ sports }: TrendingSportsBentoProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
-            className="relative rounded-3xl overflow-hidden border border-white/10 group min-h-[320px] flex flex-col justify-between p-6 bg-void-card shadow-2xl"
+            className="relative rounded-3xl overflow-hidden border border-slate-200 dark:border-white/10 group min-h-[320px] flex flex-col justify-between p-6 bg-white dark:bg-void-card shadow-xl dark:shadow-2xl"
           >
             <img
               src="https://images.unsplash.com/photo-1522163182402-834f871fd851?q=80&w=900&auto=format&fit=crop"

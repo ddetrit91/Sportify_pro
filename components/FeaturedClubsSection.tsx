@@ -32,26 +32,26 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
   });
 
   return (
-    <section id="clubs" className="py-24 relative overflow-hidden bg-void/80 text-white backdrop-blur-sm">
+    <section id="clubs" className="py-24 relative overflow-hidden bg-slate-100/90 dark:bg-void/80 text-slate-900 dark:text-white backdrop-blur-sm transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-300 dark:border-white/10 bg-white dark:bg-white/5 mb-3">
               <Sparkles className="w-3.5 h-3.5 text-[#d4ff00]" />
-              <span className="telemetry-chip text-white/80">ТОПОВЫЕ КЛУБЫ ТАШКЕНТА // RATED 4.88+</span>
+              <span className="telemetry-chip text-slate-700 dark:text-white/80">ТОПОВЫЕ КЛУБЫ ТАШКЕНТА // RATED 4.88+</span>
             </div>
-            <h2 className="font-display text-3xl sm:text-5xl font-black uppercase tracking-tight text-white leading-tight">
+            <h2 className="font-display text-3xl sm:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-tight">
               Спортивные клубы <span className="text-[#d4ff00]">Ташкента</span>
             </h2>
-            <p className="mt-2 text-sm sm:text-base text-slate-400 max-w-xl">
+            <p className="mt-2 text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-xl">
               Прямое бронирование в проверенные залы Ташкента. Честные цены без скрытых доплат и гарантированное первое занятие за 0 UZS.
             </p>
           </div>
 
           <a
             href="#booking"
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-white/10 hover:border-[#d4ff00]/60 bg-white/5 hover:bg-white/10 text-xs font-bold tracking-wide text-slate-200 hover:text-white transition-all self-start md:self-end"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-300 dark:border-white/10 hover:border-[#d4ff00] bg-white dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-xs font-bold tracking-wide text-slate-800 dark:text-slate-200 hover:text-black dark:hover:text-white transition-all self-start md:self-end shadow-sm"
           >
             <span>Оформить пропуск 0 UZS</span>
             <ArrowRight className="w-4 h-4 text-[#d4ff00]" />
@@ -59,7 +59,7 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
         </div>
 
         {/* Filter Controls Bar */}
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-white/10 mb-10">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-white/10 mb-10">
           {/* Category Tabs */}
           <div className="flex items-center gap-2 overflow-x-auto pb-2 lg:pb-0 scrollbar-none">
             {categories.map((cat) => (
@@ -69,7 +69,7 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
                 className={`px-4 py-2 rounded-xl text-xs font-bold tracking-wide whitespace-nowrap transition-all ${
                   activeCategory === cat.id
                     ? "bg-[#d4ff00] text-black font-black shadow-md shadow-[#d4ff00]/20"
-                    : "border border-white/10 bg-white/5 text-slate-300 hover:text-white hover:bg-white/10"
+                    : "border border-slate-300 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-slate-50 dark:hover:bg-white/10 shadow-sm"
                 }`}
               >
                 {cat.label}
@@ -82,11 +82,11 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
             onClick={() => setOnlyFreeTrial(!onlyFreeTrial)}
             className={`px-4 py-2 rounded-xl border text-xs font-bold tracking-wide flex items-center gap-2 transition-all self-start lg:self-auto ${
               onlyFreeTrial
-                ? "border-[#d4ff00] bg-[#d4ff00]/20 text-[#d4ff00]"
-                : "border-white/10 bg-white/5 text-slate-400 hover:text-white"
+                ? "border-[#d4ff00] bg-[#d4ff00]/20 text-lime-700 dark:text-[#d4ff00]"
+                : "border-slate-300 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-slate-400 hover:text-black dark:hover:text-white shadow-sm"
             }`}
           >
-            <span className={`w-2 h-2 rounded-full ${onlyFreeTrial ? "bg-[#d4ff00] animate-ping" : "bg-slate-600"}`} />
+            <span className={`w-2 h-2 rounded-full ${onlyFreeTrial ? "bg-[#d4ff00] animate-ping" : "bg-slate-400 dark:bg-slate-600"}`} />
             <span>Только бесплатное первое занятие (0 UZS)</span>
           </button>
         </div>
@@ -100,7 +100,7 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.08 }}
-              className="rounded-3xl border border-white/10 bg-void-card flex flex-col group hover:border-[#d4ff00]/50 transition-all hover:-translate-y-1 shadow-2xl"
+              className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card flex flex-col group hover:border-[#d4ff00]/60 transition-all hover:-translate-y-1 shadow-lg dark:shadow-2xl"
             >
               {/* Photo & Overlays */}
               <div className="relative h-60 w-full overflow-hidden bg-slate-900 rounded-t-3xl">
@@ -140,17 +140,17 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
 
               {/* Card Body */}
               <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
-                <p className="text-xs text-slate-300 line-clamp-2 leading-relaxed">
+                <p className="text-xs text-slate-600 dark:text-slate-300 line-clamp-2 leading-relaxed">
                   {club.description}
                 </p>
 
                 {/* Address & schedule */}
-                <div className="text-xs text-slate-300 font-medium space-y-1.5">
-                  <div className="flex items-center gap-1.5 text-slate-200">
+                <div className="text-xs font-medium space-y-1.5">
+                  <div className="flex items-center gap-1.5 text-slate-800 dark:text-slate-200">
                     <MapPin className="w-3.5 h-3.5 text-[#d4ff00] shrink-0" />
                     <span>{club.address}</span>
                   </div>
-                  <div className="flex items-center gap-1.5 text-slate-400">
+                  <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
                     <Clock className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                     <span>{club.schedule}</span>
                   </div>
@@ -161,7 +161,7 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
                   {club.tags.slice(0, 3).map((tag, tIdx) => (
                     <span
                       key={tIdx}
-                      className="text-xs font-medium px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-slate-300 hover:text-white transition-colors"
+                      className="text-xs font-medium px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white transition-colors"
                     >
                       {tag}
                     </span>
@@ -169,13 +169,13 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
                 </div>
 
                 {/* Price and Action Buttons */}
-                <div className="pt-4 border-t border-white/10 flex items-center justify-between gap-3">
+                <div className="pt-4 border-t border-slate-200 dark:border-white/10 flex items-center justify-between gap-3">
                   <div>
-                    <span className="telemetry-chip text-slate-500 block">АБОНЕМЕНТ</span>
-                    <span className="text-base font-extrabold text-white">
+                    <span className="telemetry-chip text-slate-400 dark:text-slate-500 block">АБОНЕМЕНТ</span>
+                    <span className="text-base font-extrabold text-slate-950 dark:text-white">
                       от {club.priceMonthly.toLocaleString("ru-RU")} UZS
                     </span>
-                    <span className="text-xs font-bold text-[#d4ff00] block mt-0.5">
+                    <span className="text-xs font-bold text-lime-600 dark:text-[#d4ff00] block mt-0.5">
                       Пробное: {club.priceTrial === 0 ? "0 UZS (Бесплатно)" : `${club.priceTrial.toLocaleString("ru-RU")} UZS`}
                     </span>
                   </div>

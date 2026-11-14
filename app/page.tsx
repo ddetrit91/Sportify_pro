@@ -17,7 +17,7 @@ export default function Home() {
   const sports = getSports();
 
   return (
-    <main className="relative flex-1 flex flex-col bg-void text-white min-h-screen">
+    <main className="relative flex-1 flex flex-col bg-slate-50 dark:bg-void text-slate-900 dark:text-white min-h-screen transition-colors duration-300">
       {/* 3D Kinetic Athletic Wireframe & Particle Stream Background across the entire page */}
       <Athletic3DBackground />
 

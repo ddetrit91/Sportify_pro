@@ -118,11 +118,14 @@ export function Athletic3DBackground() {
         }
       }
 
+      // Check current theme
+      const isDark = document.documentElement.classList.contains("dark");
+
       // Draw horizontal & vertical perspective wireframe
       ctx.lineWidth = 1;
       for (let r = 0; r < gridRows; r++) {
-        const rowAlpha = (r / gridRows) * 0.16;
-        ctx.strokeStyle = `rgba(212, 255, 0, ${rowAlpha})`;
+        const rowAlpha = (r / gridRows) * (isDark ? 0.16 : 0.08);
+        ctx.strokeStyle = isDark ? `rgba(212, 255, 0, ${rowAlpha})` : `rgba(140, 180, 0, ${rowAlpha * 1.5})`;
         ctx.beginPath();
         let started = false;
 
@@ -140,7 +143,7 @@ export function Athletic3DBackground() {
       }
 
       for (let c = 0; c < gridCols; c += 2) {
-        ctx.strokeStyle = "rgba(0, 240, 255, 0.08)";
+        ctx.strokeStyle = isDark ? "rgba(0, 240, 255, 0.08)" : "rgba(14, 165, 233, 0.08)";
         ctx.beginPath();
         let started = false;
 
@@ -171,10 +174,11 @@ export function Athletic3DBackground() {
         // Draw node
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.globalAlpha = p.alpha;
-        ctx.shadowColor = p.color;
-        ctx.shadowBlur = 10;
+        const particleColor = !isDark && p.color === "#ffffff" ? "#64748b" : p.color;
+        ctx.fillStyle = particleColor;
+        ctx.globalAlpha = isDark ? p.alpha : p.alpha * 1.3;
+        ctx.shadowColor = particleColor;
+        ctx.shadowBlur = isDark ? 10 : 4;
         ctx.fill();
         ctx.shadowBlur = 0;
 
@@ -189,8 +193,11 @@ export function Athletic3DBackground() {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
-            const lineAlpha = (1 - dist / 140) * 0.15;
-            ctx.strokeStyle = p.color === "#d4ff00" ? `rgba(212, 255, 0, ${lineAlpha})` : `rgba(0, 240, 255, ${lineAlpha})`;
+            const lineAlpha = (1 - dist / 140) * (isDark ? 0.15 : 0.1);
+            ctx.strokeStyle =
+              p.color === "#d4ff00"
+                ? (isDark ? `rgba(212, 255, 0, ${lineAlpha})` : `rgba(130, 175, 0, ${lineAlpha * 1.5})`)
+                : (isDark ? `rgba(0, 240, 255, ${lineAlpha})` : `rgba(14, 165, 233, ${lineAlpha * 1.5})`);
             ctx.stroke();
           }
         }

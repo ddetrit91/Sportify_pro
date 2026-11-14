@@ -156,20 +156,20 @@ export function FloatingAiWidget() {
 
       {/* 2. Floating AI Chat Modal / Drawer */}
       {isOpen && (
-        <div className="fixed bottom-6 right-4 sm:right-6 w-[94vw] sm:w-[420px] h-[600px] max-h-[85vh] z-50 bg-[#0c0e13]/95 backdrop-blur-2xl border border-white/15 shadow-2xl rounded-3xl flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+        <div className="fixed bottom-6 right-4 sm:right-6 w-[94vw] sm:w-[420px] h-[600px] max-h-[85vh] z-50 bg-white/95 dark:bg-[#0c0e13]/95 backdrop-blur-2xl border border-slate-200 dark:border-white/15 shadow-2xl rounded-3xl flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200 text-slate-900 dark:text-white">
           {/* Header */}
-          <div className="p-4 border-b border-white/10 bg-black/60 flex items-center justify-between">
+          <div className="p-4 border-b border-slate-200 dark:border-white/10 bg-slate-100/90 dark:bg-black/60 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="relative w-9 h-9 rounded-xl bg-[#d4ff00] text-slate-950 flex items-center justify-center font-black shadow-md shadow-[#d4ff00]/25">
                 <Sparkles className="w-5 h-5 fill-slate-950" />
                 <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-black" />
               </div>
               <div>
-                <div className="font-extrabold text-sm text-white flex items-center gap-1.5 leading-tight">
+                <div className="font-extrabold text-sm text-slate-950 dark:text-white flex items-center gap-1.5 leading-tight">
                   <span>SPORTIFY ИИ-Консультант</span>
                 </div>
-                <div className="text-[11px] text-emerald-400 font-medium flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <div className="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                   <span>Онлайн // Подбор клубов в Ташкенте</span>
                 </div>
               </div>
@@ -179,9 +179,9 @@ export function FloatingAiWidget() {
               <button
                 onClick={() => setIsLeadDrawerOpen(!isLeadDrawerOpen)}
                 title="Забронировать 0 UZS"
-                className={`px-2.5 py-1 rounded-lg text-[10px] font-extrabold uppercase transition-colors ${
+                className={`px-2.5 py-1 rounded-lg text-[10px] font-extrabold uppercase transition-colors shadow-sm ${
                   isLeadDrawerOpen
-                    ? "bg-white text-black"
+                    ? "bg-slate-950 text-white dark:bg-white dark:text-black"
                     : "bg-[#d4ff00] text-black hover:bg-[#bbf200]"
                 }`}
               >
@@ -190,7 +190,7 @@ export function FloatingAiWidget() {
               <button
                 onClick={() => setIsOpen(false)}
                 title="Свернуть окно"
-                className="p-1.5 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
+                className="p-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-white/10 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -199,14 +199,14 @@ export function FloatingAiWidget() {
 
           {/* Quick Booking Lead Drawer (if active) */}
           {isLeadDrawerOpen && (
-            <div className="p-4 bg-[#d4ff00]/10 border-b border-[#d4ff00]/25 space-y-3">
+            <div className="p-4 bg-lime-500/10 dark:bg-[#d4ff00]/10 border-b border-lime-500/25 dark:border-[#d4ff00]/25 space-y-3">
               {!leadSuccess ? (
                 <form onSubmit={handleLeadSubmit} className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-white uppercase tracking-wider">
+                    <span className="text-xs font-bold text-slate-950 dark:text-white uppercase tracking-wider">
                       Занять бесплатный слот (0 UZS)
                     </span>
-                    <span className="text-[10px] text-[#d4ff00] font-semibold">Ташкент</span>
+                    <span className="text-[10px] text-lime-700 dark:text-[#d4ff00] font-bold">Ташкент</span>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
                     <input
@@ -215,7 +215,7 @@ export function FloatingAiWidget() {
                       placeholder="Ваше имя"
                       value={leadForm.name}
                       onChange={(e) => setLeadForm({ ...leadForm, name: e.target.value })}
-                      className="px-3 py-2 rounded-xl bg-black/60 border border-white/10 text-white text-xs outline-none focus:border-[#d4ff00]"
+                      className="px-3 py-2 rounded-xl bg-white dark:bg-black/60 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white text-xs outline-none focus:border-[#d4ff00]"
                     />
                     <input
                       type="tel"
@@ -223,7 +223,7 @@ export function FloatingAiWidget() {
                       placeholder="+998 (90) ..."
                       value={leadForm.phone}
                       onChange={(e) => setLeadForm({ ...leadForm, phone: e.target.value })}
-                      className="px-3 py-2 rounded-xl bg-black/60 border border-white/10 text-white text-xs outline-none focus:border-[#d4ff00]"
+                      className="px-3 py-2 rounded-xl bg-white dark:bg-black/60 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white text-xs outline-none focus:border-[#d4ff00]"
                     />
                   </div>
                   <button
@@ -242,11 +242,11 @@ export function FloatingAiWidget() {
                   </button>
                 </form>
               ) : (
-                <div className="p-3 rounded-xl bg-[#d4ff00]/20 border border-[#d4ff00]/30 text-center space-y-1">
-                  <span className="text-xs font-bold text-white block">
+                <div className="p-3 rounded-xl bg-lime-500/20 dark:bg-[#d4ff00]/20 border border-lime-500/30 dark:border-[#d4ff00]/30 text-center space-y-1">
+                  <span className="text-xs font-bold text-slate-950 dark:text-white block">
                     ✓ Заявка передана координатору!
                   </span>
-                  <span className="text-[11px] text-slate-300 block">
+                  <span className="text-[11px] text-slate-600 dark:text-slate-300 block">
                     Электронный пропуск отправлен в Telegram.
                   </span>
                 </div>
@@ -264,7 +264,7 @@ export function FloatingAiWidget() {
                 }`}
               >
                 {m.role === "assistant" && (
-                  <div className="w-7 h-7 rounded-lg bg-[#d4ff00] text-black flex items-center justify-center font-extrabold text-[10px] shrink-0 mt-0.5">
+                  <div className="w-7 h-7 rounded-lg bg-[#d4ff00] text-black flex items-center justify-center font-extrabold text-[10px] shrink-0 mt-0.5 shadow-sm">
                     AI
                   </div>
                 )}
@@ -272,7 +272,7 @@ export function FloatingAiWidget() {
                   className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-xs sm:text-[13px] leading-relaxed ${
                     m.role === "user"
                       ? "bg-[#d4ff00] text-black font-semibold rounded-br-sm shadow-md"
-                      : "bg-white/5 border border-white/10 text-white rounded-bl-sm whitespace-pre-line"
+                      : "bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-bl-sm whitespace-pre-line"
                   }`}
                 >
                   {cleanAiText(m.content)}
@@ -281,7 +281,7 @@ export function FloatingAiWidget() {
             ))}
 
             {isAiThinking && (
-              <div className="flex items-center gap-2 text-xs text-[#d4ff00] p-2 font-medium">
+              <div className="flex items-center gap-2 text-xs text-lime-600 dark:text-[#d4ff00] p-2 font-medium">
                 <Loader2 className="w-3.5 h-3.5 animate-spin text-[#d4ff00]" />
                 <span>ИИ анализирует залы Ташкента...</span>
               </div>
@@ -290,42 +290,42 @@ export function FloatingAiWidget() {
           </div>
 
           {/* Quick Prompt Chips */}
-          <div className="px-3 py-2 bg-black/40 border-t border-white/10 flex items-center gap-1.5 overflow-x-auto scrollbar-none">
+          <div className="px-3 py-2 bg-slate-50 dark:bg-black/40 border-t border-slate-200 dark:border-white/10 flex items-center gap-1.5 overflow-x-auto scrollbar-none">
             <button
               onClick={() => handleSendMessage("🥊 Хочу бокс с нуля в Buka, какие условия?")}
-              className="px-2.5 py-1 rounded-lg border border-white/10 hover:border-[#d4ff00] hover:text-[#d4ff00] text-slate-300 text-[11px] font-medium whitespace-nowrap bg-white/5 transition-colors"
+              className="px-2.5 py-1 rounded-lg border border-slate-300 dark:border-white/10 hover:border-[#d4ff00] hover:text-black dark:hover:text-[#d4ff00] text-slate-700 dark:text-slate-300 text-[11px] font-medium whitespace-nowrap bg-white dark:bg-white/5 transition-colors shadow-sm"
             >
               🥊 Бокс с нуля в Buka
             </button>
             <button
               onClick={() => handleSendMessage("🏊 Где лучший бассейн 50м на Бабура?")}
-              className="px-2.5 py-1 rounded-lg border border-white/10 hover:border-[#d4ff00] hover:text-[#d4ff00] text-slate-300 text-[11px] font-medium whitespace-nowrap bg-white/5 transition-colors"
+              className="px-2.5 py-1 rounded-lg border border-slate-300 dark:border-white/10 hover:border-[#d4ff00] hover:text-black dark:hover:text-[#d4ff00] text-slate-700 dark:text-slate-300 text-[11px] font-medium whitespace-nowrap bg-white dark:bg-white/5 transition-colors shadow-sm"
             >
               🏊 Бассейн 50м
             </button>
             <button
               onClick={() => handleSendMessage("🧘 Реформер-пилатес для спины на Мустакиллик")}
-              className="px-2.5 py-1 rounded-lg border border-white/10 hover:border-[#d4ff00] hover:text-[#d4ff00] text-slate-300 text-[11px] font-medium whitespace-nowrap bg-white/5 transition-colors"
+              className="px-2.5 py-1 rounded-lg border border-slate-300 dark:border-white/10 hover:border-[#d4ff00] hover:text-black dark:hover:text-[#d4ff00] text-slate-700 dark:text-slate-300 text-[11px] font-medium whitespace-nowrap bg-white dark:bg-white/5 transition-colors shadow-sm"
             >
               🧘 Пилатес для спины
             </button>
             <button
               onClick={() => handleSendMessage("🎾 Корты для падел-тенниса на Юнусабаде")}
-              className="px-2.5 py-1 rounded-lg border border-white/10 hover:border-[#d4ff00] hover:text-[#d4ff00] text-slate-300 text-[11px] font-medium whitespace-nowrap bg-white/5 transition-colors"
+              className="px-2.5 py-1 rounded-lg border border-slate-300 dark:border-white/10 hover:border-[#d4ff00] hover:text-black dark:hover:text-[#d4ff00] text-slate-700 dark:text-slate-300 text-[11px] font-medium whitespace-nowrap bg-white dark:bg-white/5 transition-colors shadow-sm"
             >
               🎾 Падел Юнусабад
             </button>
           </div>
 
           {/* Chat Input Bar */}
-          <div className="p-3 bg-black/80 border-t border-white/10 flex items-center gap-2">
+          <div className="p-3 bg-slate-100/90 dark:bg-black/80 border-t border-slate-200 dark:border-white/10 flex items-center gap-2">
             <input
               type="text"
               placeholder="Спросите ИИ о любом зале в Ташкенте..."
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
-              className="flex-1 px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-400 text-xs outline-none focus:border-[#d4ff00] transition-colors"
+              className="flex-1 px-3.5 py-2.5 rounded-xl bg-white dark:bg-white/5 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 text-xs outline-none focus:border-[#d4ff00] transition-colors"
             />
             <button
               onClick={() => handleSendMessage()}

@@ -393,7 +393,7 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
   };
 
   return (
-    <section id="ai-matcher" className="py-24 relative overflow-hidden bg-void/80 text-white border-y border-white/10 backdrop-blur-sm">
+    <section id="ai-matcher" className="py-24 relative overflow-hidden bg-slate-50/90 dark:bg-void/80 text-slate-900 dark:text-white border-y border-slate-200 dark:border-white/10 backdrop-blur-sm transition-colors duration-300">
       <div id="ai-quiz" className="sr-only">AI Quiz Anchor</div>
 
       {/* Background Lighting */}
@@ -402,27 +402,27 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/5 mb-3.5">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-300 dark:border-white/10 bg-white dark:bg-white/5 mb-3.5">
             <Sparkles className="w-3.5 h-3.5 text-[#d4ff00]" />
-            <span className="telemetry-chip text-white/90">
+            <span className="telemetry-chip text-slate-700 dark:text-white/90">
               NEURAL MATCHING ENGINE // УМНЫЙ ИИ-ПОМОЩНИК
             </span>
           </div>
-          <h2 className="font-display text-3xl sm:text-5xl font-black uppercase tracking-tight text-white">
+          <h2 className="font-display text-3xl sm:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white">
             Интерактивный Квиз & <span className="text-[#d4ff00]">ИИ-Подбор</span>
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-slate-300">
+          <p className="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-300">
             Пройдите быстрый 4-шаговый визуальный квиз, получите консультацию с помощью ИИ или используйте экспресс-синтезатор параметров.
           </p>
 
-          {/* Mode Switcher Tabs - Strictly updated without 'Gemini 3.5' in user-facing labels */}
-          <div className="mt-8 inline-flex p-1.5 rounded-2xl bg-black/70 border border-white/15 backdrop-blur-md shadow-2xl">
+          {/* Mode Switcher Tabs */}
+          <div className="mt-8 inline-flex p-1.5 rounded-2xl bg-slate-200/80 dark:bg-black/70 border border-slate-300 dark:border-white/15 backdrop-blur-md shadow-lg dark:shadow-2xl">
             <button
               onClick={() => setActiveTab("quiz")}
               className={`flex items-center gap-2 px-5 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold uppercase tracking-wider transition-all ${
                 activeTab === "quiz"
                   ? "bg-[#d4ff00] text-slate-950 shadow-lg shadow-[#d4ff00]/25"
-                  : "text-slate-400 hover:text-white"
+                  : "text-slate-600 hover:text-slate-950 dark:text-slate-400 dark:hover:text-white"
               }`}
             >
               <Sparkles className="w-4 h-4" />
@@ -433,7 +433,7 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
               className={`flex items-center gap-2 px-5 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold uppercase tracking-wider transition-all ${
                 activeTab === "chat"
                   ? "bg-[#d4ff00] text-slate-950 shadow-lg shadow-[#d4ff00]/25"
-                  : "text-slate-400 hover:text-white"
+                  : "text-slate-600 hover:text-slate-950 dark:text-slate-400 dark:hover:text-white"
               }`}
             >
               <MessageSquare className="w-4 h-4" />
@@ -444,7 +444,7 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
               className={`hidden md:flex items-center gap-2 px-5 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold uppercase tracking-wider transition-all ${
                 activeTab === "synthesizer"
                   ? "bg-[#d4ff00] text-slate-950 shadow-lg shadow-[#d4ff00]/25"
-                  : "text-slate-400 hover:text-white"
+                  : "text-slate-600 hover:text-slate-950 dark:text-slate-400 dark:hover:text-white"
               }`}
             >
               <Sliders className="w-4 h-4" />
@@ -457,15 +457,15 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
             TAB 1: INTERACTIVE 4-STEP QUIZ WITH VISUAL SPORTS PHOTO CARDS
            ========================================================================= */}
         {activeTab === "quiz" && (
-          <div className="rounded-3xl border border-white/10 bg-void-card/90 backdrop-blur-md p-6 sm:p-10 shadow-2xl relative">
+          <div className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white/95 dark:bg-void-card/90 backdrop-blur-md p-6 sm:p-10 shadow-xl dark:shadow-2xl relative text-slate-900 dark:text-white">
             {/* Progress Bar */}
             {step < 5 && (
               <div className="mb-8">
-                <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
-                  <span className="text-[#d4ff00]">ШАГ 0{step} / 04</span>
+                <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
+                  <span className="text-lime-600 dark:text-[#d4ff00]">ШАГ 0{step} / 04</span>
                   <span>{step === 1 ? "25%" : step === 2 ? "50%" : step === 3 ? "75%" : "99%"}</span>
                 </div>
-                <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                <div className="w-full h-1.5 bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden">
                   <div
                     className="h-full bg-[#d4ff00] transition-all duration-500 rounded-full shadow-[0_0_12px_rgba(212,255,0,0.5)]"
                     style={{ width: `${(step / 4) * 100}%` }}
@@ -485,8 +485,8 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                   className="space-y-6"
                 >
                   <div>
-                    <span className="telemetry-chip text-[#d4ff00] block mb-1">ШАГ 01. ПРИОРИТЕТ ТРЕНИРОВОК</span>
-                    <h3 className="font-display text-xl sm:text-2xl font-black uppercase text-white tracking-tight">
+                    <span className="telemetry-chip text-lime-600 dark:text-[#d4ff00] block mb-1">ШАГ 01. ПРИОРИТЕТ ТРЕНИРОВОК</span>
+                    <h3 className="font-display text-xl sm:text-2xl font-black uppercase text-slate-950 dark:text-white tracking-tight">
                       Какая главная цель ваших занятий в Ташкенте?
                     </h3>
                   </div>
@@ -534,13 +534,13 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                   <div className="flex items-center gap-3">
                     <button
                       onClick={() => setStep(1)}
-                      className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white border border-white/10 transition-colors"
+                      className="p-2 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-white/10 transition-colors"
                     >
                       <ArrowLeft className="w-5 h-5" />
                     </button>
                     <div>
-                      <span className="telemetry-chip text-[#d4ff00] block text-[10px]">ШАГ 02. ФОРМА & ОПЫТ</span>
-                      <h3 className="font-display text-xl sm:text-2xl font-black uppercase text-white tracking-tight">
+                      <span className="telemetry-chip text-lime-600 dark:text-[#d4ff00] block text-[10px]">ШАГ 02. ФОРМА & ОПЫТ</span>
+                      <h3 className="font-display text-xl sm:text-2xl font-black uppercase text-slate-950 dark:text-white tracking-tight">
                         Ваш текущий уровень физической подготовки
                       </h3>
                     </div>
@@ -550,16 +550,16 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                       <button
                         key={exp.id}
                         onClick={() => handleExpSelect(exp.title)}
-                        className="flex items-center justify-between p-5 rounded-2xl border border-white/10 hover:border-[#d4ff00] bg-white/5 hover:bg-[#d4ff00]/10 text-left transition-all group"
+                        className="flex items-center justify-between p-5 rounded-2xl border border-slate-200 dark:border-white/10 hover:border-[#d4ff00] bg-slate-50 dark:bg-white/5 hover:bg-lime-50 dark:hover:bg-[#d4ff00]/10 text-left transition-all group"
                       >
                         <div>
-                          <span className="telemetry-chip text-[#d4ff00] text-[9px] block mb-0.5">{exp.tag}</span>
-                          <div className="font-extrabold text-white group-hover:text-[#d4ff00] text-sm sm:text-base">
+                          <span className="telemetry-chip text-lime-600 dark:text-[#d4ff00] text-[9px] block mb-0.5">{exp.tag}</span>
+                          <div className="font-extrabold text-slate-900 dark:text-white group-hover:text-lime-700 dark:group-hover:text-[#d4ff00] text-sm sm:text-base">
                             {exp.title}
                           </div>
-                          <div className="text-xs text-slate-300 mt-1 font-medium">{exp.desc}</div>
+                          <div className="text-xs text-slate-600 dark:text-slate-300 mt-1 font-medium">{exp.desc}</div>
                         </div>
-                        <ArrowRight className="w-5 h-5 text-slate-500 group-hover:text-[#d4ff00] group-hover:translate-x-1 transition-all shrink-0 ml-4" />
+                        <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-lime-600 dark:group-hover:text-[#d4ff00] group-hover:translate-x-1 transition-all shrink-0 ml-4" />
                       </button>
                     ))}
                   </div>
@@ -578,13 +578,13 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                   <div className="flex items-center gap-3">
                     <button
                       onClick={() => setStep(2)}
-                      className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white border border-white/10 transition-colors"
+                      className="p-2 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-white/10 transition-colors"
                     >
                       <ArrowLeft className="w-5 h-5" />
                     </button>
                     <div>
-                      <span className="telemetry-chip text-[#d4ff00] block text-[10px]">ШАГ 03. ДИСЦИПЛИНА</span>
-                      <h3 className="font-display text-xl sm:text-2xl font-black uppercase text-white tracking-tight">
+                      <span className="telemetry-chip text-lime-600 dark:text-[#d4ff00] block text-[10px]">ШАГ 03. ДИСЦИПЛИНА</span>
+                      <h3 className="font-display text-xl sm:text-2xl font-black uppercase text-slate-950 dark:text-white tracking-tight">
                         Какое направление привлекает сильнее всего?
                       </h3>
                     </div>
@@ -596,7 +596,7 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                       <button
                         key={sp.id}
                         onClick={() => handleSportSelect(sp.title)}
-                        className="group relative rounded-2xl overflow-hidden border border-white/10 hover:border-[#d4ff00] bg-void-card text-left transition-all hover:scale-[1.02] shadow-xl h-48 flex flex-col justify-between p-4"
+                        className="group relative rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 hover:border-[#d4ff00] bg-slate-100 dark:bg-void-card text-left transition-all hover:scale-[1.02] shadow-xl h-48 flex flex-col justify-between p-4"
                       >
                         <img
                           src={sp.image}
@@ -635,13 +635,13 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                   <div className="flex items-center gap-3">
                     <button
                       onClick={() => setStep(3)}
-                      className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white border border-white/10 transition-colors"
+                      className="p-2 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-white/10 transition-colors"
                     >
                       <ArrowLeft className="w-5 h-5" />
                     </button>
                     <div>
-                      <span className="telemetry-chip text-[#d4ff00] block text-[10px]">ШАГ 04. БЮДЖЕТ</span>
-                      <h3 className="font-display text-xl sm:text-2xl font-black uppercase text-white tracking-tight">
+                      <span className="telemetry-chip text-lime-600 dark:text-[#d4ff00] block text-[10px]">ШАГ 04. БЮДЖЕТ</span>
+                      <h3 className="font-display text-xl sm:text-2xl font-black uppercase text-slate-950 dark:text-white tracking-tight">
                         Комфортный бюджет тренировок в месяц (UZS)
                       </h3>
                     </div>
@@ -652,19 +652,19 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                         key={b.id}
                         disabled={isSubmittingQuiz}
                         onClick={() => handleFinishQuiz(b.title)}
-                        className="flex items-center justify-between p-5 rounded-2xl border border-white/10 hover:border-[#d4ff00] bg-white/5 hover:bg-[#d4ff00]/10 text-left transition-all group disabled:opacity-50"
+                        className="flex items-center justify-between p-5 rounded-2xl border border-slate-200 dark:border-white/10 hover:border-[#d4ff00] bg-slate-50 dark:bg-white/5 hover:bg-lime-50 dark:hover:bg-[#d4ff00]/10 text-left transition-all group disabled:opacity-50"
                       >
                         <div>
-                          <span className="telemetry-chip text-[#d4ff00] text-[9px] block mb-0.5">{b.badge}</span>
-                          <div className="font-extrabold text-white group-hover:text-[#d4ff00] text-sm sm:text-base">
+                          <span className="telemetry-chip text-lime-600 dark:text-[#d4ff00] text-[9px] block mb-0.5">{b.badge}</span>
+                          <div className="font-extrabold text-slate-900 dark:text-white group-hover:text-lime-700 dark:group-hover:text-[#d4ff00] text-sm sm:text-base">
                             {b.title}
                           </div>
-                          <div className="text-xs text-slate-300 mt-1 font-medium">{b.desc}</div>
+                          <div className="text-xs text-slate-600 dark:text-slate-300 mt-1 font-medium">{b.desc}</div>
                         </div>
                         {isSubmittingQuiz ? (
                           <Loader2 className="w-5 h-5 animate-spin text-[#d4ff00]" />
                         ) : (
-                          <ArrowRight className="w-5 h-5 text-slate-500 group-hover:text-[#d4ff00] group-hover:translate-x-1 transition-all" />
+                          <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-lime-600 dark:group-hover:text-[#d4ff00] group-hover:translate-x-1 transition-all" />
                         )}
                       </button>
                     ))}
@@ -680,28 +680,28 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                   animate={{ opacity: 1, scale: 1 }}
                   className="space-y-8"
                 >
-                  <div className="p-6 sm:p-7 rounded-2xl bg-[#d4ff00]/10 border border-[#d4ff00]/30 space-y-4">
-                    <div className="flex items-center gap-2 text-[#d4ff00] text-xs uppercase tracking-wider font-bold">
+                  <div className="p-6 sm:p-7 rounded-2xl bg-lime-500/10 dark:bg-[#d4ff00]/10 border border-lime-500/30 dark:border-[#d4ff00]/30 space-y-4">
+                    <div className="flex items-center gap-2 text-lime-700 dark:text-[#d4ff00] text-xs uppercase tracking-wider font-bold">
                       <Sparkles className="w-4 h-4 text-[#d4ff00]" />
                       <span>РЕЗУЛЬТАТ НЕЙРОСЕТЕВОГО АНАЛИЗА SPOTIFY</span>
                     </div>
-                    <p className="text-white text-sm sm:text-base leading-relaxed whitespace-pre-line font-normal">
+                    <p className="text-slate-800 dark:text-white text-sm sm:text-base leading-relaxed whitespace-pre-line font-normal">
                       {cleanAiText(quizResult?.recommendation)}
                     </p>
 
-                    <div className="mt-4 pt-4 border-t border-[#d4ff00]/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div className="mt-4 pt-4 border-t border-slate-200 dark:border-[#d4ff00]/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                       <div>
-                        <span className="text-xs uppercase font-semibold text-slate-400 block">
+                        <span className="text-xs uppercase font-semibold text-slate-500 dark:text-slate-400 block">
                           Рекомендуемый клуб в Ташкенте:
                         </span>
-                        <div className="font-black text-xl text-white">
+                        <div className="font-black text-xl text-slate-950 dark:text-white">
                           {quizResult?.clubName}
                         </div>
-                        <div className="flex items-center gap-2 text-xs text-slate-300 mt-1">
+                        <div className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-300 mt-1">
                           <MapPin className="w-3.5 h-3.5 text-[#d4ff00]" />
                           <span>{quizResult?.clubMetro}</span>
                           <span>•</span>
-                          <span className="font-bold text-[#d4ff00]">
+                          <span className="font-bold text-lime-700 dark:text-[#d4ff00]">
                             {quizResult?.clubPrice}
                           </span>
                         </div>
@@ -716,17 +716,17 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                   {!quizSuccess ? (
                     <form onSubmit={submitQuizLead} className="space-y-4 pt-2">
                       <div>
-                        <h4 className="font-display text-lg font-black uppercase text-white tracking-tight">
+                        <h4 className="font-display text-lg font-black uppercase text-slate-950 dark:text-white tracking-tight">
                           Зафиксировать бесплатный пробный визит (0 UZS)
                         </h4>
-                        <p className="text-xs text-slate-400 mt-1">
+                        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                           Заявка мгновенно поступит администратору в клуб <b>{quizResult?.clubName}</b> и продублируется в Telegram.
                         </p>
                       </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase">
+                          <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5 uppercase">
                             Ваше имя
                           </label>
                           <input
@@ -735,11 +735,11 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                             placeholder="Сардор / Константин"
                             value={quizLeadForm.name}
                             onChange={(e) => setQuizLeadForm({ ...quizLeadForm, name: e.target.value })}
-                            className="w-full px-4 py-3 rounded-xl border border-white/10 bg-black/60 focus:border-[#d4ff00] outline-none text-sm text-white transition-all font-medium"
+                            className="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-white/10 bg-slate-50 dark:bg-black/60 focus:border-[#d4ff00] outline-none text-sm text-slate-900 dark:text-white transition-all font-medium"
                           />
                         </div>
                         <div>
-                          <label className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase">
+                          <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5 uppercase">
                             Телефон в Ташкенте (+998)
                           </label>
                           <input
@@ -748,7 +748,7 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                             placeholder="+998 (90) 123-45-67"
                             value={quizLeadForm.phone}
                             onChange={(e) => setQuizLeadForm({ ...quizLeadForm, phone: e.target.value })}
-                            className="w-full px-4 py-3 rounded-xl border border-white/10 bg-black/60 focus:border-[#d4ff00] outline-none text-sm text-white transition-all font-medium"
+                            className="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-white/10 bg-slate-50 dark:bg-black/60 focus:border-[#d4ff00] outline-none text-sm text-slate-900 dark:text-white transition-all font-medium"
                           />
                         </div>
                       </div>
@@ -771,21 +771,21 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                         <button
                           type="button"
                           onClick={() => setStep(1)}
-                          className="text-xs text-slate-400 hover:text-[#d4ff00] font-semibold transition-colors"
+                          className="text-xs text-slate-500 hover:text-black dark:text-slate-400 dark:hover:text-[#d4ff00] font-semibold transition-colors"
                         >
                           ↺ Пройти квиз заново
                         </button>
                       </div>
                     </form>
                   ) : (
-                    <div className="p-8 rounded-2xl bg-[#d4ff00]/10 border border-[#d4ff00]/30 text-center space-y-3">
+                    <div className="p-8 rounded-2xl bg-lime-500/10 dark:bg-[#d4ff00]/10 border border-lime-500/30 dark:border-[#d4ff00]/30 text-center space-y-3">
                       <div className="w-14 h-14 mx-auto rounded-full bg-[#d4ff00] text-slate-950 flex items-center justify-center shadow-lg shadow-[#d4ff00]/30">
                         <Check className="w-8 h-8 stroke-[3]" />
                       </div>
-                      <h4 className="font-display text-xl font-black uppercase text-white">
+                      <h4 className="font-display text-xl font-black uppercase text-slate-950 dark:text-white">
                         Заявка успешно оформлена!
                       </h4>
-                      <p className="text-sm text-slate-300 max-w-md mx-auto">
+                      <p className="text-sm text-slate-600 dark:text-slate-300 max-w-md mx-auto">
                         Детали переданы в клуб <b>{quizResult?.clubName}</b> и отправлены в Telegram. Менеджер свяжется с вами в течение 10 минут!
                       </p>
                     </div>
@@ -800,7 +800,7 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
             TAB 2: LIVE AI CHAT ASSISTANT ("Консультация с помощью ИИ")
            ========================================================================= */}
         {activeTab === "chat" && (
-          <div className="rounded-3xl border border-white/10 bg-void-card/90 backdrop-blur-md p-6 sm:p-8 shadow-2xl flex flex-col h-[600px] relative">
+          <div className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white/95 dark:bg-void-card/90 backdrop-blur-md p-6 sm:p-8 shadow-xl dark:shadow-2xl flex flex-col h-[600px] relative text-slate-900 dark:text-white">
             {/* Chat Messages Stream */}
             <div className="flex-1 overflow-y-auto space-y-4 pr-2 scrollbar-thin">
               {messages.map((m, idx) => (
@@ -819,7 +819,7 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                     className={`max-w-[85%] rounded-2xl px-4 py-3 text-xs sm:text-sm leading-relaxed ${
                       m.role === "user"
                         ? "bg-[#d4ff00] text-slate-950 font-semibold"
-                        : "bg-white/5 border border-white/10 text-white"
+                        : "bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white"
                     }`}
                   >
                     {cleanAiText(m.content)}
@@ -828,7 +828,7 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
               ))}
 
               {isAiThinking && (
-                <div className="flex items-center gap-2 text-xs text-[#d4ff00] p-2 font-medium">
+                <div className="flex items-center gap-2 text-xs text-lime-600 dark:text-[#d4ff00] p-2 font-medium">
                   <Loader2 className="w-4 h-4 animate-spin text-[#d4ff00]" />
                   <span>Умный ИИ анализирует запрос и каталог залов Ташкента...</span>
                 </div>
@@ -836,28 +836,28 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
             </div>
 
             {/* Quick Prompt Suggestions */}
-            <div className="py-3 flex flex-wrap gap-2 border-t border-white/10">
+            <div className="py-3 flex flex-wrap gap-2 border-t border-slate-200 dark:border-white/10">
               <button
                 onClick={() => handleSendMessage("Что посоветуешь для снятия стресса после сидячей работы в Ташкенте?")}
-                className="text-xs px-3 py-1.5 rounded-full border border-white/10 bg-white/5 hover:border-[#d4ff00] hover:text-[#d4ff00] text-slate-300 transition-colors font-medium"
+                className="text-xs px-3 py-1.5 rounded-full border border-slate-300 dark:border-white/10 bg-slate-100 dark:bg-white/5 hover:border-[#d4ff00] hover:text-black dark:hover:text-[#d4ff00] text-slate-700 dark:text-slate-300 transition-colors font-medium shadow-sm"
               >
                 🧘 Снять стресс после работы
               </button>
               <button
                 onClick={() => handleSendMessage("Где лучший олимпийский бассейн со спа в Ташкенте и сколько стоит?")}
-                className="text-xs px-3 py-1.5 rounded-full border border-white/10 bg-white/5 hover:border-[#d4ff00] hover:text-[#d4ff00] text-slate-300 transition-colors font-medium"
+                className="text-xs px-3 py-1.5 rounded-full border border-slate-300 dark:border-white/10 bg-slate-100 dark:bg-white/5 hover:border-[#d4ff00] hover:text-black dark:hover:text-[#d4ff00] text-slate-700 dark:text-slate-300 transition-colors font-medium shadow-sm"
               >
                 🏊 Олимпийский бассейн 50м
               </button>
               <button
                 onClick={() => handleSendMessage("Хочу начать заниматься боксом с нуля в Buka, как проходит пробное?")}
-                className="text-xs px-3 py-1.5 rounded-full border border-white/10 bg-white/5 hover:border-[#d4ff00] hover:text-[#d4ff00] text-slate-300 transition-colors font-medium"
+                className="text-xs px-3 py-1.5 rounded-full border border-slate-300 dark:border-white/10 bg-slate-100 dark:bg-white/5 hover:border-[#d4ff00] hover:text-black dark:hover:text-[#d4ff00] text-slate-700 dark:text-slate-300 transition-colors font-medium shadow-sm"
               >
                 🥊 Бокс с нуля в Buka
               </button>
               <button
                 onClick={() => handleSendMessage("Сколько стоят корты для падел-тенниса на Юнусабаде?")}
-                className="text-xs px-3 py-1.5 rounded-full border border-white/10 bg-white/5 hover:border-[#d4ff00] hover:text-[#d4ff00] text-slate-300 transition-colors font-medium"
+                className="text-xs px-3 py-1.5 rounded-full border border-slate-300 dark:border-white/10 bg-slate-100 dark:bg-white/5 hover:border-[#d4ff00] hover:text-black dark:hover:text-[#d4ff00] text-slate-700 dark:text-slate-300 transition-colors font-medium shadow-sm"
               >
                 🎾 Корты для падел-тенниса
               </button>
@@ -870,8 +870,8 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                 placeholder="Задай любой вопрос ИИ: 'Какой зал выбрать на Чиланзаре?', 'Хочу скинуть 5 кг'..."
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
-                className="flex-1 px-4 py-3 rounded-xl border border-white/10 bg-black/60 focus:border-[#d4ff00] outline-none text-xs sm:text-sm text-white placeholder-slate-400 transition-all font-medium"
+                onKeyDown={(e) => e.key === "Enter" && handleSendMessage(inputMessage)}
+                className="flex-1 px-4 py-3 rounded-xl bg-slate-50 dark:bg-black/60 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 text-xs sm:text-sm outline-none focus:border-[#d4ff00]"
               />
               <button
                 onClick={() => handleSendMessage()}
@@ -885,16 +885,16 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
             {/* Quick Contact Drawer */}
             {!chatSuccess ? (
               <div className="mt-3 pt-3 border-t border-white/10 flex items-center justify-between text-xs font-medium">
-                <span className="text-slate-400">Понравилась рекомендация? Забронируйте слот 0 UZS:</span>
+                <span className="text-slate-500 dark:text-slate-400">Понравилась рекомендация? Забронируйте слот 0 UZS:</span>
                 <button
                   onClick={() => setChatLeadForm({ ...chatLeadForm, isOpen: !chatLeadForm.isOpen })}
-                  className="font-bold text-[#d4ff00] hover:underline"
+                  className="font-bold text-lime-600 dark:text-[#d4ff00] hover:underline"
                 >
                   {chatLeadForm.isOpen ? "Скрыть форму" : "Оставить контакты ⚡"}
                 </button>
               </div>
             ) : (
-              <div className="mt-2 text-xs text-[#d4ff00] font-bold text-center">
+              <div className="mt-2 text-xs text-lime-600 dark:text-[#d4ff00] font-bold text-center">
                 ✓ Контакты переданы в клуб и Telegram! Менеджер свяжется с вами.
               </div>
             )}
@@ -907,7 +907,7 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                   placeholder="Ваше имя"
                   value={chatLeadForm.name}
                   onChange={(e) => setChatLeadForm({ ...chatLeadForm, name: e.target.value })}
-                  className="sm:w-1/3 px-3 py-2 text-xs rounded-lg border border-white/10 bg-black/70 text-white font-medium"
+                  className="sm:w-1/3 px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-white/10 bg-slate-50 dark:bg-black/70 text-slate-900 dark:text-white font-medium outline-none focus:border-[#d4ff00]"
                 />
                 <input
                   type="tel"
@@ -915,11 +915,11 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                   placeholder="Телефон (+998 ...)"
                   value={chatLeadForm.phone}
                   onChange={(e) => setChatLeadForm({ ...chatLeadForm, phone: e.target.value })}
-                  className="sm:w-1/2 px-3 py-2 text-xs rounded-lg border border-white/10 bg-black/70 text-white font-medium"
+                  className="sm:w-1/2 px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-white/10 bg-slate-50 dark:bg-black/70 text-slate-900 dark:text-white font-medium outline-none focus:border-[#d4ff00]"
                 />
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-[#d4ff00] text-slate-950 font-black text-xs uppercase rounded-lg hover:bg-[#bbf200]"
+                  className="px-5 py-2 bg-[#d4ff00] text-slate-950 font-black text-xs uppercase rounded-lg hover:bg-[#bbf200] shadow-md shadow-[#d4ff00]/20"
                 >
                   Записаться
                 </button>
@@ -932,9 +932,9 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
             TAB 3: QUICK PARAMETER SYNTHESIZER
            ========================================================================= */}
         {activeTab === "synthesizer" && (
-          <div className="rounded-3xl border border-white/10 bg-void-card/90 backdrop-blur-md p-6 sm:p-10 shadow-2xl space-y-6">
+          <div className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white/95 dark:bg-void-card/90 backdrop-blur-md p-6 sm:p-10 shadow-xl dark:shadow-2xl space-y-6 text-slate-900 dark:text-white">
             <div className="space-y-3">
-              <label className="telemetry-chip text-[#d4ff00] block text-xs">
+              <label className="telemetry-chip text-lime-600 dark:text-[#d4ff00] block text-xs">
                 01. ГЛАВНЫЙ ЗАПРОС ТЕЛА И РАЗУМА:
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
@@ -948,8 +948,8 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                     }}
                     className={`p-3.5 rounded-xl border text-left text-xs font-semibold transition-all flex items-center justify-between ${
                       synthGoal === g.id
-                        ? "border-[#d4ff00] bg-[#d4ff00]/15 text-white shadow-sm"
-                        : "border-white/10 bg-white/5 text-slate-300 hover:text-white hover:border-white/30"
+                        ? "border-[#d4ff00] bg-lime-500/15 dark:bg-[#d4ff00]/15 text-slate-950 dark:text-white shadow-sm"
+                        : "border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:border-[#d4ff00]/50"
                     }`}
                   >
                     <span>{g.label}</span>
@@ -959,10 +959,10 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
               </div>
             </div>
 
-            <div className="space-y-2 pt-4 border-t border-white/10">
+            <div className="space-y-2 pt-4 border-t border-slate-200 dark:border-white/10">
               <div className="flex justify-between items-center text-xs">
-                <span className="telemetry-chip text-slate-400">02. ТЕКУЩИЙ УРОВЕНЬ НАПРЯЖЕНИЯ / СТРЕССА:</span>
-                <span className="font-extrabold text-[#d4ff00]">{stressLevel} / 10</span>
+                <span className="telemetry-chip text-slate-500 dark:text-slate-400">02. ТЕКУЩИЙ УРОВЕНЬ НАПРЯЖЕНИЯ / СТРЕССА:</span>
+                <span className="font-extrabold text-lime-600 dark:text-[#d4ff00]">{stressLevel} / 10</span>
               </div>
               <input
                 type="range"
@@ -970,20 +970,20 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                 max="10"
                 value={stressLevel}
                 onChange={(e) => setStressLevel(Number(e.target.value))}
-                className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#d4ff00]"
+                className="w-full h-2 bg-slate-200 dark:bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#d4ff00]"
               />
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#d4ff00]/10 border border-[#d4ff00]/25 flex flex-col sm:flex-row items-center justify-between gap-4 mt-6">
+            <div className="p-5 rounded-2xl bg-lime-500/10 dark:bg-[#d4ff00]/10 border border-lime-500/30 dark:border-[#d4ff00]/25 flex flex-col sm:flex-row items-center justify-between gap-4 mt-6">
               <div>
-                <span className="telemetry-chip text-[#d4ff00] block text-[10px]">ПОДОБРАННЫЙ СПОРТИВНЫЙ КЛУБ:</span>
-                <div className="font-black text-lg text-white">
+                <span className="telemetry-chip text-lime-600 dark:text-[#d4ff00] block text-[10px]">ПОДОБРАННЫЙ СПОРТИВНЫЙ КЛУБ:</span>
+                <div className="font-black text-lg text-slate-950 dark:text-white">
                   {synthGoals.find((g) => g.id === synthGoal)?.club}
                 </div>
               </div>
               <a
                 href="#booking"
-                className="px-6 py-2.5 rounded-xl bg-[#d4ff00] text-slate-950 font-black text-xs uppercase tracking-wider hover:bg-[#bbf200] transition-colors"
+                className="px-6 py-2.5 rounded-xl bg-[#d4ff00] text-slate-950 font-black text-xs uppercase tracking-wider hover:bg-[#bbf200] transition-colors shadow-md shadow-[#d4ff00]/20"
               >
                 Забронировать 0 UZS
               </a>

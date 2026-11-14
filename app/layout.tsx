@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Manrope, Unbounded, JetBrains_Mono } from "next/font/google";
+import { Manrope, Unbounded, Golos_Text } from "next/font/google";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -14,7 +14,7 @@ const unbounded = Unbounded({
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const golosText = Golos_Text({
   subsets: ["latin", "cyrillic"],
   variable: "--font-mono",
   display: "swap",
@@ -38,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" suppressHydrationWarning className={`dark ${manrope.variable} ${unbounded.variable} ${jetbrainsMono.variable}`}>
+    <html lang="ru" suppressHydrationWarning className={`dark ${manrope.variable} ${unbounded.variable} ${golosText.variable}`}>
       <head>
         <script
           dangerouslySetInnerHTML={{

@@ -208,18 +208,18 @@ export function HeroSection() {
               </div>
             </motion.div>
 
-            {/* Overlapping Floating Stat Chip */}
+            {/* Sleek Floating AI Assistant Badge (Top Left of Card - Zero Overlap) */}
             <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.6 }}
-              className="hidden sm:flex absolute -bottom-5 -left-6 p-3.5 rounded-2xl glass-athletic border border-[#d4ff00]/40 shadow-2xl items-center gap-3 bg-black/90 backdrop-blur-xl"
+              className="hidden sm:flex absolute -top-5 -left-4 sm:-left-6 p-3 rounded-2xl glass-athletic border border-[#d4ff00]/40 shadow-2xl items-center gap-3 bg-black/85 backdrop-blur-xl z-20"
             >
-              <div className="w-9 h-9 rounded-xl bg-[#d4ff00]/20 flex items-center justify-center text-[#d4ff00]">
-                <Flame className="w-5 h-5 fill-[#d4ff00]" />
+              <div className="w-8 h-8 rounded-xl bg-[#d4ff00]/20 flex items-center justify-center text-[#d4ff00] shadow-sm">
+                <Flame className="w-4 h-4 fill-[#d4ff00]" />
               </div>
               <div>
-                <span className="telemetry-chip text-slate-400 block text-[9px]">AI ПОДБОР</span>
+                <span className="telemetry-chip text-[#d4ff00] block text-[9px] tracking-wider">AI ПОДБОР</span>
                 <span className="text-xs font-black text-white">Умный ИИ-помощник</span>
               </div>
             </motion.div>

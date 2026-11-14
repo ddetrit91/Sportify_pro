@@ -31,17 +31,17 @@ export function InteractiveFaq() {
   ];
 
   return (
-    <section id="faq" className="py-24 relative overflow-hidden bg-void/80 text-white backdrop-blur-sm">
+    <section id="faq" className="py-24 relative overflow-hidden bg-slate-100/90 dark:bg-void/80 text-slate-900 dark:text-white backdrop-blur-sm transition-colors duration-300">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 mb-3">
-            <HelpCircle className="w-3.5 h-3.5 text-[#d4ff00]" />
-            <span className="telemetry-chip text-white/80">FAQ & ПРАВИЛА ПЛАТФОРМЫ</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-300 dark:border-white/10 bg-white dark:bg-white/5 mb-3">
+            <HelpCircle className="w-3.5 h-3.5 text-lime-600 dark:text-[#d4ff00]" />
+            <span className="telemetry-chip text-slate-700 dark:text-white/80">FAQ & ПРАВИЛА ПЛАТФОРМЫ</span>
           </div>
-          <h2 className="font-display text-3xl sm:text-5xl font-black uppercase tracking-tight text-white leading-tight">
+          <h2 className="font-display text-3xl sm:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-tight">
             Часто задаваемые вопросы
           </h2>
-          <p className="mt-2 text-sm sm:text-base text-slate-400">
+          <p className="mt-2 text-sm sm:text-base text-slate-600 dark:text-slate-400">
             Всё о бронировании, бесплатных пробных слотах и гарантиях SPORTIFY.
           </p>
         </div>
@@ -52,15 +52,15 @@ export function InteractiveFaq() {
             return (
               <div
                 key={idx}
-                className="rounded-2xl border border-white/10 bg-void-card overflow-hidden transition-all shadow-md"
+                className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-void-card overflow-hidden transition-all shadow-md"
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : idx)}
-                  className="w-full p-6 text-left flex items-center justify-between gap-4 font-black uppercase tracking-tight text-base sm:text-lg text-white hover:text-[#d4ff00] transition-colors"
+                  className="w-full p-6 text-left flex items-center justify-between gap-4 font-black uppercase tracking-tight text-base sm:text-lg text-slate-900 dark:text-white hover:text-lime-600 dark:hover:text-[#d4ff00] transition-colors"
                 >
                   <span>{faq.q}</span>
                   <ChevronDown
-                    className={`w-5 h-5 text-[#d4ff00] shrink-0 transition-transform duration-300 ${
+                    className={`w-5 h-5 text-lime-600 dark:text-[#d4ff00] shrink-0 transition-transform duration-300 ${
                       isOpen ? "rotate-180" : ""
                     }`}
                   />
@@ -75,7 +75,7 @@ export function InteractiveFaq() {
                       transition={{ duration: 0.25 }}
                       className="overflow-hidden"
                     >
-                      <div className="px-6 pb-6 text-sm text-slate-300 leading-relaxed border-t border-white/5 pt-4 font-normal">
+                      <div className="px-6 pb-6 text-sm text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-white/5 pt-4 font-normal">
                         {faq.a}
                       </div>
                     </motion.div>
