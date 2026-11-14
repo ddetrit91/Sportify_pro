@@ -2,33 +2,139 @@
 
 import { useEffect, useRef } from "react";
 
-interface Point3D {
+// --- 3D SIMPLEX NOISE ENGINE ---
+class SimplexNoise3D {
+  private perm: Uint8Array;
+  private permMod12: Uint8Array;
+
+  constructor(seed = 19937) {
+    this.perm = new Uint8Array(512);
+    this.permMod12 = new Uint8Array(512);
+    const p = new Uint8Array(256);
+    for (let i = 0; i < 256; i++) p[i] = i;
+
+    let s = seed;
+    for (let i = 255; i > 0; i--) {
+      s = (s * 16807 + 0) % 2147483647;
+      const j = s % (i + 1);
+      const tmp = p[i];
+      p[i] = p[j];
+      p[j] = tmp;
+    }
+
+    for (let i = 0; i < 512; i++) {
+      this.perm[i] = p[i & 255];
+      this.permMod12[i] = this.perm[i] % 12;
+    }
+  }
+
+  private static readonly grad3 = new Float32Array([
+    1, 1, 0, -1, 1, 0, 1, -1, 0, -1, -1, 0,
+    1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, -1,
+    0, 1, 1, 0, -1, 1, 0, 1, -1, 0, -1, -1,
+  ]);
+
+  noise(xin: number, yin: number, zin: number): number {
+    const F3 = 1.0 / 3.0;
+    const G3 = 1.0 / 6.0;
+
+    const s = (xin + yin + zin) * F3;
+    const i = Math.floor(xin + s);
+    const j = Math.floor(yin + s);
+    const k = Math.floor(zin + s);
+
+    const t = (i + j + k) * G3;
+    const X0 = i - t;
+    const Y0 = j - t;
+    const Z0 = k - t;
+
+    const x0 = xin - X0;
+    const y0 = yin - Y0;
+    const z0 = zin - Z0;
+
+    let i1: number, j1: number, k1: number;
+    let i2: number, j2: number, k2: number;
+
+    if (x0 >= y0) {
+      if (y0 >= z0) {
+        i1 = 1; j1 = 0; k1 = 0; i2 = 1; j2 = 1; k2 = 0;
+      } else if (x0 >= z0) {
+        i1 = 1; j1 = 0; k1 = 0; i2 = 1; j2 = 0; k2 = 1;
+      } else {
+        i1 = 0; j1 = 0; k1 = 1; i2 = 1; j2 = 0; k2 = 1;
+      }
+    } else {
+      if (y0 < z0) {
+        i1 = 0; j1 = 0; k1 = 1; i2 = 0; j2 = 1; k2 = 1;
+      } else if (x0 < z0) {
+        i1 = 0; j1 = 1; k1 = 0; i2 = 0; j2 = 1; k2 = 1;
+      } else {
+        i1 = 0; j1 = 1; k1 = 0; i2 = 1; j2 = 1; k2 = 0;
+      }
+    }
+
+    const x1 = x0 - i1 + G3;
+    const y1 = y0 - j1 + G3;
+    const z1 = z0 - k1 + G3;
+
+    const x2 = x0 - i2 + 2.0 * G3;
+    const y2 = y0 - j2 + 2.0 * G3;
+    const z2 = z0 - k2 + 2.0 * G3;
+
+    const x3 = x0 - 1.0 + 3.0 * G3;
+    const y3 = y0 - 1.0 + 3.0 * G3;
+    const z3 = z0 - 1.0 + 3.0 * G3;
+
+    const ii = i & 255;
+    const jj = j & 255;
+    const kk = k & 255;
+
+    let n0 = 0, n1 = 0, n2 = 0, n3 = 0;
+
+    let t0 = 0.6 - x0 * x0 - y0 * y0 - z0 * z0;
+    if (t0 > 0) {
+      const gi0 = this.permMod12[ii + this.perm[jj + this.perm[kk]]] * 3;
+      t0 *= t0;
+      n0 = t0 * t0 * (SimplexNoise3D.grad3[gi0] * x0 + SimplexNoise3D.grad3[gi0 + 1] * y0 + SimplexNoise3D.grad3[gi0 + 2] * z0);
+    }
+
+    let t1 = 0.6 - x1 * x1 - y1 * y1 - z1 * z1;
+    if (t1 > 0) {
+      const gi1 = this.permMod12[ii + i1 + this.perm[jj + j1 + this.perm[kk + k1]]] * 3;
+      t1 *= t1;
+      n1 = t1 * t1 * (SimplexNoise3D.grad3[gi1] * x1 + SimplexNoise3D.grad3[gi1 + 1] * y1 + SimplexNoise3D.grad3[gi1 + 2] * z1);
+    }
+
+    let t2 = 0.6 - x2 * x2 - y2 * y2 - z2 * z2;
+    if (t2 > 0) {
+      const gi2 = this.permMod12[ii + i2 + this.perm[jj + j2 + this.perm[kk + k2]]] * 3;
+      t2 *= t2;
+      n2 = t2 * t2 * (SimplexNoise3D.grad3[gi2] * x2 + SimplexNoise3D.grad3[gi2 + 1] * y2 + SimplexNoise3D.grad3[gi2 + 2] * z2);
+    }
+
+    let t3 = 0.6 - x3 * x3 - y3 * y3 - z3 * z3;
+    if (t3 > 0) {
+      const gi3 = this.permMod12[ii + 1 + this.perm[jj + 1 + this.perm[kk + 1]]] * 3;
+      t3 *= t3;
+      n3 = t3 * t3 * (SimplexNoise3D.grad3[gi3] * x3 + SimplexNoise3D.grad3[gi3 + 1] * y3 + SimplexNoise3D.grad3[gi3 + 2] * z3);
+    }
+
+    return 32.0 * (n0 + n1 + n2 + n3);
+  }
+}
+
+interface Streamline {
   x: number;
   y: number;
-  z: number;
-}
-
-interface Edge {
-  a: number;
-  b: number;
-}
-
-interface Shape3D {
-  vertices: Point3D[];
-  edges: Edge[];
-  x: number; // base X (percentage of width: 0..1)
-  y: number; // base Y (percentage of height: 0..1)
-  z: number; // depth offset
-  size: number;
-  rx: number;
-  ry: number;
-  rz: number;
-  vrx: number;
-  vry: number;
-  vrz: number;
-  floatPhase: number;
-  floatSpeed: number;
-  type: "icosahedron" | "gyro" | "octahedron";
+  history: { x: number; y: number }[];
+  maxHistory: number;
+  speed: number;
+  width: number;
+  tier: "river_core" | "river_halo" | "flank" | "ambient";
+  sparkPhase: number;
+  sparkSpeed: number;
+  hasSpark: boolean;
+  alpha: number;
 }
 
 export function CinematicSportsAtmosphere() {
@@ -38,513 +144,399 @@ export function CinematicSportsAtmosphere() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
+
+    const simplex = new SimplexNoise3D(9911);
 
     let animId: number;
     let width = 0;
     let height = 0;
 
-    // Theme state
     let isDark = document.documentElement.classList.contains("dark");
-
     const observer = new MutationObserver(() => {
       isDark = document.documentElement.classList.contains("dark");
     });
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
 
-    // Handle Resize & Retina support
     const handleResize = () => {
       if (!canvas) return;
-      const rect = canvas.parentElement?.getBoundingClientRect() || canvas.getBoundingClientRect();
-      width = canvas.width = rect.width || window.innerWidth;
-      height = canvas.height = rect.height || window.innerHeight * 4;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
     handleResize();
     window.addEventListener("resize", handleResize);
 
-    // Mouse coordinates for parallax tilt
-    const mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
-    const handleMouseMove = (e: MouseEvent) => {
-      const normX = (e.clientX / window.innerWidth - 0.5) * 2;
-      const normY = (e.clientY / window.innerHeight - 0.5) * 2;
-      mouse.targetX = normX;
-      mouse.targetY = normY;
+    const mouse = {
+      x: -1000,
+      y: -1000,
+      targetX: -1000,
+      targetY: -1000,
+      active: false,
     };
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
 
-    // Scroll parallax tracking
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.targetX = e.clientX - rect.left;
+      mouse.targetY = e.clientY - rect.top;
+      mouse.active = true;
+    };
+
+    const handleMouseLeave = () => {
+      mouse.active = false;
+      mouse.targetX = -1000;
+      mouse.targetY = -1000;
+    };
+
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    document.addEventListener("mouseleave", handleMouseLeave);
+
     let scrollY = window.scrollY;
     const handleScroll = () => {
       scrollY = window.scrollY;
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
 
-    // --- 1. BUILD 3D GEOMETRIES ---
-    // A. Icosahedron (12 vertices, 30 edges)
-    const phi = (1 + Math.sqrt(5)) / 2;
-    const rawIcoVerts: Point3D[] = [
-      { x: -1, y: phi, z: 0 },
-      { x: 1, y: phi, z: 0 },
-      { x: -1, y: -phi, z: 0 },
-      { x: 1, y: -phi, z: 0 },
-      { x: 0, y: -1, z: phi },
-      { x: 0, y: 1, z: phi },
-      { x: 0, y: -1, z: -phi },
-      { x: 0, y: 1, z: -phi },
-      { x: phi, y: 0, z: -1 },
-      { x: phi, y: 0, z: 1 },
-      { x: -phi, y: 0, z: -1 },
-      { x: -phi, y: 0, z: 1 },
-    ];
-    // Normalize vertices
-    const icoVerts: Point3D[] = rawIcoVerts.map((v) => {
-      const len = Math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
-      return { x: v.x / len, y: v.y / len, z: v.z / len };
-    });
-    const icoEdges: Edge[] = [];
-    for (let i = 0; i < icoVerts.length; i++) {
-      for (let j = i + 1; j < icoVerts.length; j++) {
-        const dx = icoVerts[i].x - icoVerts[j].x;
-        const dy = icoVerts[i].y - icoVerts[j].y;
-        const dz = icoVerts[i].z - icoVerts[j].z;
-        const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
-        // In normalized icosahedron, edge distance is ~1.051
-        if (Math.abs(dist - 1.051) < 0.15) {
-          icoEdges.push({ a: i, b: j });
+    // --- HIGH DENSITY STREAMLINE FIELD (GENOMINES ARCHITECTURE) ---
+    // 500 streamlines on desktop for dense, rich bioluminescent river
+    const STREAMLINE_COUNT = width < 768 ? 240 : 520;
+    const streamlines: Streamline[] = [];
+
+    // Computes the central luminous river spine path (diagonal S-curve)
+    const getRiverCenter = (py: number, timeZ: number) => {
+      const normY = py / (height || 1);
+      // Fluid meandering river across screen width
+      const riverBaseX = width * 0.48;
+      const meander =
+        Math.sin(normY * 3.2 + timeZ * 0.8) * (width * 0.28) +
+        Math.cos(normY * 1.5 - timeZ * 0.4) * (width * 0.14);
+      return riverBaseX + meander;
+    };
+
+    const spawnStreamline = (index: number, initialScatter = false): Streamline => {
+      const ratio = index / STREAMLINE_COUNT;
+      let tier: "river_core" | "river_halo" | "flank" | "ambient";
+      let widthVal: number;
+      let maxHist: number;
+      let speedVal: number;
+      let alphaVal: number;
+      const hasSpark = Math.random() < 0.24;
+
+      if (ratio < 0.18) {
+        // Tier 1: River Core (The brilliant glowing heart of the Genomines stream)
+        tier = "river_core";
+        widthVal = 2.4 + Math.random() * 2.2; // 2.4 - 4.6px
+        maxHist = 45 + Math.floor(Math.random() * 25);
+        speedVal = 2.6 + Math.random() * 1.8;
+        alphaVal = 0.85 + Math.random() * 0.15;
+      } else if (ratio < 0.42) {
+        // Tier 2: River Halo & Concentrated Filaments
+        tier = "river_halo";
+        widthVal = 1.4 + Math.random() * 1.2; // 1.4 - 2.6px
+        maxHist = 36 + Math.floor(Math.random() * 20);
+        speedVal = 2.0 + Math.random() * 1.4;
+        alphaVal = 0.55 + Math.random() * 0.25;
+      } else if (ratio < 0.70) {
+        // Tier 3: Flanking Speed Streaks (Cyan & Lime)
+        tier = "flank";
+        widthVal = 1.0 + Math.random() * 1.0;
+        maxHist = 28 + Math.floor(Math.random() * 16);
+        speedVal = 1.8 + Math.random() * 1.2;
+        alphaVal = 0.35 + Math.random() * 0.2;
+      } else {
+        // Tier 4: Ambient Tapestry (Delicate background mycelial filaments)
+        tier = "ambient";
+        widthVal = 0.6 + Math.random() * 0.6;
+        maxHist = 22 + Math.floor(Math.random() * 14);
+        speedVal = 1.4 + Math.random() * 0.9;
+        alphaVal = 0.14 + Math.random() * 0.12;
+      }
+
+      // Compute seed coordinates
+      const sy = initialScatter ? Math.random() * height : -30 - Math.random() * 120;
+      let sx: number;
+
+      if (tier === "river_core") {
+        const rc = getRiverCenter(sy, 0);
+        sx = rc + (Math.random() - 0.5) * (width * 0.12);
+      } else if (tier === "river_halo") {
+        const rc = getRiverCenter(sy, 0);
+        sx = rc + (Math.random() - 0.5) * (width * 0.28);
+      } else {
+        sx = Math.random() * width;
+      }
+
+      return {
+        x: sx,
+        y: sy,
+        history: [{ x: sx, y: sy }],
+        maxHistory: maxHist,
+        speed: speedVal,
+        width: widthVal,
+        tier,
+        sparkPhase: Math.random(),
+        sparkSpeed: 0.014 + Math.random() * 0.018,
+        hasSpark,
+        alpha: alphaVal,
+      };
+    };
+
+    for (let i = 0; i < STREAMLINE_COUNT; i++) {
+      streamlines.push(spawnStreamline(i, true));
+    }
+
+    // --- GENOMINES CURL NOISE VECTOR MATH ---
+    // Evaluates divergence-free curl flow + magnetic mouse vortex
+    const getVector = (
+      px: number,
+      py: number,
+      timeZ: number,
+      mx: number,
+      my: number,
+      mActive: boolean
+    ) => {
+      // Scale coordinates
+      const s1 = 0.00085;
+      const s2 = 0.0024;
+      const delta = 1.0;
+
+      // Genomines dual sine wave modulation & fBm noise potential
+      const pYPlus =
+        simplex.noise(px * s1, (py + delta) * s1, timeZ) * 1.0 +
+        simplex.noise(px * s2, (py + delta) * s2, timeZ * 1.4) * 0.5 +
+        Math.sin((py + delta) * 0.003 + timeZ * 0.6) * 0.12;
+
+      const pYMinus =
+        simplex.noise(px * s1, (py - delta) * s1, timeZ) * 1.0 +
+        simplex.noise(px * s2, (py - delta) * s2, timeZ * 1.4) * 0.5 +
+        Math.sin((py - delta) * 0.003 + timeZ * 0.6) * 0.12;
+
+      const pXPlus =
+        simplex.noise((px + delta) * s1, py * s1, timeZ) * 1.0 +
+        simplex.noise((px + delta) * s2, py * s2, timeZ * 1.4) * 0.5;
+
+      const pXMinus =
+        simplex.noise((px - delta) * s1, py * s1, timeZ) * 1.0 +
+        simplex.noise((px - delta) * s2, py * s2, timeZ * 1.4) * 0.5;
+
+      // Incompressible Curl: Vx = dPsi/dy, Vy = -dPsi/dx
+      let vx = (pYPlus - pYMinus) / (2 * delta) * 280.0;
+      let vy = -(pXPlus - pXMinus) / (2 * delta) * 280.0;
+
+      // Flow momentum: predominantly downward with diagonal athletic drift
+      vx += 0.85;
+      vy += 1.6;
+
+      // Mouse interactive fluid vortex
+      if (mActive) {
+        const dx = px - mx;
+        const dy = py - my;
+        const distSq = dx * dx + dy * dy;
+        const radius = 280;
+        const radiusSq = radius * radius;
+
+        if (distSq < radiusSq && distSq > 4) {
+          const dist = Math.sqrt(distSq);
+          const factor = Math.pow(1 - dist / radius, 1.8);
+          const normX = dx / dist;
+          const normY = dy / dist;
+
+          // Radial repulsion (lines part around cursor)
+          vx += normX * factor * 5.5;
+          vy += normY * factor * 5.5;
+
+          // Tangential swirl (fluid vortex)
+          vx += -normY * factor * 7.0;
+          vy += normX * factor * 7.0;
         }
       }
-    }
 
-    // B. Octahedron (6 vertices, 12 edges)
-    const octVerts: Point3D[] = [
-      { x: 1, y: 0, z: 0 },
-      { x: -1, y: 0, z: 0 },
-      { x: 0, y: 1, z: 0 },
-      { x: 0, y: -1, z: 0 },
-      { x: 0, y: 0, z: 1 },
-      { x: 0, y: 0, z: -1 },
-    ];
-    const octEdges: Edge[] = [
-      { a: 0, b: 2 }, { a: 0, b: 3 }, { a: 0, b: 4 }, { a: 0, b: 5 },
-      { a: 1, b: 2 }, { a: 1, b: 3 }, { a: 1, b: 4 }, { a: 1, b: 5 },
-      { a: 2, b: 4 }, { a: 2, b: 5 }, { a: 3, b: 4 }, { a: 3, b: 5 },
-    ];
+      const len = Math.sqrt(vx * vx + vy * vy);
+      if (len > 0.0001) {
+        vx /= len;
+        vy /= len;
+      }
 
-    // C. Gyro Dual Rings (24 vertices, connecting edges)
-    const gyroVerts: Point3D[] = [];
-    const gyroEdges: Edge[] = [];
-    const ringSegments = 14;
-    // Ring 1 (XY plane)
-    for (let i = 0; i < ringSegments; i++) {
-      const angle = (i / ringSegments) * Math.PI * 2;
-      gyroVerts.push({ x: Math.cos(angle), y: Math.sin(angle), z: 0 });
-      gyroEdges.push({ a: i, b: (i + 1) % ringSegments });
-    }
-    // Ring 2 (YZ plane, slightly larger)
-    for (let i = 0; i < ringSegments; i++) {
-      const angle = (i / ringSegments) * Math.PI * 2;
-      gyroVerts.push({ x: 0, y: Math.cos(angle) * 1.15, z: Math.sin(angle) * 1.15 });
-      const currentIdx = ringSegments + i;
-      const nextIdx = ringSegments + ((i + 1) % ringSegments);
-      gyroEdges.push({ a: currentIdx, b: nextIdx });
-    }
-    // Connect subtle struts between the two perpendicular rings
-    for (let i = 0; i < 4; i++) {
-      gyroEdges.push({ a: (i * 3) % ringSegments, b: ringSegments + (i * 3) % ringSegments });
-    }
+      return { vx, vy };
+    };
 
-    // --- 2. INSTANTIATE MOVING 3D FIGURES DISTRIBUTED ALONG PAGE HEIGHT ---
-    const shapes: Shape3D[] = [
-      // Top right (Bento section area)
-      {
-        vertices: icoVerts,
-        edges: icoEdges,
-        x: 0.88,
-        y: 0.08,
-        z: 320,
-        size: 95,
-        rx: 0.2,
-        ry: 0.4,
-        rz: 0.1,
-        vrx: 0.006,
-        vry: 0.009,
-        vrz: 0.004,
-        floatPhase: 0,
-        floatSpeed: 0.015,
-        type: "icosahedron",
-      },
-      // Mid-left (Featured Clubs area)
-      {
-        vertices: gyroVerts,
-        edges: gyroEdges,
-        x: 0.1,
-        y: 0.28,
-        z: 280,
-        size: 110,
-        rx: 0.5,
-        ry: 0.2,
-        rz: 0.3,
-        vrx: 0.008,
-        vry: 0.005,
-        vrz: 0.007,
-        floatPhase: 1.5,
-        floatSpeed: 0.018,
-        type: "gyro",
-      },
-      // Center-right (AI Quiz section area)
-      {
-        vertices: icoVerts,
-        edges: icoEdges,
-        x: 0.92,
-        y: 0.52,
-        z: 360,
-        size: 130,
-        rx: 0.1,
-        ry: 0.8,
-        rz: 0.4,
-        vrx: 0.005,
-        vry: 0.007,
-        vrz: 0.006,
-        floatPhase: 3.1,
-        floatSpeed: 0.012,
-        type: "icosahedron",
-      },
-      // Lower-left (Athlete Stories & Editorial area)
-      {
-        vertices: octVerts,
-        edges: octEdges,
-        x: 0.08,
-        y: 0.74,
-        z: 260,
-        size: 90,
-        rx: 0.4,
-        ry: 0.1,
-        rz: 0.5,
-        vrx: 0.009,
-        vry: 0.011,
-        vrz: 0.005,
-        floatPhase: 4.2,
-        floatSpeed: 0.02,
-        type: "octahedron",
-      },
-      // Bottom-right (Final Booking area)
-      {
-        vertices: gyroVerts,
-        edges: gyroEdges,
-        x: 0.86,
-        y: 0.92,
-        z: 300,
-        size: 105,
-        rx: 0.3,
-        ry: 0.6,
-        rz: 0.2,
-        vrx: 0.007,
-        vry: 0.008,
-        vrz: 0.005,
-        floatPhase: 2.2,
-        floatSpeed: 0.016,
-        type: "gyro",
-      },
-    ];
-
-    // --- 3. KINETIC ENERGY PARTICLES (Volt & Cyan) ---
-    const particleCount = 40;
-    const particles: Array<{
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      size: number;
-      colorDark: string;
-      colorLight: string;
-      alpha: number;
-    }> = [];
-
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random(),
-        y: Math.random(),
-        vx: (Math.random() - 0.5) * 0.0003,
-        vy: (Math.random() - 0.5) * 0.0003,
-        size: Math.random() * 2.2 + 1.2,
-        colorDark: i % 2 === 0 ? "#d4ff00" : "#00f0ff",
-        colorLight: i % 2 === 0 ? "#65a30d" : "#0284c7",
-        alpha: Math.random() * 0.4 + 0.2,
-      });
-    }
-
-    // --- 4. 3D TOPOGRAPHICAL TERRAIN ELEVATION MESH ---
-    const meshCols = 18;
-    const meshRows = 12;
-    let waveClock = 0;
-
-    // --- 5. RENDER LOOP ---
-    const fov = 450;
+    let frame = 0;
+    let lastTime = performance.now();
 
     const render = () => {
-      waveClock += 0.014;
-      mouse.x += (mouse.targetX - mouse.x) * 0.05;
-      mouse.y += (mouse.targetY - mouse.y) * 0.05;
+      const now = performance.now();
+      const dt = Math.min((now - lastTime) / 1000, 0.05);
+      lastTime = now;
+      frame++;
+
+      mouse.x += (mouse.targetX - mouse.x) * 0.12;
+      mouse.y += (mouse.targetY - mouse.y) * 0.12;
 
       ctx.clearRect(0, 0, width, height);
 
-      // A. Ambient Radial Mouse Glow (Reactive to theme)
-      const mouseScreenX = (mouse.x * 0.5 + 0.5) * width;
-      const mouseScreenY = scrollY + (mouse.y * 0.5 + 0.5) * window.innerHeight;
+      const timeZ = frame * 0.0022 + scrollY * 0.0004;
 
-      const radial = ctx.createRadialGradient(
-        mouseScreenX,
-        mouseScreenY,
-        40,
-        mouseScreenX,
-        mouseScreenY,
-        Math.min(width, 900)
-      );
+      // Volumetric Bioluminescent Phosphor Bleed (Genomines signature aura)
       if (isDark) {
-        radial.addColorStop(0, "rgba(212, 255, 0, 0.045)");
-        radial.addColorStop(0.5, "rgba(0, 240, 255, 0.02)");
-        radial.addColorStop(1, "rgba(6, 7, 9, 0)");
-      } else {
-        radial.addColorStop(0, "rgba(101, 163, 13, 0.04)");
-        radial.addColorStop(0.5, "rgba(2, 132, 199, 0.015)");
-        radial.addColorStop(1, "rgba(248, 250, 252, 0)");
+        const riverX = getRiverCenter(height * 0.5, timeZ);
+        const glowGrad = ctx.createRadialGradient(
+          riverX,
+          height * 0.5,
+          60,
+          riverX,
+          height * 0.5,
+          width * 0.65
+        );
+        glowGrad.addColorStop(0, "rgba(212, 255, 0, 0.065)");
+        glowGrad.addColorStop(0.35, "rgba(163, 230, 53, 0.03)");
+        glowGrad.addColorStop(0.7, "rgba(0, 240, 255, 0.012)");
+        glowGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
+        ctx.fillStyle = glowGrad;
+        ctx.fillRect(0, 0, width, height);
       }
-      ctx.fillStyle = radial;
-      ctx.fillRect(0, 0, width, height);
 
-      // B. Render 3D Perspective Elevation Mesh (Upper & Lower waves)
-      const drawElevationMesh = (baseYPercent: number, rowCount: number) => {
-        const originX = width / 2 + mouse.x * 40;
-        const originY = height * baseYPercent + mouse.y * 25;
-        const meshPts: Array<Array<{ x: number; y: number; visible: boolean }>> = [];
+      // Group rendering by tier
+      const tiers: ("ambient" | "flank" | "river_halo" | "river_core")[] = [
+        "ambient",
+        "flank",
+        "river_halo",
+        "river_core",
+      ];
 
-        for (let r = 0; r < rowCount; r++) {
-          meshPts[r] = [];
-          const zDepth = 180 + r * 50;
-          const scale = fov / zDepth;
+      for (const tier of tiers) {
+        for (let i = 0; i < streamlines.length; i++) {
+          const s = streamlines[i];
+          if (s.tier !== tier) continue;
 
-          for (let c = 0; c < meshCols; c++) {
-            const worldX = (c - meshCols / 2) * 110;
-            const waveY =
-              Math.sin(c * 0.4 + waveClock) * 30 +
-              Math.cos(r * 0.5 + waveClock * 1.1) * 20 +
-              Math.sin((c + r) * 0.25 + waveClock) * 15;
+          const { vx, vy } = getVector(
+            s.x,
+            s.y,
+            timeZ,
+            mouse.x,
+            mouse.y,
+            mouse.active
+          );
 
-            const projX = originX + worldX * scale;
-            const projY = originY + (waveY + r * 14) * scale;
+          const stepDist = s.speed * dt * 60;
+          s.x += vx * stepDist;
+          s.y += vy * stepDist;
 
-            meshPts[r][c] = {
-              x: projX,
-              y: projY,
-              visible: projX >= -100 && projX <= width + 100 && projY >= -100 && projY <= height + 100,
-            };
+          s.history.push({ x: s.x, y: s.y });
+          if (s.history.length > s.maxHistory) {
+            s.history.shift();
           }
-        }
 
-        // Draw horizontal mesh lines
-        for (let r = 0; r < rowCount; r++) {
-          const rowProgress = r / rowCount;
-          ctx.lineWidth = 1;
-          if (isDark) {
-            ctx.strokeStyle = `rgba(212, 255, 0, ${rowProgress * 0.12})`;
-          } else {
-            ctx.strokeStyle = `rgba(100, 116, 139, ${rowProgress * 0.15})`;
+          const margin = 100;
+          if (
+            s.x < -margin ||
+            s.x > width + margin ||
+            s.y > height + margin ||
+            s.history.length < 2
+          ) {
+            streamlines[i] = spawnStreamline(i, false);
+            continue;
           }
+
+          const pts = s.history;
+          if (pts.length < 3) continue;
+
           ctx.beginPath();
-          let started = false;
-          for (let c = 0; c < meshCols; c++) {
-            const pt = meshPts[r][c];
-            if (!pt.visible) continue;
-            if (!started) {
-              ctx.moveTo(pt.x, pt.y);
-              started = true;
+          ctx.moveTo(pts[0].x, pts[0].y);
+
+          for (let p = 1; p < pts.length - 1; p++) {
+            const midX = (pts[p].x + pts[p + 1].x) / 2;
+            const midY = (pts[p].y + pts[p + 1].y) / 2;
+            ctx.quadraticCurveTo(pts[p].x, pts[p].y, midX, midY);
+          }
+          ctx.lineTo(pts[pts.length - 1].x, pts[pts.length - 1].y);
+
+          ctx.lineWidth = s.width;
+          ctx.lineCap = "round";
+          ctx.lineJoin = "round";
+
+          if (isDark) {
+            if (s.tier === "river_core") {
+              // Genomines vibrant Neon Volt core with intense phosphor bloom
+              ctx.strokeStyle = `rgba(225, 255, 60, ${s.alpha})`;
+              ctx.shadowColor = "#d4ff00";
+              ctx.shadowBlur = 20;
+            } else if (s.tier === "river_halo") {
+              ctx.strokeStyle = `rgba(180, 245, 40, ${s.alpha})`;
+              ctx.shadowColor = "#a3e635";
+              ctx.shadowBlur = 10;
+            } else if (s.tier === "flank") {
+              // Subtle cyan speed accents mixed into lime currents
+              if (i % 3 === 0) {
+                ctx.strokeStyle = `rgba(0, 240, 255, ${s.alpha * 0.85})`;
+                ctx.shadowColor = "#00f0ff";
+                ctx.shadowBlur = 8;
+              } else {
+                ctx.strokeStyle = `rgba(163, 230, 53, ${s.alpha})`;
+                ctx.shadowColor = "#a3e635";
+                ctx.shadowBlur = 6;
+              }
             } else {
-              ctx.lineTo(pt.x, pt.y);
+              // Ambient delicate filaments
+              ctx.strokeStyle = `rgba(212, 255, 0, ${s.alpha})`;
+              ctx.shadowBlur = 0;
+            }
+          } else {
+            // LIGHT THEME: High-contrast athletic slate/graphite with emerald & lime highlights
+            if (s.tier === "river_core") {
+              ctx.strokeStyle = `rgba(21, 128, 61, ${s.alpha * 0.9})`; // Racing Green
+              ctx.shadowColor = "rgba(34, 197, 94, 0.4)";
+              ctx.shadowBlur = 12;
+            } else if (s.tier === "river_halo") {
+              ctx.strokeStyle = `rgba(30, 41, 59, ${s.alpha * 0.7})`; // Deep slate
+              ctx.shadowBlur = 0;
+            } else if (s.tier === "flank") {
+              ctx.strokeStyle = `rgba(51, 65, 85, ${s.alpha * 0.6})`;
+              ctx.shadowBlur = 0;
+            } else {
+              ctx.strokeStyle = `rgba(100, 116, 139, ${s.alpha * 0.5})`; // Hairline slate
+              ctx.shadowBlur = 0;
             }
           }
+
           ctx.stroke();
-        }
-
-        // Draw vertical mesh lines
-        for (let c = 0; c < meshCols; c += 2) {
-          if (isDark) {
-            ctx.strokeStyle = "rgba(0, 240, 255, 0.06)";
-          } else {
-            ctx.strokeStyle = "rgba(2, 132, 199, 0.08)";
-          }
-          ctx.beginPath();
-          let started = false;
-          for (let r = 0; r < rowCount; r++) {
-            const pt = meshPts[r][c];
-            if (!pt.visible) continue;
-            if (!started) {
-              ctx.moveTo(pt.x, pt.y);
-              started = true;
-            } else {
-              ctx.lineTo(pt.x, pt.y);
-            }
-          }
-          ctx.stroke();
-        }
-      };
-
-      // Draw elevation mesh near upper section (25%) and lower section (75%)
-      drawElevationMesh(0.18, meshRows);
-      drawElevationMesh(0.65, meshRows);
-
-      // C. Render Kinetic Energy Particles & Dynamic Constellations
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-
-        if (p.x < 0) p.x = 1;
-        if (p.x > 1) p.x = 0;
-        if (p.y < 0) p.y = 1;
-        if (p.y > 1) p.y = 0;
-
-        const px = p.x * width;
-        const py = p.y * height;
-        const color = isDark ? p.colorDark : p.colorLight;
-
-        // Draw particle node
-        ctx.beginPath();
-        ctx.arc(px, py, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = color;
-        ctx.globalAlpha = p.alpha;
-        if (isDark) {
-          ctx.shadowColor = color;
-          ctx.shadowBlur = 8;
-        }
-        ctx.fill();
-        ctx.shadowBlur = 0;
-
-        // Connect nearby particles within 130px
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const dx = px - p2.x * width;
-          const dy = py - p2.y * height;
-          const distSq = dx * dx + dy * dy;
-
-          if (distSq < 16900) {
-            const dist = Math.sqrt(distSq);
-            const lineAlpha = (1 - dist / 130) * (isDark ? 0.16 : 0.14);
-            ctx.beginPath();
-            ctx.moveTo(px, py);
-            ctx.lineTo(p2.x * width, p2.y * height);
-            ctx.strokeStyle = color;
-            ctx.globalAlpha = lineAlpha;
-            ctx.lineWidth = 1;
-            ctx.stroke();
-          }
-        }
-      }
-      ctx.globalAlpha = 1.0;
-
-      // D. RENDER MOVING 3D FIGURES (POLYHEDRA & GYRO RINGS)
-      shapes.forEach((shape) => {
-        // Continuous rotation on 3 axes
-        shape.rx += shape.vrx;
-        shape.ry += shape.vry;
-        shape.rz += shape.vrz;
-        shape.floatPhase += shape.floatSpeed;
-
-        // Floating offset calculation
-        const floatOffsetY = Math.sin(shape.floatPhase) * 25;
-        const floatOffsetX = Math.cos(shape.floatPhase * 0.8) * 15;
-
-        // Mouse deflection on shape position
-        const centerScreenX = shape.x * width + floatOffsetX + mouse.x * 25;
-        const centerScreenY = shape.y * height + floatOffsetY + mouse.y * 20;
-
-        // Precompute trigonometric matrices for 3D rotation
-        const cx = Math.cos(shape.rx + mouse.y * 0.2);
-        const sx = Math.sin(shape.rx + mouse.y * 0.2);
-        const cy = Math.cos(shape.ry + mouse.x * 0.2);
-        const sy = Math.sin(shape.ry + mouse.x * 0.2);
-        const cz = Math.cos(shape.rz);
-        const sz = Math.sin(shape.rz);
-
-        // Project all vertices
-        const projected = shape.vertices.map((v) => {
-          // Scale base vertex by shape size
-          const x0 = v.x * shape.size;
-          const y0 = v.y * shape.size;
-          const z0 = v.z * shape.size;
-
-          // Rotate around X
-          const y1 = y0 * cx - z0 * sx;
-          const z1 = y0 * sx + z0 * cx;
-
-          // Rotate around Y
-          const x2 = x0 * cy + z1 * sy;
-          const z2 = -x0 * sy + z1 * cy;
-
-          // Rotate around Z
-          const x3 = x2 * cz - y1 * sz;
-          const y3 = x2 * sz + y1 * cz;
-          const z3 = z2;
-
-          // 3D perspective projection
-          const totalDepth = Math.max(shape.z + z3, 100);
-          const scale = fov / totalDepth;
-          const projX = centerScreenX + x3 * scale;
-          const projY = centerScreenY + y3 * scale;
-
-          return { x: projX, y: projY, z: z3, scale };
-        });
-
-        // Determine shape color based on theme and type
-        let edgeColor = isDark ? "rgba(212, 255, 0, 0.45)" : "rgba(101, 163, 13, 0.45)";
-        let glowColor = isDark ? "#d4ff00" : "#65a30d";
-        let nodeColor = isDark ? "#ffffff" : "#0f172a";
-
-        if (shape.type === "gyro") {
-          edgeColor = isDark ? "rgba(0, 240, 255, 0.4)" : "rgba(2, 132, 199, 0.45)";
-          glowColor = isDark ? "#00f0ff" : "#0284c7";
-          nodeColor = isDark ? "#00f0ff" : "#0284c7";
-        } else if (shape.type === "octahedron") {
-          edgeColor = isDark ? "rgba(255, 255, 255, 0.35)" : "rgba(71, 85, 105, 0.45)";
-          glowColor = isDark ? "#ffffff" : "#475569";
-          nodeColor = isDark ? "#d4ff00" : "#65a30d";
-        }
-
-        // Draw 3D wireframe edges
-        ctx.lineWidth = 1.25;
-        ctx.strokeStyle = edgeColor;
-        if (isDark) {
-          ctx.shadowColor = glowColor;
-          ctx.shadowBlur = 6;
-        }
-
-        shape.edges.forEach((edge) => {
-          const p1 = projected[edge.a];
-          const p2 = projected[edge.b];
-          if (!p1 || !p2) return;
-
-          ctx.beginPath();
-          ctx.moveTo(p1.x, p1.y);
-          ctx.lineTo(p2.x, p2.y);
-          ctx.stroke();
-        });
-        ctx.shadowBlur = 0;
-
-        // Draw vertex nodes
-        projected.forEach((pt) => {
-          const nodeRadius = Math.max(pt.scale * 1.8, 1.2);
-          ctx.beginPath();
-          ctx.arc(pt.x, pt.y, nodeRadius, 0, Math.PI * 2);
-          ctx.fillStyle = nodeColor;
-          if (isDark) {
-            ctx.shadowColor = glowColor;
-            ctx.shadowBlur = 5;
-          }
-          ctx.fill();
           ctx.shadowBlur = 0;
-        });
-      });
+
+          // Traveling Spark Nodes (Bio-electric kinetic pulses)
+          if (s.hasSpark && pts.length > 8) {
+            s.sparkPhase += s.sparkSpeed;
+            if (s.sparkPhase > 1) s.sparkPhase = 0;
+
+            const targetIdx = Math.floor(s.sparkPhase * (pts.length - 1));
+            const sparkPt = pts[targetIdx];
+
+            if (sparkPt) {
+              const sparkRadius = s.tier === "river_core" ? 2.6 : 1.8;
+              ctx.beginPath();
+              ctx.arc(sparkPt.x, sparkPt.y, sparkRadius, 0, Math.PI * 2);
+
+              if (isDark) {
+                ctx.fillStyle = s.tier === "river_core" ? "#ffffff" : "#d4ff00";
+                ctx.shadowColor = "#d4ff00";
+                ctx.shadowBlur = 14;
+              } else {
+                ctx.fillStyle = "#16a34a";
+                ctx.shadowColor = "#22c55e";
+                ctx.shadowBlur = 8;
+              }
+
+              ctx.fill();
+              ctx.shadowBlur = 0;
+            }
+          }
+        }
+      }
 
       animId = requestAnimationFrame(render);
     };
@@ -556,6 +548,7 @@ export function CinematicSportsAtmosphere() {
       observer.disconnect();
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseleave", handleMouseLeave);
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
@@ -565,14 +558,18 @@ export function CinematicSportsAtmosphere() {
       aria-hidden="true"
       className="absolute inset-0 pointer-events-none overflow-hidden select-none z-0"
     >
-      {/* Dynamic Background Base: Slate-50 in light mode, deep #060709 in dark mode */}
-      <div className="absolute inset-0 bg-slate-50 dark:bg-[#060709] transition-colors duration-500" />
+      {/* Dynamic Background Base: Slate-50 in light mode, deep #07080a in dark mode */}
+      <div className="absolute inset-0 bg-slate-50 dark:bg-[#07080a] transition-colors duration-500" />
 
-      {/* Canvas rendering moving 3D geometric figures, elevation mesh wave, and kinetic particles */}
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full block" />
+      {/* Sticky Fullscreen Flow Field Canvas:
+          Sticks to the top of the viewport during scroll through all below-hero sections,
+          guaranteeing silky-smooth 60 FPS viewport rendering and ZERO overlap with Hero Section */}
+      <div className="sticky top-0 w-full h-screen pointer-events-none -mb-[100vh]">
+        <canvas ref={canvasRef} className="w-full h-full block" />
+      </div>
 
-      {/* Top Transition Soft Gradient: Seamlessly dissolves from Hero Section into the 3D atmosphere */}
-      <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#08090b] via-transparent to-transparent pointer-events-none z-10" />
+      {/* Top Transition Soft Gradient: Seamlessly dissolves from Hero Section into the Flow Field */}
+      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#08090b] dark:from-[#08090b] from-slate-200/50 via-transparent to-transparent pointer-events-none z-10" />
 
       {/* Subtle athletic dot grid texture */}
       <div className="absolute inset-0 bg-[radial-gradient(#64748b_1px,transparent_1px)] dark:bg-[radial-gradient(#d4ff00_1px,transparent_1px)] [background-size:48px_48px] opacity-[0.035] pointer-events-none" />
