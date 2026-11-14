@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // --- 3D SIMPLEX NOISE ENGINE ---
 class SimplexNoise3D {
   private perm: Uint8Array;
   private permMod12: Uint8Array;
 
-  constructor(seed = 19937) {
+  constructor(seed = 31337) {
     this.perm = new Uint8Array(512);
     this.permMod12 = new Uint8Array(512);
     const p = new Uint8Array(256);
@@ -135,10 +135,12 @@ interface Streamline {
   sparkSpeed: number;
   hasSpark: boolean;
   alpha: number;
+  accentType: "volt" | "cyan" | "emerald" | "amber";
 }
 
 export function CinematicSportsAtmosphere() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -147,7 +149,7 @@ export function CinematicSportsAtmosphere() {
     const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
 
-    const simplex = new SimplexNoise3D(9911);
+    const simplex = new SimplexNoise3D(7771);
 
     let animId: number;
     let width = 0;
@@ -183,9 +185,8 @@ export function CinematicSportsAtmosphere() {
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      mouse.targetX = e.clientX - rect.left;
-      mouse.targetY = e.clientY - rect.top;
+      mouse.targetX = e.clientX;
+      mouse.targetY = e.clientY;
       mouse.active = true;
     };
 
@@ -198,77 +199,110 @@ export function CinematicSportsAtmosphere() {
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
     document.addEventListener("mouseleave", handleMouseLeave);
 
+    // Scroll state tracking with smooth Hero threshold detection
     let scrollY = window.scrollY;
+    let docHeight = document.documentElement.scrollHeight || 5000;
+
     const handleScroll = () => {
       scrollY = window.scrollY;
+      docHeight = document.documentElement.scrollHeight || 5000;
+
+      // Visibility: Fades in when scrolling past Hero section (> 350px)
+      const heroThreshold = Math.max(window.innerHeight * 0.45, 360);
+      setIsVisible(scrollY > heroThreshold);
     };
+
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
 
-    // --- HIGH DENSITY STREAMLINE FIELD (GENOMINES ARCHITECTURE) ---
-    // 500 streamlines on desktop for dense, rich bioluminescent river
-    const STREAMLINE_COUNT = width < 768 ? 240 : 520;
+    // --- 600 DENSE STREAMLINES ACROSS ENTIRE VIEWPORT ---
+    const STREAMLINE_COUNT = width < 768 ? 280 : 580;
     const streamlines: Streamline[] = [];
 
-    // Computes the central luminous river spine path (diagonal S-curve)
-    const getRiverCenter = (py: number, timeZ: number) => {
+    // Continuous Section-Aware Meander Center
+    // As user scrolls, the central energy artery weaves and branches organically
+    const getRiverCenter = (py: number, timeZ: number, scrollProg: number) => {
       const normY = py / (height || 1);
-      // Fluid meandering river across screen width
-      const riverBaseX = width * 0.48;
+
+      // Section 1 (Sports): Diagonal from top-center to right
+      // Section 2 (Clubs): Broad dual-lane stadium curve
+      // Section 3 (AI Quiz): Synaptic serpentine neural channel
+      // Section 4 (Advantages & Reviews): Panoramic harmonic wave
+      // Section 5 (Booking): Center focal convergence
+      const baseCenter = width * (0.42 + 0.16 * Math.sin(scrollProg * Math.PI * 2));
       const meander =
-        Math.sin(normY * 3.2 + timeZ * 0.8) * (width * 0.28) +
-        Math.cos(normY * 1.5 - timeZ * 0.4) * (width * 0.14);
-      return riverBaseX + meander;
+        Math.sin(normY * 2.8 + timeZ * 0.9 + scrollProg * 4.0) * (width * 0.24) +
+        Math.cos(normY * 1.4 - timeZ * 0.45 + scrollProg * 2.5) * (width * 0.12);
+
+      return baseCenter + meander;
     };
 
-    const spawnStreamline = (index: number, initialScatter = false): Streamline => {
+    const spawnStreamline = (index: number, initialScatter = false, currentProg = 0): Streamline => {
       const ratio = index / STREAMLINE_COUNT;
       let tier: "river_core" | "river_halo" | "flank" | "ambient";
       let widthVal: number;
       let maxHist: number;
       let speedVal: number;
       let alphaVal: number;
-      const hasSpark = Math.random() < 0.24;
+      let accent: "volt" | "cyan" | "emerald" | "amber";
 
-      if (ratio < 0.18) {
-        // Tier 1: River Core (The brilliant glowing heart of the Genomines stream)
-        tier = "river_core";
-        widthVal = 2.4 + Math.random() * 2.2; // 2.4 - 4.6px
-        maxHist = 45 + Math.floor(Math.random() * 25);
-        speedVal = 2.6 + Math.random() * 1.8;
-        alphaVal = 0.85 + Math.random() * 0.15;
-      } else if (ratio < 0.42) {
-        // Tier 2: River Halo & Concentrated Filaments
-        tier = "river_halo";
-        widthVal = 1.4 + Math.random() * 1.2; // 1.4 - 2.6px
-        maxHist = 36 + Math.floor(Math.random() * 20);
-        speedVal = 2.0 + Math.random() * 1.4;
-        alphaVal = 0.55 + Math.random() * 0.25;
-      } else if (ratio < 0.70) {
-        // Tier 3: Flanking Speed Streaks (Cyan & Lime)
-        tier = "flank";
-        widthVal = 1.0 + Math.random() * 1.0;
-        maxHist = 28 + Math.floor(Math.random() * 16);
-        speedVal = 1.8 + Math.random() * 1.2;
-        alphaVal = 0.35 + Math.random() * 0.2;
+      // Accent distribution depends smoothly on scroll progression
+      if (currentProg > 0.4 && currentProg < 0.65) {
+        // AI Quiz zone: higher cyan synaptic frequency
+        accent = Math.random() < 0.45 ? "cyan" : "volt";
+      } else if (currentProg >= 0.2 && currentProg <= 0.4) {
+        // Clubs zone: athletic emerald & volt
+        accent = Math.random() < 0.35 ? "emerald" : "volt";
+      } else if (currentProg >= 0.65 && currentProg <= 0.85) {
+        // Advantages & Reviews: gold/amber highlights & volt
+        accent = Math.random() < 0.25 ? "amber" : "volt";
       } else {
-        // Tier 4: Ambient Tapestry (Delicate background mycelial filaments)
+        // Sports & Booking: high-voltage electric volt
+        accent = Math.random() < 0.2 ? "cyan" : "volt";
+      }
+
+      const hasSpark = Math.random() < (currentProg > 0.4 && currentProg < 0.65 ? 0.38 : 0.22);
+
+      if (ratio < 0.20) {
+        tier = "river_core";
+        widthVal = 2.4 + Math.random() * 2.0; // 2.4 - 4.4px
+        maxHist = 46 + Math.floor(Math.random() * 24);
+        speedVal = 2.4 + Math.random() * 1.6;
+        alphaVal = 0.85 + Math.random() * 0.15;
+      } else if (ratio < 0.45) {
+        tier = "river_halo";
+        widthVal = 1.4 + Math.random() * 1.2;
+        maxHist = 36 + Math.floor(Math.random() * 18);
+        speedVal = 1.9 + Math.random() * 1.3;
+        alphaVal = 0.55 + Math.random() * 0.25;
+      } else if (ratio < 0.72) {
+        tier = "flank";
+        widthVal = 1.0 + Math.random() * 0.9;
+        maxHist = 28 + Math.floor(Math.random() * 14);
+        speedVal = 1.6 + Math.random() * 1.1;
+        alphaVal = 0.34 + Math.random() * 0.20;
+      } else {
         tier = "ambient";
-        widthVal = 0.6 + Math.random() * 0.6;
-        maxHist = 22 + Math.floor(Math.random() * 14);
-        speedVal = 1.4 + Math.random() * 0.9;
+        widthVal = 0.6 + Math.random() * 0.5;
+        maxHist = 22 + Math.floor(Math.random() * 12);
+        speedVal = 1.3 + Math.random() * 0.8;
         alphaVal = 0.14 + Math.random() * 0.12;
       }
 
-      // Compute seed coordinates
-      const sy = initialScatter ? Math.random() * height : -30 - Math.random() * 120;
-      let sx: number;
+      // Initial scatter distributes across full height so every pixel is alive immediately
+      const sy = initialScatter
+        ? Math.random() * height
+        : Math.random() < 0.75
+        ? -20 - Math.random() * 80
+        : Math.random() * height;
 
+      let sx: number;
       if (tier === "river_core") {
-        const rc = getRiverCenter(sy, 0);
-        sx = rc + (Math.random() - 0.5) * (width * 0.12);
+        const rc = getRiverCenter(sy, 0, currentProg);
+        sx = rc + (Math.random() - 0.5) * (width * 0.14);
       } else if (tier === "river_halo") {
-        const rc = getRiverCenter(sy, 0);
-        sx = rc + (Math.random() - 0.5) * (width * 0.28);
+        const rc = getRiverCenter(sy, 0, currentProg);
+        sx = rc + (Math.random() - 0.5) * (width * 0.32);
       } else {
         sx = Math.random() * width;
       }
@@ -282,41 +316,44 @@ export function CinematicSportsAtmosphere() {
         width: widthVal,
         tier,
         sparkPhase: Math.random(),
-        sparkSpeed: 0.014 + Math.random() * 0.018,
+        sparkSpeed: 0.012 + Math.random() * 0.018,
         hasSpark,
         alpha: alphaVal,
+        accentType: accent,
       };
     };
 
     for (let i = 0; i < STREAMLINE_COUNT; i++) {
-      streamlines.push(spawnStreamline(i, true));
+      streamlines.push(spawnStreamline(i, true, 0));
     }
 
-    // --- GENOMINES CURL NOISE VECTOR MATH ---
-    // Evaluates divergence-free curl flow + magnetic mouse vortex
+    // --- CURL NOISE VECTOR FIELD WITH SECTION TRANSITIONS ---
     const getVector = (
       px: number,
       py: number,
       timeZ: number,
       mx: number,
       my: number,
-      mActive: boolean
+      mActive: boolean,
+      scrollProg: number
     ) => {
-      // Scale coordinates
-      const s1 = 0.00085;
-      const s2 = 0.0024;
+      // Dynamic frequency modulation per section
+      // In AI Quiz: higher frequency turbulence (synaptic branching)
+      // In Clubs: broader undulating arena waves
+      const s1 = 0.00085 + 0.00025 * Math.sin(scrollProg * Math.PI);
+      const s2 = 0.0022 + 0.0008 * (scrollProg > 0.4 && scrollProg < 0.65 ? 1.0 : 0.0);
       const delta = 1.0;
 
-      // Genomines dual sine wave modulation & fBm noise potential
+      // Section-modulated potential field
       const pYPlus =
         simplex.noise(px * s1, (py + delta) * s1, timeZ) * 1.0 +
         simplex.noise(px * s2, (py + delta) * s2, timeZ * 1.4) * 0.5 +
-        Math.sin((py + delta) * 0.003 + timeZ * 0.6) * 0.12;
+        Math.sin((py + delta) * 0.0028 + timeZ * 0.6 + scrollProg * 3.0) * 0.14;
 
       const pYMinus =
         simplex.noise(px * s1, (py - delta) * s1, timeZ) * 1.0 +
         simplex.noise(px * s2, (py - delta) * s2, timeZ * 1.4) * 0.5 +
-        Math.sin((py - delta) * 0.003 + timeZ * 0.6) * 0.12;
+        Math.sin((py - delta) * 0.0028 + timeZ * 0.6 + scrollProg * 3.0) * 0.14;
 
       const pXPlus =
         simplex.noise((px + delta) * s1, py * s1, timeZ) * 1.0 +
@@ -326,20 +363,35 @@ export function CinematicSportsAtmosphere() {
         simplex.noise((px - delta) * s1, py * s1, timeZ) * 1.0 +
         simplex.noise((px - delta) * s2, py * s2, timeZ * 1.4) * 0.5;
 
-      // Incompressible Curl: Vx = dPsi/dy, Vy = -dPsi/dx
-      let vx = (pYPlus - pYMinus) / (2 * delta) * 280.0;
-      let vy = -(pXPlus - pXMinus) / (2 * delta) * 280.0;
+      // Incompressible curl
+      let vx = ((pYPlus - pYMinus) / (2 * delta)) * 280.0;
+      let vy = -((pXPlus - pXMinus) / (2 * delta)) * 280.0;
 
-      // Flow momentum: predominantly downward with diagonal athletic drift
-      vx += 0.85;
-      vy += 1.6;
+      // Section-aware momentum drift
+      // In Sports: diagonal downward-right
+      // In Clubs: broader S-curve wave
+      // In Booking: focal convergence towards center
+      if (scrollProg > 0.85) {
+        // Final booking terminal: streamlines gently converge toward center
+        const centerX = width * 0.5;
+        const dirX = (centerX - px) / width;
+        vx += dirX * 1.2;
+        vy += 1.5;
+      } else if (scrollProg > 0.2 && scrollProg < 0.42) {
+        // Clubs section: stadium waves
+        vx += 0.6 + 0.8 * Math.sin(py * 0.004 + timeZ);
+        vy += 1.5;
+      } else {
+        vx += 0.85;
+        vy += 1.6;
+      }
 
-      // Mouse interactive fluid vortex
+      // Interactive Mouse Fluid Vortex
       if (mActive) {
         const dx = px - mx;
         const dy = py - my;
         const distSq = dx * dx + dy * dy;
-        const radius = 280;
+        const radius = 290;
         const radiusSq = radius * radius;
 
         if (distSq < radiusSq && distSq > 4) {
@@ -348,13 +400,11 @@ export function CinematicSportsAtmosphere() {
           const normX = dx / dist;
           const normY = dy / dist;
 
-          // Radial repulsion (lines part around cursor)
-          vx += normX * factor * 5.5;
-          vy += normY * factor * 5.5;
-
-          // Tangential swirl (fluid vortex)
-          vx += -normY * factor * 7.0;
-          vy += normX * factor * 7.0;
+          // Radial push + tangential swirl
+          vx += normX * factor * 5.6;
+          vy += normY * factor * 5.6;
+          vx += -normY * factor * 7.2;
+          vy += normX * factor * 7.2;
         }
       }
 
@@ -381,28 +431,33 @@ export function CinematicSportsAtmosphere() {
 
       ctx.clearRect(0, 0, width, height);
 
-      const timeZ = frame * 0.0022 + scrollY * 0.0004;
+      // Continuous scroll progress across all sections below Hero
+      const heroHeight = window.innerHeight * 0.9;
+      const scrollMax = Math.max(docHeight - window.innerHeight, 1);
+      const scrollProg = Math.min(Math.max((scrollY - heroHeight) / (scrollMax - heroHeight), 0), 1);
 
-      // Volumetric Bioluminescent Phosphor Bleed (Genomines signature aura)
+      const timeZ = frame * 0.0022 + scrollY * 0.00035;
+
+      // Volumetric Phosphor Aura (Soft bloom along the continuous river)
       if (isDark) {
-        const riverX = getRiverCenter(height * 0.5, timeZ);
+        const riverX = getRiverCenter(height * 0.5, timeZ, scrollProg);
         const glowGrad = ctx.createRadialGradient(
           riverX,
           height * 0.5,
-          60,
+          50,
           riverX,
           height * 0.5,
           width * 0.65
         );
         glowGrad.addColorStop(0, "rgba(212, 255, 0, 0.065)");
-        glowGrad.addColorStop(0.35, "rgba(163, 230, 53, 0.03)");
-        glowGrad.addColorStop(0.7, "rgba(0, 240, 255, 0.012)");
+        glowGrad.addColorStop(0.35, "rgba(163, 230, 53, 0.028)");
+        glowGrad.addColorStop(0.7, scrollProg > 0.4 && scrollProg < 0.65 ? "rgba(0, 240, 255, 0.025)" : "rgba(34, 197, 94, 0.015)");
         glowGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
         ctx.fillStyle = glowGrad;
         ctx.fillRect(0, 0, width, height);
       }
 
-      // Group rendering by tier
+      // Tier rendering order: Ambient -> Flank -> River Halo -> River Core
       const tiers: ("ambient" | "flank" | "river_halo" | "river_core")[] = [
         "ambient",
         "flank",
@@ -421,7 +476,8 @@ export function CinematicSportsAtmosphere() {
             timeZ,
             mouse.x,
             mouse.y,
-            mouse.active
+            mouse.active,
+            scrollProg
           );
 
           const stepDist = s.speed * dt * 60;
@@ -440,7 +496,7 @@ export function CinematicSportsAtmosphere() {
             s.y > height + margin ||
             s.history.length < 2
           ) {
-            streamlines[i] = spawnStreamline(i, false);
+            streamlines[i] = spawnStreamline(i, false, scrollProg);
             continue;
           }
 
@@ -463,7 +519,6 @@ export function CinematicSportsAtmosphere() {
 
           if (isDark) {
             if (s.tier === "river_core") {
-              // Genomines vibrant Neon Volt core with intense phosphor bloom
               ctx.strokeStyle = `rgba(225, 255, 60, ${s.alpha})`;
               ctx.shadowColor = "#d4ff00";
               ctx.shadowBlur = 20;
@@ -472,35 +527,41 @@ export function CinematicSportsAtmosphere() {
               ctx.shadowColor = "#a3e635";
               ctx.shadowBlur = 10;
             } else if (s.tier === "flank") {
-              // Subtle cyan speed accents mixed into lime currents
-              if (i % 3 === 0) {
-                ctx.strokeStyle = `rgba(0, 240, 255, ${s.alpha * 0.85})`;
+              if (s.accentType === "cyan") {
+                ctx.strokeStyle = `rgba(0, 240, 255, ${s.alpha * 0.9})`;
                 ctx.shadowColor = "#00f0ff";
                 ctx.shadowBlur = 8;
+              } else if (s.accentType === "emerald") {
+                ctx.strokeStyle = `rgba(34, 197, 94, ${s.alpha * 0.85})`;
+                ctx.shadowColor = "#22c55e";
+                ctx.shadowBlur = 7;
+              } else if (s.accentType === "amber") {
+                ctx.strokeStyle = `rgba(245, 158, 11, ${s.alpha * 0.85})`;
+                ctx.shadowColor = "#f59e0b";
+                ctx.shadowBlur = 7;
               } else {
                 ctx.strokeStyle = `rgba(163, 230, 53, ${s.alpha})`;
                 ctx.shadowColor = "#a3e635";
                 ctx.shadowBlur = 6;
               }
             } else {
-              // Ambient delicate filaments
               ctx.strokeStyle = `rgba(212, 255, 0, ${s.alpha})`;
               ctx.shadowBlur = 0;
             }
           } else {
-            // LIGHT THEME: High-contrast athletic slate/graphite with emerald & lime highlights
+            // LIGHT THEME
             if (s.tier === "river_core") {
-              ctx.strokeStyle = `rgba(21, 128, 61, ${s.alpha * 0.9})`; // Racing Green
+              ctx.strokeStyle = `rgba(21, 128, 61, ${s.alpha * 0.9})`;
               ctx.shadowColor = "rgba(34, 197, 94, 0.4)";
-              ctx.shadowBlur = 12;
+              ctx.shadowBlur = 10;
             } else if (s.tier === "river_halo") {
-              ctx.strokeStyle = `rgba(30, 41, 59, ${s.alpha * 0.7})`; // Deep slate
+              ctx.strokeStyle = `rgba(30, 41, 59, ${s.alpha * 0.7})`;
               ctx.shadowBlur = 0;
             } else if (s.tier === "flank") {
               ctx.strokeStyle = `rgba(51, 65, 85, ${s.alpha * 0.6})`;
               ctx.shadowBlur = 0;
             } else {
-              ctx.strokeStyle = `rgba(100, 116, 139, ${s.alpha * 0.5})`; // Hairline slate
+              ctx.strokeStyle = `rgba(100, 116, 139, ${s.alpha * 0.5})`;
               ctx.shadowBlur = 0;
             }
           }
@@ -522,8 +583,16 @@ export function CinematicSportsAtmosphere() {
               ctx.arc(sparkPt.x, sparkPt.y, sparkRadius, 0, Math.PI * 2);
 
               if (isDark) {
-                ctx.fillStyle = s.tier === "river_core" ? "#ffffff" : "#d4ff00";
-                ctx.shadowColor = "#d4ff00";
+                if (s.accentType === "cyan") {
+                  ctx.fillStyle = "#ffffff";
+                  ctx.shadowColor = "#00f0ff";
+                } else if (s.accentType === "emerald") {
+                  ctx.fillStyle = "#a7f3d0";
+                  ctx.shadowColor = "#10b981";
+                } else {
+                  ctx.fillStyle = s.tier === "river_core" ? "#ffffff" : "#d4ff00";
+                  ctx.shadowColor = "#d4ff00";
+                }
                 ctx.shadowBlur = 14;
               } else {
                 ctx.fillStyle = "#16a34a";
@@ -556,20 +625,17 @@ export function CinematicSportsAtmosphere() {
   return (
     <div
       aria-hidden="true"
-      className="absolute inset-0 pointer-events-none overflow-hidden select-none z-0"
+      className={`fixed inset-0 pointer-events-none select-none z-0 transition-opacity duration-700 ${
+        isVisible ? "opacity-100" : "opacity-0"
+      }`}
     >
       {/* Dynamic Background Base: Slate-50 in light mode, deep #07080a in dark mode */}
-      <div className="absolute inset-0 bg-slate-50 dark:bg-[#07080a] transition-colors duration-500" />
+      <div className="absolute inset-0 bg-slate-50 dark:bg-[#07080a] transition-colors duration-500 -z-10" />
 
-      {/* Sticky Fullscreen Flow Field Canvas:
-          Sticks to the top of the viewport during scroll through all below-hero sections,
-          guaranteeing silky-smooth 60 FPS viewport rendering and ZERO overlap with Hero Section */}
-      <div className="sticky top-0 w-full h-screen pointer-events-none -mb-[100vh]">
-        <canvas ref={canvasRef} className="w-full h-full block" />
-      </div>
-
-      {/* Top Transition Soft Gradient: Seamlessly dissolves from Hero Section into the Flow Field */}
-      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#08090b] dark:from-[#08090b] from-slate-200/50 via-transparent to-transparent pointer-events-none z-10" />
+      {/* Fullscreen Continuous Flow Field Canvas:
+          Remains fixed in the viewport as user scrolls through ALL sections below Hero.
+          Provides seamless continuity, section-aware pattern morphing, and silky 60 FPS */}
+      <canvas ref={canvasRef} className="w-full h-full block" />
 
       {/* Subtle athletic dot grid texture */}
       <div className="absolute inset-0 bg-[radial-gradient(#64748b_1px,transparent_1px)] dark:bg-[radial-gradient(#d4ff00_1px,transparent_1px)] [background-size:48px_48px] opacity-[0.035] pointer-events-none" />
