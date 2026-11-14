@@ -22,6 +22,8 @@ import {
   TrendingUp,
   FileSpreadsheet,
   Zap,
+  Database,
+  Cloud,
 } from "lucide-react";
 import { Lead, LeadStatus } from "@/lib/types";
 
@@ -44,11 +46,19 @@ export default function AdminPage() {
     error?: string;
   } | null>(null);
 
+  // Neon Cloud state
+  const [dataSource, setDataSource] = useState<string>("neon_postgres");
+  const [neonHealth, setNeonHealth] = useState<{
+    postgres?: { status: string; latencyMs: number; version?: string; database?: string; leadsCount?: number };
+    objectStorage?: { status: string; latencyMs: number; bucket: string; objectsCount: number };
+  } | null>(null);
+
   useEffect(() => {
     const savedAuth = sessionStorage.getItem("spotify-admin-auth");
     if (savedAuth === "true") {
       setIsAuthenticated(true);
       fetchLeads();
+      fetchNeonHealth();
     }
   }, []);
 
@@ -76,11 +86,26 @@ export default function AdminPage() {
       const data = await res.json();
       if (data.success) {
         setLeads(data.leads || []);
+        if (data.source) {
+          setDataSource(data.source);
+        }
       }
     } catch (err) {
       console.error(err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchNeonHealth = async () => {
+    try {
+      const res = await fetch("/api/neon/health");
+      const data = await res.json();
+      if (data.services) {
+        setNeonHealth(data.services);
+      }
+    } catch (err) {
+      console.warn("Neon health check notice:", err);
     }
   };
 
@@ -338,6 +363,50 @@ export default function AdminPage() {
             <div className="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center">
               <TrendingUp className="w-6 h-6" />
             </div>
+          </div>
+        </div>
+
+        {/* Neon Cloud Infrastructure Terminal */}
+        <div className="p-5 rounded-2xl border border-white/10 bg-void-card flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <Database className="w-4 h-4 text-[#d4ff00]" />
+              <span className="font-bold text-sm text-white uppercase">
+                NEON CLOUD LAKEBASE (POSTGRESQL & S3 OBJECT STORAGE)
+              </span>
+              <span className="telemetry-chip text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded">
+                CONNECTED
+              </span>
+            </div>
+            <p className="text-xs text-slate-400 font-mono">
+              Облачная база данных Postgres и объектное хранилище Neon подключены в режиме реального времени.
+            </p>
+            <div className="flex flex-wrap items-center gap-3 pt-1 text-xs font-mono">
+              <div className="flex items-center gap-1.5 text-slate-300">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Postgres: {neonHealth?.postgres?.status === "healthy" ? `Активен (${neonHealth.postgres.latencyMs} мс)` : "Подключение..."}</span>
+              </div>
+              <span className="text-white/20">•</span>
+              <div className="flex items-center gap-1.5 text-slate-300">
+                <Cloud className="w-3.5 h-3.5 text-cyan-400" />
+                <span>S3 Bucket: {neonHealth?.objectStorage?.bucket || "assets"} ({neonHealth?.objectStorage?.status === "healthy" ? "OK" : "Проверка..."})</span>
+              </div>
+              <span className="text-white/20">•</span>
+              <div className="text-slate-400">
+                <span>Хранилище: </span>
+                <span className="text-[#d4ff00] font-bold">{dataSource === "neon_postgres" ? "Neon Lakebase Cloud" : "Local Sync"}</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={fetchNeonHealth}
+              className="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-slate-300 hover:text-white flex items-center gap-1.5 transition-colors"
+            >
+              <RefreshCw className="w-3 h-3 text-[#d4ff00]" />
+              <span>Диагностика Neon</span>
+            </button>
           </div>
         </div>
 

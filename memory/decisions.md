@@ -36,3 +36,13 @@
   - В системный промпт [route.ts](file:///c:/Users/Lenovo/Desktop/Проект%20по%20AI-разработке/4-Проект%20с%20курсор/11_Sportify/app/api/ai/chat/route.ts) добавлена строгая директива: запрет на использование звездочек `*`, списки оформляются эмодзи или дефисами, клубы выделяются кавычками «...».
   - На бэкенде внедрена функция пост-обработки `cleanAiFormatting`, гарантированно удаляющая `**`, преобразующая списки со звездочками в аккуратные буллеты `• `, и удаляющая любые случайные звездочки.
   - На фронтенде во всех клиентских компонентах чата ([FloatingAiWidget.tsx](file:///c:/Users/Lenovo/Desktop/Проект%20по%20AI-разработке/4-Проект%20с%20курсор/11_Sportify/components/FloatingAiWidget.tsx), [AIQuizSection.tsx](file:///c:/Users/Lenovo/Desktop/Проект%20по%20AI-разработке/4-Проект%20с%20курсор/11_Sportify/components/AIQuizSection.tsx), [MatcherClient.tsx](file:///c:/Users/Lenovo/Desktop/Проект%20по%20AI-разработке/4-Проект%20с%20курсор/11_Sportify/app/matcher/MatcherClient.tsx)) подключен локальный санитайзер `cleanAiText`, обеспечивающий безупречно чистый рендеринг диалогов.
+
+## ADR-007: Интеграция облачной платформы Neon (Lakebase Postgres и Object Storage S3)
+- **Контекст:** Требовалось перевести хранение данных платформы с локальных JSON-файлов на полноценную облачную архитектуру с поддержкой репликации, бранчинга и S3-совместимого объектного хранилища.
+- **Решение:**
+  - Инициализирован проект Neon через Neon CLI 9.5.0: проект `SPORTIFY (long-flower-54714792)`, организация `org-orange-mountain-89684631`, ветка `production`.
+  - Сконфигурирован `neon.ts` с поддержкой Lakebase Postgres и S3-бакета `assets`.
+  - В качестве драйвера БД выбран официальный `@neondatabase/serverless` (HTTP-транспорт, оптимален для Next.js App Router).
+  - В качестве драйвера объектного хранилища подключен `@aws-sdk/client-s3` с обязательным параметром `forcePathStyle: true`.
+  - Реализован гибридный отказоустойчивый слой в `lib/db.ts` и `app/api/leads/route.ts`: лиды сохраняются в Neon Postgres, дублируются в Neon S3 (`assets/leads/{id}.json`) и отправляются в Telegram.
+  - Создан эндпоинт диагностики `/api/neon/health` и добавлен виджет состояния в панель `/admin`.

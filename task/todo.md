@@ -64,3 +64,14 @@
 - [x] Создан подробный `README.md` с описанием возможностей платформы, технологического стека и инструкции по установке.
 - [x] Инициализирован Git репозиторий, сделан корневой коммит `97b9ab8`.
 - [x] Успешно опубликован проект на GitHub: `https://github.com/ddetrit91/Sportify_pro.git` (ветка `main`).
+
+## Этап 9: Интеграция Neon Lakebase Postgres и Neon Object Storage
+- [x] Установлен Neon CLI 9.5.0 (`npm i -g neon@latest`).
+- [x] Инициализирован проект через `neon init -y --org-id org-orange-mountain-89684631 --project-id long-flower-54714792 --branch production --services postgres,object-storage`.
+- [x] Применены изменения через `neon deploy`: развернут бакет `assets` и подтянуты переменные окружения в `.env.local`.
+- [x] Установлен драйвер `@neondatabase/serverless` и клиент `@aws-sdk/client-s3`.
+- [x] Создан слой подключения к БД `lib/db.ts` с созданием таблицы `leads` и CRUD операциями.
+- [x] Создан клиент объектного хранилища `lib/storage-s3.ts` с поддержкой path-style S3.
+- [x] Подключены сервисы в `app/api/leads/route.ts`: сохранение в Postgres + бэкап в S3 + дублирование в Telegram.
+- [x] Создан маршрут мониторинга `app/api/neon/health/route.ts` и виджет в `/admin`.
+- [x] Сквозное тестирование: успешно выполнен `npm run build`, проверены POST/GET запросы к API и подтверждена запись в Postgres и S3.
