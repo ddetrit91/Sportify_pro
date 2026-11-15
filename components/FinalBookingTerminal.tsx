@@ -89,7 +89,7 @@ export function FinalBookingTerminal() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#d4ff00]/5 rounded-full blur-[200px] pointer-events-none -z-10" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="relative rounded-3xl border border-slate-200/90 dark:border-white/20 bg-white/90 dark:bg-[#0c0e14]/85 backdrop-blur-2xl p-8 sm:p-14 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.12)] dark:shadow-[0_24px_70px_-15px_rgba(0,0,0,0.9)] before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/25 before:to-transparent overflow-hidden text-slate-900 dark:text-white">
+        <div className="relative rounded-3xl border border-slate-200/90 dark:border-white/20 bg-white/90 dark:bg-[#0c0e14]/92 backdrop-blur-2xl p-8 sm:p-14 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.12)] dark:shadow-[0_24px_70px_-15px_rgba(0,0,0,0.9)] before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/25 before:to-transparent overflow-hidden text-slate-900 dark:text-white">
           {/* Laser Tracing Perimeter Beam */}
           <BorderBeam duration={8} borderWidth={1.5} colorFrom="#d4ff00" />
           {/* Subtle volt top border */}
