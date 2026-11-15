@@ -81,59 +81,40 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
 
         {/* Filter Controls Bar with Live Telemetry Count */}
         <div className="flex flex-col gap-4 pb-6 border-b border-slate-200 dark:border-white/10 mb-10">
-          <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
-            {/* Category Tabs: Flex Wrap ensures all sport disciplines are 100% visible and accessible without getting cut off */}
-            <div className="flex flex-wrap items-center gap-2">
-              {categories.map((cat) => {
-                const isActive = activeCategory === cat.id;
-                return (
-                  <button
-                    key={cat.id}
-                    onClick={() => {
-                      haptic.select();
-                      setActiveCategory(cat.id);
-                    }}
-                    className={`relative px-4 py-2.5 rounded-xl text-xs font-bold tracking-wide whitespace-nowrap transition-all duration-200 cursor-pointer ${
-                      isActive
-                        ? "border border-black/15 dark:border-transparent bg-[#d4ff00] text-black font-black shadow-sm dark:shadow-md dark:shadow-[#d4ff00]/25 scale-[1.02]"
-                        : "border border-slate-300 dark:border-white/10 bg-white/80 dark:bg-[#0c0e14]/75 text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 backdrop-blur-sm shadow-sm"
-                    }`}
-                  >
-                    <span>{cat.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Quick Toggle: 0 UZS trial */}
-            <button
-              onClick={() => {
-                haptic.toggle();
-                setOnlyFreeTrial(!onlyFreeTrial);
-              }}
-              className={`px-4 py-2.5 rounded-xl border text-xs font-bold tracking-wide flex items-center gap-2.5 transition-all self-start xl:self-auto shrink-0 backdrop-blur-md cursor-pointer ${
-                onlyFreeTrial
-                  ? "border-[#d4ff00] bg-[#d4ff00]/20 text-black dark:text-[#d4ff00] shadow-[0_0_15px_-3px_rgba(212,255,0,0.3)] ring-1 ring-[#d4ff00]/40 scale-[1.02]"
-                  : "border-slate-300 dark:border-white/10 bg-white/80 dark:bg-[#0c0e14]/85 text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white hover:border-slate-400 dark:hover:border-white/25 shadow-sm"
-              }`}
-            >
-              <span className="relative flex h-2.5 w-2.5">
-                {onlyFreeTrial && (
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d4ff00] opacity-75" />
-                )}
-                <span
-                  className={`relative inline-flex rounded-full h-2.5 w-2.5 transition-colors ${
-                    onlyFreeTrial ? "bg-[#d4ff00]" : "bg-slate-400 dark:bg-slate-600"
+          {/* Row 1: Monolithic Sport Category Stream across full width (All 7 in 1 row) */}
+          <div
+            className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden w-full"
+            onWheel={(e) => {
+              if (e.deltaY !== 0) {
+                e.currentTarget.scrollLeft += e.deltaY;
+              }
+            }}
+          >
+            {categories.map((cat) => {
+              const isActive = activeCategory === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => {
+                    haptic.select();
+                    setActiveCategory(cat.id);
+                  }}
+                  className={`relative px-4 py-2.5 rounded-xl text-xs font-bold tracking-wide whitespace-nowrap transition-all duration-200 cursor-pointer ${
+                    isActive
+                      ? "border border-black/15 dark:border-transparent bg-[#d4ff00] text-black font-black shadow-sm dark:shadow-md dark:shadow-[#d4ff00]/25 scale-[1.02]"
+                      : "border border-slate-300 dark:border-white/10 bg-white/80 dark:bg-[#0c0e14]/75 text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 backdrop-blur-sm shadow-sm"
                   }`}
-                />
-              </span>
-              <span>Только бесплатное первое занятие (0 UZS)</span>
-            </button>
+                >
+                  <span>{cat.label}</span>
+                </button>
+              );
+            })}
           </div>
 
-          {/* Active Filter Status Bar */}
-          <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-mono pt-1">
-            <div className="flex items-center gap-2">
+          {/* Row 2: Balanced Live Telemetry & Quick Action Controls */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
+            {/* Left: Live Telemetry Indicator */}
+            <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 font-mono">
               <span className="w-1.5 h-1.5 rounded-full bg-[#d4ff00] animate-pulse" />
               <span>
                 ПОКАЗАНО: <strong className="text-slate-900 dark:text-white font-bold">{filteredClubs.length}</strong> ИЗ{" "}
@@ -146,15 +127,44 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
               )}
             </div>
 
-            {(activeCategory !== "all" || onlyFreeTrial) && (
+            {/* Right: Quick Toggle (0 UZS) + Reset Filters Button */}
+            <div className="flex items-center gap-2.5 flex-wrap sm:flex-nowrap self-start sm:self-auto">
+              {/* Quick Toggle: 0 UZS trial */}
               <button
-                onClick={resetFilters}
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-300 dark:border-white/20 bg-white/90 dark:bg-[#0c0e14]/90 hover:border-[#d4ff00]/60 dark:hover:border-[#d4ff00]/60 hover:bg-[#d4ff00]/10 text-xs font-semibold text-slate-800 dark:text-slate-200 hover:text-black dark:hover:text-[#d4ff00] backdrop-blur-md shadow-sm transition-all cursor-pointer group"
+                onClick={() => {
+                  haptic.toggle();
+                  setOnlyFreeTrial(!onlyFreeTrial);
+                }}
+                className={`px-3.5 py-1.5 rounded-xl border text-xs font-bold tracking-wide flex items-center gap-2 transition-all backdrop-blur-md cursor-pointer ${
+                  onlyFreeTrial
+                    ? "border-[#d4ff00] bg-[#d4ff00]/20 text-black dark:text-[#d4ff00] shadow-[0_0_15px_-3px_rgba(212,255,0,0.3)] ring-1 ring-[#d4ff00]/40 scale-[1.02]"
+                    : "border-slate-300 dark:border-white/10 bg-white/80 dark:bg-[#0c0e14]/85 text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white hover:border-slate-400 dark:hover:border-white/25 shadow-sm"
+                }`}
               >
-                <RotateCcw className="w-3.5 h-3.5 text-[#d4ff00] group-hover:rotate-[-45deg] transition-transform duration-200" />
-                <span>Сбросить фильтры</span>
+                <span className="relative flex h-2 w-2">
+                  {onlyFreeTrial && (
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d4ff00] opacity-75" />
+                  )}
+                  <span
+                    className={`relative inline-flex rounded-full h-2 w-2 transition-colors ${
+                      onlyFreeTrial ? "bg-[#d4ff00]" : "bg-slate-400 dark:bg-slate-600"
+                    }`}
+                  />
+                </span>
+                <span>Только бесплатное (0 UZS)</span>
               </button>
-            )}
+
+              {/* Reset Filters HUD Button */}
+              {(activeCategory !== "all" || onlyFreeTrial) && (
+                <button
+                  onClick={resetFilters}
+                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-300 dark:border-white/20 bg-white/90 dark:bg-[#0c0e14]/90 hover:border-[#d4ff00]/60 dark:hover:border-[#d4ff00]/60 hover:bg-[#d4ff00]/10 text-xs font-semibold text-slate-800 dark:text-slate-200 hover:text-black dark:hover:text-[#d4ff00] backdrop-blur-md shadow-sm transition-all cursor-pointer group shrink-0"
+                >
+                  <RotateCcw className="w-3.5 h-3.5 text-[#d4ff00] group-hover:rotate-[-45deg] transition-transform duration-200" />
+                  <span>Сбросить</span>
+                </button>
+              )}
+            </div>
           </div>
         </div>
 
