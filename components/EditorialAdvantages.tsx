@@ -36,15 +36,15 @@ export function EditorialAdvantages() {
   return (
     <section id="advantages" className="py-24 relative overflow-hidden bg-transparent text-slate-900 dark:text-white transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-          {/* Left Column: Sticky Editorial Statement */}
-          <div className="lg:col-span-5 lg:sticky lg:top-32 h-fit space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-300 dark:border-white/10 bg-white dark:bg-white/5">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+          {/* Left Column: Editorial Statement */}
+          <div className="lg:col-span-5 space-y-6">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-300 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-md shadow-sm">
               <ShieldCheck className="w-3.5 h-3.5 text-lime-600 dark:text-[#d4ff00]" />
-              <span className="telemetry-chip text-slate-700 dark:text-white/80">СТАНДАРТЫ SPORTIFY // ТАШКЕНТ</span>
+              <span className="telemetry-chip text-slate-800 dark:text-white/90">СТАНДАРТЫ SPORTIFY // ТАШКЕНТ</span>
             </div>
 
-            <h2 className="font-display text-3xl sm:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-[1.05]">
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-[1.05]">
               Новая культура спорта:{" "}
               <span className="text-lime-600 dark:text-[#d4ff00]">
                 без рутины и навязывания.
@@ -75,41 +75,45 @@ export function EditorialAdvantages() {
             <div className="pt-2">
               <a
                 href="#booking"
-                className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-lime-600 dark:text-[#d4ff00] hover:text-black dark:hover:text-white transition-colors"
+                className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-lime-600 dark:text-[#d4ff00] hover:text-black dark:hover:text-white transition-colors group"
               >
-                <span>Забронировать пробный визит (0 UZS) →</span>
+                <span>Забронировать пробный визит (0 UZS)</span>
+                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </a>
             </div>
           </div>
 
-          {/* Right Column: Numbered Editorial Cards with 3D Tilt */}
-          <div className="lg:col-span-7 space-y-8">
-            {pillars.map((item) => (
+          {/* Right Column: 2x2 Grid of Numbered Editorial Cards - All 4 visible simultaneously */}
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-5">
+            {pillars.map((item, idx) => (
               <motion.div
                 key={item.num}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ duration: 0.5, delay: idx * 0.08 }}
                 className="h-full"
               >
-                <TiltCard maxTilt={4} glareOpacity={0.18} className="rounded-3xl">
-                  <div className="relative p-8 rounded-3xl border border-slate-200/90 dark:border-white/15 bg-white/90 dark:bg-[#0c0e14]/85 backdrop-blur-2xl hover:border-[#d4ff00]/70 dark:hover:border-[#d4ff00]/80 transition-all duration-300 group shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.25)] before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent overflow-hidden">
-                    <div className="flex items-start justify-between mb-4">
-                      <span className="font-display text-3xl sm:text-4xl font-black text-lime-600 dark:text-[#d4ff00]/80 group-hover:text-black dark:group-hover:text-[#d4ff00] transition-colors">
-                        {item.num}
-                      </span>
-                      <span className="telemetry-chip text-slate-400 dark:text-slate-500">
-                        {item.tagline}
-                      </span>
+                <TiltCard maxTilt={5} glareOpacity={0.2} className="h-full rounded-3xl">
+                  <div className="relative h-full p-6 sm:p-7 rounded-3xl border border-slate-200/90 dark:border-white/15 bg-white/90 dark:bg-[#0c0e14]/85 backdrop-blur-2xl hover:border-[#d4ff00]/70 dark:hover:border-[#d4ff00]/80 transition-all duration-300 group shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.25)] before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent overflow-hidden flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center justify-between mb-3.5">
+                        <span className="font-display text-2xl sm:text-3xl font-black text-lime-600 dark:text-[#d4ff00] group-hover:scale-105 transition-transform">
+                          {item.num}
+                        </span>
+                        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 truncate max-w-[170px]">
+                          {item.tagline}
+                        </span>
+                      </div>
+
+                      <h3 className="text-base sm:text-lg font-black uppercase tracking-tight text-slate-950 dark:text-white mb-2.5 leading-snug">
+                        {item.title}
+                      </h3>
+
+                      <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
+                        {item.desc}
+                      </p>
                     </div>
-
-                    <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-slate-950 dark:text-white mb-3">
-                      {item.title}
-                    </h3>
-
-                    <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
-                      {item.desc}
-                    </p>
                   </div>
                 </TiltCard>
               </motion.div>
