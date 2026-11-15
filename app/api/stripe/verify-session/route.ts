@@ -5,6 +5,9 @@ import { dbGetLeads, dbUpdateLead, getDb } from "@/lib/db";
 import { sendTelegramNotification } from "@/lib/telegram";
 import { Lead } from "@/lib/types";
 
+// Cache of notified sessions to prevent duplicate Telegram alerts if the user reloads /payment/success
+const notifiedSessions = new Set<string>();
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
@@ -45,26 +48,56 @@ export async function GET(request: NextRequest) {
           status: "enrolled",
           notes: `[Оплачено картой через Stripe Checkout. Session: ${session.id}]`,
         });
+      } catch (storageErr) {
+        console.warn("Storage update notice:", storageErr);
+      }
 
-        if (getDb()) {
+      if (getDb()) {
+        try {
           await dbUpdateLead(leadId, {
             status: "enrolled",
             notes: `[Оплачено картой через Stripe Checkout. Session: ${session.id}]`,
           });
+        } catch (dbErr) {
+          console.warn("Neon DB update notice in verify-session:", dbErr);
         }
+      }
 
-        // Находим актуальный объект лида для Telegram
-        const allLeads = getLeads();
-        const foundLead = allLeads.find((l) => l.id === leadId);
+      // Отправляем уведомление в Telegram только когда пользователь видит успешный экран с QR-кодом
+      if (!notifiedSessions.has(session.id)) {
+        notifiedSessions.add(session.id);
+        try {
+          const allLeads = getLeads();
+          const foundLead = allLeads.find((l) => l.id === leadId);
 
-        if (foundLead) {
-          foundLead.status = "enrolled";
-          foundLead.paymentMethod = "stripe";
-          foundLead.amountUzs = amountUzs;
-          await sendTelegramNotification(foundLead);
+          const leadToNotify: Lead = foundLead || {
+            id: leadId,
+            name,
+            phone: session.metadata?.phone || "",
+            clubName,
+            sportInterest,
+            amountUzs,
+            source: "catalog",
+            status: "enrolled",
+            planType: "membership",
+            paymentMethod: "stripe",
+            passCode,
+            language: (session.metadata?.language as any) || "ru",
+            bookingDate,
+            bookingTime,
+            aiSummary: `Онлайн-оплата абонемента ${Number(amountUzs).toLocaleString("ru-RU")} UZS успешно подтверждена. Клиент получил VIP-пропуск с QR-кодом.`,
+            notes: `[Оплачено картой через Stripe Checkout. Session: ${session.id}]`,
+            createdAt: new Date().toISOString(),
+          };
+
+          leadToNotify.status = "enrolled";
+          leadToNotify.paymentMethod = "stripe";
+          leadToNotify.amountUzs = amountUzs;
+
+          await sendTelegramNotification(leadToNotify);
+        } catch (tgErr) {
+          console.warn("Notice sending Telegram notification after Stripe verification:", tgErr);
         }
-      } catch (updErr) {
-        console.warn("Notice updating lead status after Stripe verification:", updErr);
       }
     }
 

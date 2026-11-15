@@ -3,7 +3,6 @@ import { stripe } from "@/lib/stripe";
 import { saveLead } from "@/lib/storage";
 import { dbSaveLead, getDb } from "@/lib/db";
 import { uploadToStorage } from "@/lib/storage-s3";
-import { sendTelegramNotification } from "@/lib/telegram";
 import { Lead } from "@/lib/types";
 
 export async function POST(request: NextRequest) {
@@ -91,15 +90,6 @@ export async function POST(request: NextRequest) {
       saveLead(newLead);
     } catch (saveErr) {
       console.warn("Local storage save warning during Stripe init:", saveErr);
-    }
-
-    // Instant notification to Telegram group (0s delay upon checkout creation)
-    try {
-      sendTelegramNotification(newLead).catch((tgErr) =>
-        console.warn("Telegram checkout init notification warning:", tgErr)
-      );
-    } catch (tgErr) {
-      console.warn("Telegram checkout sync notice:", tgErr);
     }
 
     // Create Stripe Checkout Session
