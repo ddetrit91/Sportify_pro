@@ -101,12 +101,12 @@ export function Header() {
           </a>
 
           {/* Desktop Nav Capsule with Athletic Highlighting */}
-          <nav className="hidden lg:flex items-center gap-1 bg-slate-100/90 dark:bg-[#11141c]/90 border border-slate-200 dark:border-white/10 rounded-full p-1 backdrop-blur-md shadow-inner">
+          <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1 bg-slate-100/90 dark:bg-[#11141c]/90 border border-slate-200 dark:border-white/10 rounded-full p-1 backdrop-blur-md shadow-inner shrink-0">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className={`relative px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 flex items-center gap-1.5 ${
+                className={`relative px-2.5 xl:px-3.5 py-1.5 rounded-full text-[11px] xl:text-xs font-bold transition-all duration-200 flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
                   link.highlight
                     ? "text-black bg-[#d4ff00] hover:bg-[#cbf200] font-black shadow-[0_0_16px_rgba(212,255,0,0.45)] hover:shadow-[0_0_24px_rgba(212,255,0,0.65)] hover:scale-105 active:scale-95"
                     : "text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-slate-200/80 dark:hover:bg-white/10"
@@ -115,7 +115,7 @@ export function Header() {
                 {link.highlight && (
                   <Sparkles className="w-3.5 h-3.5 fill-black stroke-black animate-pulse shrink-0" />
                 )}
-                <span>{link.label}</span>
+                <span className="whitespace-nowrap">{link.label}</span>
               </a>
             ))}
           </nav>
