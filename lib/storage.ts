@@ -8,8 +8,12 @@ const CLUBS_FILE = path.join(DATA_DIR, "clubs.json");
 const SPORTS_FILE = path.join(DATA_DIR, "sports.json");
 
 function ensureDirectoryExists() {
-  if (!fs.existsSync(DATA_DIR)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
+  try {
+    if (!fs.existsSync(DATA_DIR)) {
+      fs.mkdirSync(DATA_DIR, { recursive: true });
+    }
+  } catch (err) {
+    // Read-only filesystem in serverless environments (e.g. Vercel)
   }
 }
 
@@ -17,7 +21,11 @@ export function getLeads(): Lead[] {
   try {
     ensureDirectoryExists();
     if (!fs.existsSync(LEADS_FILE)) {
-      fs.writeFileSync(LEADS_FILE, "[]", "utf-8");
+      try {
+        fs.writeFileSync(LEADS_FILE, "[]", "utf-8");
+      } catch {
+        // Read-only filesystem fallback
+      }
       return [];
     }
     const data = fs.readFileSync(LEADS_FILE, "utf-8");
@@ -41,7 +49,11 @@ export function saveLead(newLead: Partial<Lead> & { name: string; phone: string 
   };
 
   leads.unshift(lead);
-  fs.writeFileSync(LEADS_FILE, JSON.stringify(leads, null, 2), "utf-8");
+  try {
+    fs.writeFileSync(LEADS_FILE, JSON.stringify(leads, null, 2), "utf-8");
+  } catch (err) {
+    console.warn("Storage notice: Could not write leads.json (serverless read-only environment):", err);
+  }
   return lead;
 }
 
@@ -56,7 +68,11 @@ export function updateLead(id: string, updates: { status?: LeadStatus; notes?: s
     ...updates,
   };
 
-  fs.writeFileSync(LEADS_FILE, JSON.stringify(leads, null, 2), "utf-8");
+  try {
+    fs.writeFileSync(LEADS_FILE, JSON.stringify(leads, null, 2), "utf-8");
+  } catch (err) {
+    console.warn("Storage notice: Could not update leads.json (serverless read-only environment):", err);
+  }
   return leads[index];
 }
 
@@ -66,7 +82,11 @@ export function deleteLead(id: string): boolean {
   const filtered = leads.filter((l) => l.id !== id);
   if (filtered.length === leads.length) return false;
 
-  fs.writeFileSync(LEADS_FILE, JSON.stringify(filtered, null, 2), "utf-8");
+  try {
+    fs.writeFileSync(LEADS_FILE, JSON.stringify(filtered, null, 2), "utf-8");
+  } catch (err) {
+    console.warn("Storage notice: Could not delete in leads.json (serverless read-only environment):", err);
+  }
   return true;
 }
 

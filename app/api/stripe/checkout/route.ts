@@ -35,10 +35,19 @@ export async function POST(request: NextRequest) {
     }
 
     // Determine host origin for redirect URLs
-    const origin =
-      request.headers.get("origin") ||
-      request.headers.get("referer")?.split("/").slice(0, 3).join("/") ||
-      "http://localhost:3000";
+    const hostHeader = request.headers.get("x-forwarded-host") || request.headers.get("host");
+    const protoHeader = request.headers.get("x-forwarded-proto") || (hostHeader?.includes("localhost") ? "http" : "https");
+    const originHeader = request.headers.get("origin");
+    const refererHeader = request.headers.get("referer");
+
+    let origin = "https://sportifypro.vercel.app";
+    if (originHeader && originHeader.startsWith("http")) {
+      origin = originHeader;
+    } else if (refererHeader && refererHeader.startsWith("http")) {
+      origin = refererHeader.split("/").slice(0, 3).join("/");
+    } else if (hostHeader) {
+      origin = `${protoHeader}://${hostHeader}`;
+    }
 
     // Generate unique Pass Code for this customer
     const randomSuffix = Math.floor(1000 + Math.random() * 9000);

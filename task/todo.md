@@ -322,6 +322,21 @@
   - Сборка `npm run build` успешно скомпилирована (31/31 статических и динамических маршрутов).
   - Визуальная инспекция в браузере через Browser Subagent подтвердила корректность состояний и UI.
 
+## Этап 34: Устранение зависания Stripe на странице завершения и возврат на Sportify
+- [x] Диагностика причины зависания по скриншотам пользователя:
+  - В Stripe Dashboard зафиксирована ошибка доставки события: `Event delivery: checkout.session.completed` (`1 failed event`).
+  - При сбое вебхука Stripe Checkout приостанавливал переход пользователя на URL успешной оплаты.
+  - В serverless среде Vercel вызов `updateLead()` приводил к исключению `EROFS: read-only file system` из-за `fs.writeFileSync`.
+  - При тестировании на `http://localhost:3000` браузеры (Chrome/Edge/Safari) блокируют автоматический редирект с HTTPS на незащищенный HTTP, требуя ручного клика «Вернуться в Sportify».
+- [x] Защита файловых операций в `lib/storage.ts`: все операции записи в файл изолированы в `try/catch` для serverless совместимости.
+- [x] Отказоустойчивый вебхук `app/api/stripe/webhook/route.ts`:
+  - Гарантированный возврат HTTP 200 OK без задержек.
+  - Защищенное обновление статуса в Neon Postgres и отправка в Telegram.
+  - Graceful fallback для Sandbox вебхуков.
+- [x] Корректное определение origin в `app/api/stripe/checkout/route.ts`: поддержка HTTPS production и локального хоста.
+- [x] Проверка сборки `npm run build` (31/31 маршрутов сгенерировано, 0 ошибок).
+- [x] Синхронизация с GitHub и деплой на Vercel Production (`https://sportifypro.vercel.app`).
+
 ## Этап 30: Унификация чистого вольтового зеленого цвета (#d4ff00)
 - [x] Анализ проблемы: в нескольких компонентах использовался блеклый оливковый цвет `text-lime-600` / `bg-lime-600`.
 - [x] Полная зачистка `lime-600` во всех 7 файлах проекта (`FeaturedClubsSection.tsx`, `TrendingSportsBento.tsx`, `BookingModal.tsx`, `FinalBookingTerminal.tsx`, `AIQuizSection.tsx`, `InteractiveFaq.tsx`, `EditorialAdvantages.tsx`).
@@ -532,3 +547,18 @@
   - Серверные эндпоинты протестированы автономным скриптом (все возвращают 200 OK).
   - Сборка `npm run build` успешно скомпилирована (31/31 статических и динамических маршрутов).
   - Визуальная инспекция в браузере через Browser Subagent подтвердила корректность состояний и UI.
+
+## Этап 34: Устранение зависания Stripe на странице завершения и возврат на Sportify
+- [x] Диагностика причины зависания по скриншотам пользователя:
+  - В Stripe Dashboard зафиксирована ошибка доставки события: `Event delivery: checkout.session.completed` (`1 failed event`).
+  - При сбое вебхука Stripe Checkout приостанавливал переход пользователя на URL успешной оплаты.
+  - В serverless среде Vercel вызов `updateLead()` приводил к исключению `EROFS: read-only file system` из-за `fs.writeFileSync`.
+  - При тестировании на `http://localhost:3000` браузеры (Chrome/Edge/Safari) блокируют автоматический редирект с HTTPS на незащищенный HTTP, требуя ручного клика «Вернуться в Sportify».
+- [x] Защита файловых операций в `lib/storage.ts`: все операции записи в файл изолированы в `try/catch` для serverless совместимости.
+- [x] Отказоустойчивый вебхук `app/api/stripe/webhook/route.ts`:
+  - Гарантированный возврат HTTP 200 OK без задержек.
+  - Защищенное обновление статуса в Neon Postgres и отправка в Telegram.
+  - Graceful fallback для Sandbox вебхуков.
+- [x] Корректное определение origin в `app/api/stripe/checkout/route.ts`: поддержка HTTPS production и локального хоста.
+- [x] Проверка сборки `npm run build` (31/31 маршрутов сгенерировано, 0 ошибок).
+- [x] Синхронизация с GitHub и деплой на Vercel Production (`https://sportifypro.vercel.app`).

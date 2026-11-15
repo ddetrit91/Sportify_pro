@@ -8,14 +8,15 @@
     "budget": "850 000 UZS (Stripe Онлайн)",
     "source": "catalog",
     "aiSummary": "Онлайн-оплата абонемента через Stripe Checkout. Клуб: \"Мирабадский р-н (ул. Нукусская / Шевченко)\". Дата: Ближайшая. Слот: 19:00.",
-    "status": "new",
+    "status": "enrolled",
     "planType": "membership",
     "paymentMethod": "stripe",
     "paymentStatus": "pending",
     "amountUzs": 850000,
     "language": "ru",
     "passCode": "SPT-2026-4084",
-    "createdAt": "2026-11-15T15:09:06.284Z"
+    "createdAt": "2026-11-15T15:09:06.284Z",
+    "notes": "[Оплачено картой через Stripe Checkout. Session: cs_test_a0UE40sC12RJOpZRCwnEC9e99WrtKPLgJpHysTeEydVwFtmHiWBYL5HuCU]"
   },
   {
     "id": "lead-1794755314637-9oy17",
