@@ -7,7 +7,8 @@
      - Создание Checkout Session на сервере (`app/api/stripe/checkout/route.ts`) с поддержкой валюты UZS и динамических платежных методов.
      - Разработаны страницы `/payment/success` и `/payment/cancel`.
      - Защита от фальсификации: серверная проверка реального статуса платежа через `/api/stripe/verify-session` (запрос к Stripe API `stripe.checkout.sessions.retrieve`). Заказ не считается оплаченным по факту редиректа.
-     - Серверный Webhook эндпоинт `/api/stripe/webhook` с проверкой подписи и автоматическим обновлением лида и отправкой уведомления в Telegram.
+     - Серверный Webhook эндпоинт `/api/stripe/webhook` связан с эндпоинтом Stripe `we_1Uc4j64BBZIXZXqTNELD0zTP` для автоматического обновления лида и отправки уведомления в Telegram.
+     - Продакшен развернут на Vercel (`https://sportifypro.vercel.app`).
      - Сохранение 100% дизайн-кода проекта (Liquid Glass, Volt Rim `#d4ff00`, Dark/Light).
   2. **Мультиязычность (RU / UZ) и валюта UZS (`lib/i18n.ts`):**
      - Двуязычный переключатель `RU | UZ` в навигационном баре и мобильном меню.
