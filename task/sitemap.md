@@ -18,11 +18,16 @@
 | `/matcher` | `app/matcher/page.tsx` | Public | Полноэкранный AI Sport Matcher + живой диалог с консультантом на базе Gemini |
 | `/booking` | `app/booking/page.tsx` | Public | Расширенный терминал онлайн-резервирования слотов за 0 UZS |
 | `/dashboard` | `app/dashboard/page.tsx` | Member / Demo | Личный кабинет атлета: предстоящие тренировки, QR-пропуск, баланс тренировок |
+| `/payment/success` | `app/payment/success/page.tsx` | Public | Страница подтверждения оплаты: серверная верификация сессии Stripe, салют конфетти и генерация персонального цифрового VIP-пропуска с QR-кодом |
+| `/payment/cancel` | `app/payment/cancel/page.tsx` | Public | Страница отмены Stripe Checkout: уведомление о сохранности средств, предложение альтернативной оплаты через Click/Payme и кнопка возврата к бронированию |
 | `/admin` | `app/admin/page.tsx` | Protected (Env: ADMIN_PASSWORD) | Executive админ-панель: KPI-метрики, воронка лидов, мониторинг Neon Cloud, интеграция с Telegram Bot API, экспорт в CSV |
 
 ## 2. Backend & API Routes
 | Endpoint | Method | File Path | Purpose |
 | :--- | :--- | :--- | :--- |
+| `/api/stripe/checkout` | `POST` | `app/api/stripe/checkout/route.ts` | Серверное создание сессии Stripe Checkout Sandbox в валюте UZS с метаданными лида и генерацией Pass ID |
+| `/api/stripe/verify-session` | `GET` | `app/api/stripe/verify-session/route.ts` | Серверная верификация фактического статуса оплаты напрямую из Stripe API (защита от несанкционированного доступа к success URL) |
+| `/api/stripe/webhook` | `POST` | `app/api/stripe/webhook/route.ts` | Обработка асинхронных вебхуков Stripe (`checkout.session.completed`), обновление статуса лида в БД и уведомление менеджера в Telegram |
 | `/api/admin/login` | `POST` | `app/api/admin/login/route.ts` | Безопасная серверная валидация пароля администратора без раскрытия секрета на клиенте |
 | `/api/leads` | `POST` | `app/api/leads/route.ts` | Приём новой заявки с сайта, бронирования или квиза, сохранение в базу и мгновенная отправка в Telegram |
 | `/api/leads` | `GET` | `app/api/leads/route.ts` | Получение списка всех заявок с фильтрацией по статусу для админки |

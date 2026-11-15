@@ -1,5 +1,26 @@
 [
   {
+    "id": "lead-1794753672499-wjqsp",
+    "name": "Тестовый Атлет",
+    "phone": "+998 90 999 88 77",
+    "clubName": "Apex Performance Tashkent",
+    "sportInterest": "Кроссфит & Зал",
+    "budget": "850 000 UZS (Stripe Онлайн)",
+    "source": "catalog",
+    "aiSummary": "Онлайн-оплата абонемента через Stripe Checkout. Клуб: \"Apex Performance Tashkent\". Дата: 2026-11-20. Слот: 18:00 - 20:00.",
+    "status": "enrolled",
+    "planType": "membership",
+    "paymentMethod": "stripe",
+    "paymentStatus": "pending",
+    "amountUzs": 850000,
+    "language": "ru",
+    "passCode": "SPT-2026-1692",
+    "bookingDate": "2026-11-20",
+    "bookingTime": "18:00 - 20:00",
+    "createdAt": "2026-11-15T14:41:12.499Z",
+    "notes": "[Оплата подтверждена через Stripe Webhook (checkout.session.completed). Session: cs_test_mock_123]"
+  },
+  {
     "id": "lead-1794750299682-u0pqc",
     "name": "Азиз Тестовый",
     "phone": "+998 90 777 66 55",

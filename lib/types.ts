@@ -90,6 +90,8 @@ export interface Lead {
   passCode?: string;
   amountUzs?: number;
   language?: 'ru' | 'uz';
+  paymentStatus?: 'pending' | 'paid' | 'failed';
+  stripeSessionId?: string;
 }
 
 export interface QuizAnswers {

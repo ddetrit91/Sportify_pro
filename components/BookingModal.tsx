@@ -98,6 +98,41 @@ export function BookingModal({ club, isOpen, onClose }: BookingModalProps) {
       return;
     }
 
+    // Если выбрана оплата через Stripe, создаем серверную сессию Checkout
+    if (planType === "membership" && paymentMethod === "stripe") {
+      setIsSubmitting(true);
+      try {
+        const stripeRes = await fetch("/api/stripe/checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: name.trim(),
+            phone: phone.trim(),
+            sportInterest: club.categoryName || club.name,
+            clubId: club.id,
+            clubName: club.name,
+            amountUzs: membershipPrice,
+            bookingDate: date || "Ближайшая дата",
+            bookingTime: time,
+            language: lang,
+          }),
+        });
+
+        const stripeData = await stripeRes.json();
+        if (stripeRes.ok && stripeData.success && stripeData.url) {
+          window.location.href = stripeData.url;
+          return;
+        } else {
+          setErrorMessage(stripeData.error || t("errNetwork"));
+        }
+      } catch (err: any) {
+        setErrorMessage(t("errNetwork"));
+      } finally {
+        setIsSubmitting(false);
+      }
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       const formData = new FormData();
@@ -402,55 +437,26 @@ export function BookingModal({ club, isOpen, onClose }: BookingModalProps) {
                     </div>
                   )}
 
-                  {/* Payment Sub-Block B: Stripe Card Inputs */}
+                  {/* Payment Sub-Block B: Stripe Checkout Sandbox Info */}
                   {paymentMethod === "stripe" && (
-                    <div className="space-y-2.5 pt-1">
-                      <div>
-                        <label className="telemetry-chip text-slate-700 dark:text-slate-300 block mb-1">
-                          {t("stripeCardNumber")}
-                        </label>
-                        <div className="relative">
-                          <input
-                            type="text"
-                            maxLength={19}
-                            placeholder="4000 1234 5678 9010"
-                            value={cardNumber}
-                            onChange={(e) => setCardNumber(e.target.value)}
-                            className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-black/50 border border-slate-300 dark:border-white/10 text-xs font-mono outline-none focus:border-[#d4ff00]"
-                          />
-                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">
-                            VISA / MC
-                          </span>
+                    <div className="p-4 rounded-xl bg-slate-900 text-white border border-[#d4ff00]/40 space-y-3 font-mono text-xs">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <CreditCard className="w-4 h-4 text-[#d4ff00]" />
+                          <span className="font-bold text-sm text-white">STRIPE CHECKOUT</span>
                         </div>
+                        <span className="px-2 py-0.5 rounded text-[10px] font-black uppercase bg-[#d4ff00] text-black">
+                          SANDBOX TEST
+                        </span>
                       </div>
-
-                      <div className="grid grid-cols-2 gap-2">
-                        <div>
-                          <label className="telemetry-chip text-slate-700 dark:text-slate-300 block mb-1">
-                            {t("stripeCardExp")}
-                          </label>
-                          <input
-                            type="text"
-                            maxLength={5}
-                            placeholder="12/28"
-                            value={cardExp}
-                            onChange={(e) => setCardExp(e.target.value)}
-                            className="w-full px-3 py-2.5 rounded-xl bg-white dark:bg-black/50 border border-slate-300 dark:border-white/10 text-xs font-mono outline-none focus:border-[#d4ff00]"
-                          />
-                        </div>
-                        <div>
-                          <label className="telemetry-chip text-slate-700 dark:text-slate-300 block mb-1">
-                            {t("stripeCardCvc")}
-                          </label>
-                          <input
-                            type="password"
-                            maxLength={4}
-                            placeholder="•••"
-                            value={cardCvc}
-                            onChange={(e) => setCardCvc(e.target.value)}
-                            className="w-full px-3 py-2.5 rounded-xl bg-white dark:bg-black/50 border border-slate-300 dark:border-white/10 text-xs font-mono outline-none focus:border-[#d4ff00]"
-                          />
-                        </div>
+                      <p className="text-[11px] text-slate-300 font-sans leading-relaxed">
+                        {lang === "uz"
+                          ? "To'lov rasmiy Stripe Checkout xavfsiz sahifasida amalga oshiriladi (3D Secure 2.0 va 256-bitli SSL shifrlash)."
+                          : "Вы будете перенаправлены на официальную защищенную страницу Stripe Checkout (3D Secure 2.0, сквозное шифрование SSL)."}
+                      </p>
+                      <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1 border-t border-white/10">
+                        <span>Visa, Mastercard, Uzcard</span>
+                        <span className="text-[#d4ff00] font-bold">{formattedMonthly} UZS</span>
                       </div>
                     </div>
                   )}
@@ -536,6 +542,8 @@ export function BookingModal({ club, isOpen, onClose }: BookingModalProps) {
                     <span>
                       {planType === "trial"
                         ? t("btnSubmitTrial")
+                        : paymentMethod === "stripe"
+                        ? `${lang === "uz" ? "Stripe Checkout orqali to'lash" : "Оплатить через Stripe Checkout"} (${formattedMonthly} UZS) →`
                         : `${t("btnSubmitPaid")} (${formattedMonthly} UZS)`}
                     </span>
                   )}
