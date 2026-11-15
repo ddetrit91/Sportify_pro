@@ -183,10 +183,10 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
 
                   <button
                     onClick={() => setBookingClub(club)}
-                    className="px-4.5 py-2.5 rounded-xl bg-gradient-to-r from-[#d4ff00] to-[#bbf200] hover:from-[#bbf200] hover:to-[#a3e635] text-slate-950 font-black text-xs uppercase tracking-wider flex items-center gap-1.5 shadow-[0_4px_16px_rgba(212,255,0,0.3),inset_0_1px_2px_rgba(255,255,255,0.6)] hover:shadow-[0_6px_22px_rgba(212,255,0,0.5)] transition-all active:scale-95"
+                    className="px-5 py-2.5 rounded-xl bg-[#d4ff00] hover:bg-[#bbf200] text-black font-extrabold text-xs uppercase tracking-wider flex items-center gap-2 shadow-md shadow-[#d4ff00]/20 hover:shadow-[#d4ff00]/40 transition-all active:scale-95"
                   >
                     <span>Записаться</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <ArrowRight className="w-4 h-4 stroke-[2.5]" />
                   </button>
                 </div>
               </div>
