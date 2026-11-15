@@ -97,11 +97,11 @@ export function EditorialAdvantages() {
                 <TiltCard maxTilt={5} glareOpacity={0.2} className="h-full rounded-3xl">
                   <div className="relative h-full p-6 sm:p-7 rounded-3xl border border-slate-200/90 dark:border-white/15 bg-white/90 dark:bg-[#0c0e14]/85 backdrop-blur-2xl hover:border-[#d4ff00]/70 dark:hover:border-[#d4ff00]/80 transition-all duration-300 group shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.25)] before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent overflow-hidden flex flex-col justify-between">
                     <div>
-                      <div className="flex items-center justify-between mb-3.5">
-                        <span className="font-display text-2xl sm:text-3xl font-black text-lime-600 dark:text-[#d4ff00] group-hover:scale-105 transition-transform">
+                      <div className="flex items-start justify-between gap-3 mb-3.5">
+                        <span className="font-display text-2xl sm:text-3xl font-black text-lime-600 dark:text-[#d4ff00] group-hover:scale-105 transition-transform shrink-0 leading-none">
                           {item.num}
                         </span>
-                        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 truncate max-w-[170px]">
+                        <span className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-md bg-slate-100 dark:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 text-right leading-snug">
                           {item.tagline}
                         </span>
                       </div>
