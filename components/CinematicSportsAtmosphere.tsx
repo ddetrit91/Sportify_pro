@@ -215,8 +215,8 @@ export function CinematicSportsAtmosphere() {
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
 
-    // --- 600 DENSE STREAMLINES ACROSS ENTIRE VIEWPORT ---
-    const STREAMLINE_COUNT = width < 768 ? 280 : 580;
+    // --- CINEMATIC CONTINUOUS STREAMLINES (Airy, Deep Muted Palette) ---
+    const STREAMLINE_COUNT = width < 768 ? 200 : 380;
     const streamlines: Streamline[] = [];
 
     // Continuous Section-Aware Meander Center
@@ -246,47 +246,47 @@ export function CinematicSportsAtmosphere() {
       let alphaVal: number;
       let accent: "volt" | "cyan" | "emerald" | "amber";
 
-      // Accent distribution depends smoothly on scroll progression
+      // Color differentiation: Deep emerald, graphite-green & neon-cyan/teal
       if (currentProg > 0.4 && currentProg < 0.65) {
-        // AI Quiz zone: higher cyan synaptic frequency
-        accent = Math.random() < 0.45 ? "cyan" : "volt";
+        // AI Quiz zone: deep cyan/teal synaptic lines
+        accent = Math.random() < 0.65 ? "cyan" : "emerald";
       } else if (currentProg >= 0.2 && currentProg <= 0.4) {
-        // Clubs zone: athletic emerald & volt
-        accent = Math.random() < 0.35 ? "emerald" : "volt";
+        // Clubs zone: athletic deep emerald & dark graphite
+        accent = Math.random() < 0.55 ? "emerald" : "cyan";
       } else if (currentProg >= 0.65 && currentProg <= 0.85) {
-        // Advantages & Reviews: gold/amber highlights & volt
-        accent = Math.random() < 0.25 ? "amber" : "volt";
+        // Advantages & Reviews: deep forest emerald & subtle cyan
+        accent = Math.random() < 0.5 ? "emerald" : "cyan";
       } else {
-        // Sports & Booking: high-voltage electric volt
-        accent = Math.random() < 0.2 ? "cyan" : "volt";
+        // Sports & Booking: deep emerald & petrol cyan
+        accent = Math.random() < 0.5 ? "cyan" : "emerald";
       }
 
-      const hasSpark = Math.random() < (currentProg > 0.4 && currentProg < 0.65 ? 0.38 : 0.22);
+      const hasSpark = Math.random() < (currentProg > 0.4 && currentProg < 0.65 ? 0.32 : 0.18);
 
       if (ratio < 0.20) {
         tier = "river_core";
-        widthVal = 2.4 + Math.random() * 2.0; // 2.4 - 4.4px
-        maxHist = 46 + Math.floor(Math.random() * 24);
-        speedVal = 2.4 + Math.random() * 1.6;
-        alphaVal = 0.85 + Math.random() * 0.15;
+        widthVal = 1.6 + Math.random() * 1.0; // 1.6 - 2.6px (refined & non-intrusive)
+        maxHist = 42 + Math.floor(Math.random() * 20);
+        speedVal = 2.2 + Math.random() * 1.4;
+        alphaVal = 0.55 + Math.random() * 0.15;
       } else if (ratio < 0.45) {
         tier = "river_halo";
-        widthVal = 1.4 + Math.random() * 1.2;
-        maxHist = 36 + Math.floor(Math.random() * 18);
-        speedVal = 1.9 + Math.random() * 1.3;
-        alphaVal = 0.55 + Math.random() * 0.25;
+        widthVal = 1.1 + Math.random() * 0.8;
+        maxHist = 34 + Math.floor(Math.random() * 16);
+        speedVal = 1.8 + Math.random() * 1.2;
+        alphaVal = 0.40 + Math.random() * 0.15;
       } else if (ratio < 0.72) {
         tier = "flank";
-        widthVal = 1.0 + Math.random() * 0.9;
-        maxHist = 28 + Math.floor(Math.random() * 14);
-        speedVal = 1.6 + Math.random() * 1.1;
-        alphaVal = 0.34 + Math.random() * 0.20;
+        widthVal = 0.8 + Math.random() * 0.6;
+        maxHist = 26 + Math.floor(Math.random() * 12);
+        speedVal = 1.5 + Math.random() * 1.0;
+        alphaVal = 0.28 + Math.random() * 0.12;
       } else {
         tier = "ambient";
-        widthVal = 0.6 + Math.random() * 0.5;
-        maxHist = 22 + Math.floor(Math.random() * 12);
-        speedVal = 1.3 + Math.random() * 0.8;
-        alphaVal = 0.14 + Math.random() * 0.12;
+        widthVal = 0.5 + Math.random() * 0.4;
+        maxHist = 20 + Math.floor(Math.random() * 10);
+        speedVal = 1.2 + Math.random() * 0.8;
+        alphaVal = 0.15 + Math.random() * 0.10;
       }
 
       // Initial scatter distributes across full height so every pixel is alive immediately
@@ -518,50 +518,52 @@ export function CinematicSportsAtmosphere() {
           ctx.lineJoin = "round";
 
           if (isDark) {
+            // DEEP EMERALD, GRAPHITE-GREEN & MUTED CYAN/TEAL (Low Brightness, High Text Contrast)
             if (s.tier === "river_core") {
-              ctx.strokeStyle = `rgba(225, 255, 60, ${s.alpha})`;
-              ctx.shadowColor = "#d4ff00";
-              ctx.shadowBlur = 20;
+              // Deep athletic emerald core
+              ctx.strokeStyle = `rgba(16, 150, 90, ${s.alpha * 0.42})`;
+              ctx.shadowColor = "rgba(16, 185, 129, 0.3)";
+              ctx.shadowBlur = 8;
             } else if (s.tier === "river_halo") {
-              ctx.strokeStyle = `rgba(180, 245, 40, ${s.alpha})`;
-              ctx.shadowColor = "#a3e635";
-              ctx.shadowBlur = 10;
+              // Deep forest / dark graphite-green halo
+              ctx.strokeStyle = `rgba(14, 115, 72, ${s.alpha * 0.34})`;
+              ctx.shadowColor = "rgba(16, 140, 80, 0.18)";
+              ctx.shadowBlur = 5;
             } else if (s.tier === "flank") {
               if (s.accentType === "cyan") {
-                ctx.strokeStyle = `rgba(0, 240, 255, ${s.alpha * 0.9})`;
-                ctx.shadowColor = "#00f0ff";
-                ctx.shadowBlur = 8;
+                // Muted neon-cyan / deep teal
+                ctx.strokeStyle = `rgba(12, 140, 160, ${s.alpha * 0.36})`;
+                ctx.shadowColor = "rgba(6, 182, 212, 0.22)";
+                ctx.shadowBlur = 5;
               } else if (s.accentType === "emerald") {
-                ctx.strokeStyle = `rgba(34, 197, 94, ${s.alpha * 0.85})`;
-                ctx.shadowColor = "#22c55e";
-                ctx.shadowBlur = 7;
-              } else if (s.accentType === "amber") {
-                ctx.strokeStyle = `rgba(245, 158, 11, ${s.alpha * 0.85})`;
-                ctx.shadowColor = "#f59e0b";
-                ctx.shadowBlur = 7;
+                // Pure dark emerald
+                ctx.strokeStyle = `rgba(18, 128, 80, ${s.alpha * 0.32})`;
+                ctx.shadowColor = "rgba(16, 185, 129, 0.18)";
+                ctx.shadowBlur = 4;
               } else {
-                ctx.strokeStyle = `rgba(163, 230, 53, ${s.alpha})`;
-                ctx.shadowColor = "#a3e635";
-                ctx.shadowBlur = 6;
+                // Graphite moss
+                ctx.strokeStyle = `rgba(28, 80, 58, ${s.alpha * 0.28})`;
+                ctx.shadowBlur = 0;
               }
             } else {
-              ctx.strokeStyle = `rgba(212, 255, 0, ${s.alpha})`;
+              // Ambient deep slate-moss
+              ctx.strokeStyle = `rgba(22, 65, 48, ${s.alpha * 0.24})`;
               ctx.shadowBlur = 0;
             }
           } else {
-            // LIGHT THEME
+            // LIGHT THEME (Soft Muted Slate & Pine)
             if (s.tier === "river_core") {
-              ctx.strokeStyle = `rgba(21, 128, 61, ${s.alpha * 0.9})`;
-              ctx.shadowColor = "rgba(34, 197, 94, 0.4)";
-              ctx.shadowBlur = 10;
+              ctx.strokeStyle = `rgba(21, 100, 60, ${s.alpha * 0.45})`;
+              ctx.shadowColor = "rgba(34, 197, 94, 0.25)";
+              ctx.shadowBlur = 6;
             } else if (s.tier === "river_halo") {
-              ctx.strokeStyle = `rgba(30, 41, 59, ${s.alpha * 0.7})`;
+              ctx.strokeStyle = `rgba(30, 65, 55, ${s.alpha * 0.35})`;
               ctx.shadowBlur = 0;
             } else if (s.tier === "flank") {
-              ctx.strokeStyle = `rgba(51, 65, 85, ${s.alpha * 0.6})`;
+              ctx.strokeStyle = `rgba(15, 95, 90, ${s.alpha * 0.30})`;
               ctx.shadowBlur = 0;
             } else {
-              ctx.strokeStyle = `rgba(100, 116, 139, ${s.alpha * 0.5})`;
+              ctx.strokeStyle = `rgba(71, 85, 105, ${s.alpha * 0.20})`;
               ctx.shadowBlur = 0;
             }
           }
@@ -578,26 +580,23 @@ export function CinematicSportsAtmosphere() {
             const sparkPt = pts[targetIdx];
 
             if (sparkPt) {
-              const sparkRadius = s.tier === "river_core" ? 2.6 : 1.8;
+              const sparkRadius = s.tier === "river_core" ? 2.2 : 1.5;
               ctx.beginPath();
               ctx.arc(sparkPt.x, sparkPt.y, sparkRadius, 0, Math.PI * 2);
 
               if (isDark) {
                 if (s.accentType === "cyan") {
-                  ctx.fillStyle = "#ffffff";
-                  ctx.shadowColor = "#00f0ff";
-                } else if (s.accentType === "emerald") {
-                  ctx.fillStyle = "#a7f3d0";
-                  ctx.shadowColor = "#10b981";
+                  ctx.fillStyle = "rgba(103, 232, 249, 0.85)";
+                  ctx.shadowColor = "#06b6d4";
                 } else {
-                  ctx.fillStyle = s.tier === "river_core" ? "#ffffff" : "#d4ff00";
-                  ctx.shadowColor = "#d4ff00";
+                  ctx.fillStyle = "rgba(110, 231, 183, 0.85)";
+                  ctx.shadowColor = "#10b981";
                 }
-                ctx.shadowBlur = 14;
-              } else {
-                ctx.fillStyle = "#16a34a";
-                ctx.shadowColor = "#22c55e";
                 ctx.shadowBlur = 8;
+              } else {
+                ctx.fillStyle = "rgba(22, 101, 52, 0.8)";
+                ctx.shadowColor = "#16a34a";
+                ctx.shadowBlur = 5;
               }
 
               ctx.fill();
