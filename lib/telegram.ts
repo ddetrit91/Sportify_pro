@@ -49,19 +49,30 @@ export async function sendTelegramNotification(
       ? `💎 Месячный абонемент (${lead.amountUzs ? Number(lead.amountUzs).toLocaleString("ru-RU") + " UZS" : lead.budget || "Тариф клуба"})`
       : `🟢 Бесплатный вводный визит (0 UZS)`;
 
+  const isEnrolled = lead.status === "enrolled";
+  const isStripe = lead.paymentMethod === "stripe";
+
   const paymentLabel =
     lead.paymentMethod === "click_payme"
       ? `📲 Перевод Click / Payme ${receiptFilePath ? "📎 [ЧЕК ПРИКРЕПЛЕН]" : ""}`
-      : lead.paymentMethod === "stripe"
-      ? `💳 Онлайн-оплата картой (Stripe)`
+      : isStripe
+      ? isEnrolled
+        ? `💳 Онлайн-оплата картой (Stripe) — ✅ ОПЛАЧЕНО`
+        : `💳 Онлайн-оплата картой (Stripe) — ⏳ ОЖИДАЕТ СКАНИРОВАНИЯ КАРТЫ`
       : `🎫 Бесплатный пропуск (0 UZS)`;
 
   const passCodeLabel = lead.passCode || `SPT-${new Date().getFullYear()}-${lead.id.slice(-4)}`;
 
+  const headerTitle = isEnrolled
+    ? `✅ <b>ОПЛАТА ПОДТВЕРЖДЕНА // VIP-ПРОПУСК АКТИВИРОВАН</b>`
+    : isStripe
+    ? `💳 <b>НОВАЯ ЗАЯВКА // ПЕРЕХОД В STRIPE CHECKOUT</b>`
+    : `⚡ <b>НОВАЯ ЗАЯВКА // SPORTIFY</b>`;
+
   const captionText = `
-⚡ <b>НОВАЯ ЗАЯВКА И ОПЛАТА // SPORTIFY</b>
+${headerTitle}
 ━━━━━━━━━━━━━━━━━━
-🎫 <b>ПРОПУСК:</b> <code>#${escapeHtml(passCodeLabel)}</code>
+🎫 <b>ПРОПУСК:</b> <code>#${escapeHtml(passCodeLabel)}</code> ${isEnrolled ? "🟢 [АКТИВЕН]" : "⏳ [ОЖИДАЕТ ОПЛАТЫ]"}
 👤 <b>Клиент:</b> ${escapeHtml(lead.name)}
 📞 <b>Телефон:</b> <code>${escapeHtml(lead.phone)}</code>
 🏆 <b>Спорт / Направление:</b> ${escapeHtml(lead.sportInterest || "Не указано")}
