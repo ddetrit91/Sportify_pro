@@ -59,11 +59,11 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
               className="absolute -inset-x-8 -inset-y-6 rounded-[40px] bg-[radial-gradient(ellipse_at_center,_rgba(248,250,252,0.9)_0%,_rgba(248,250,252,0.6)_50%,_transparent_100%)] dark:bg-[radial-gradient(ellipse_at_center,_rgba(7,8,10,0.92)_0%,_rgba(7,8,10,0.65)_55%,_transparent_100%)] blur-2xl pointer-events-none -z-10"
             />
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-300 dark:border-[#d4ff00]/30 bg-white/80 dark:bg-[#d4ff00]/10 mb-3 shadow-sm">
-              <Sparkles className="w-3.5 h-3.5 text-lime-600 dark:text-[#d4ff00]" />
+              <Sparkles className="w-3.5 h-3.5 text-[#d4ff00]" />
               <span className="telemetry-chip text-slate-700 dark:text-[#d4ff00]">ТОПОВЫЕ КЛУБЫ ТАШКЕНТА // RATED 4.88+</span>
             </div>
             <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-tight drop-shadow-[0_2px_15px_rgba(0,0,0,0.8)]">
-              Спортивные клубы <span className="text-lime-600 dark:text-[#d4ff00]">Ташкента</span>
+              Спортивные клубы <span className="text-[#d4ff00]">Ташкента</span>
             </h2>
             <p className="mt-2 text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed">
               Прямое бронирование в проверенные залы Ташкента. Честные цены без скрытых доплат и гарантированное первое занятие за 0 UZS.
@@ -75,7 +75,7 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
             className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-300 dark:border-[#d4ff00]/30 hover:border-[#d4ff00] bg-white dark:bg-[#0c0e14]/85 hover:bg-slate-200 dark:hover:bg-[#d4ff00]/15 text-xs font-bold tracking-wide text-slate-800 dark:text-slate-200 hover:text-black dark:hover:text-[#d4ff00] transition-all self-start md:self-end shadow-sm backdrop-blur-md shrink-0"
           >
             <span>Оформить пропуск 0 UZS</span>
-            <ArrowRight className="w-4 h-4 text-lime-600 dark:text-[#d4ff00]" />
+            <ArrowRight className="w-4 h-4 text-[#d4ff00]" />
           </a>
         </div>
 
@@ -113,17 +113,17 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
               }}
               className={`px-4 py-2.5 rounded-xl border text-xs font-bold tracking-wide flex items-center gap-2.5 transition-all self-start xl:self-auto shrink-0 backdrop-blur-md cursor-pointer ${
                 onlyFreeTrial
-                  ? "border-lime-500 dark:border-[#d4ff00] bg-lime-100 dark:bg-[#d4ff00]/20 text-lime-800 dark:text-[#d4ff00] shadow-sm dark:shadow-[0_0_15px_-3px_rgba(212,255,0,0.3)] ring-1 ring-lime-400/40 dark:ring-[#d4ff00]/40 scale-[1.02]"
+                  ? "border-[#d4ff00] bg-[#d4ff00]/20 text-black dark:text-[#d4ff00] shadow-[0_0_15px_-3px_rgba(212,255,0,0.3)] ring-1 ring-[#d4ff00]/40 scale-[1.02]"
                   : "border-slate-300 dark:border-white/10 bg-white/80 dark:bg-[#0c0e14]/85 text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white hover:border-slate-400 dark:hover:border-white/25 shadow-sm"
               }`}
             >
               <span className="relative flex h-2.5 w-2.5">
                 {onlyFreeTrial && (
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime-500 dark:bg-[#d4ff00] opacity-75" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d4ff00] opacity-75" />
                 )}
                 <span
                   className={`relative inline-flex rounded-full h-2.5 w-2.5 transition-colors ${
-                    onlyFreeTrial ? "bg-lime-500 dark:bg-[#d4ff00]" : "bg-slate-400 dark:bg-slate-600"
+                    onlyFreeTrial ? "bg-[#d4ff00]" : "bg-slate-400 dark:bg-slate-600"
                   }`}
                 />
               </span>
@@ -134,13 +134,13 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
           {/* Active Filter Status Bar */}
           <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-mono pt-1">
             <div className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-lime-500 dark:bg-[#d4ff00] animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#d4ff00] animate-pulse" />
               <span>
                 ПОКАЗАНО: <strong className="text-slate-900 dark:text-white font-bold">{filteredClubs.length}</strong> ИЗ{" "}
                 {clubs.length} КЛУБОВ
               </span>
               {onlyFreeTrial && (
-                <span className="text-lime-800 dark:text-[#d4ff00] bg-lime-100 dark:bg-[#d4ff00]/10 px-2 py-0.5 rounded border border-lime-300 dark:border-[#d4ff00]/20 text-[10px] uppercase font-sans font-semibold">
+                <span className="text-black dark:text-[#d4ff00] bg-[#d4ff00]/25 dark:bg-[#d4ff00]/10 px-2 py-0.5 rounded border border-[#d4ff00]/40 text-[10px] uppercase font-sans font-black">
                   Фильтр: 0 UZS
                 </span>
               )}
@@ -149,9 +149,9 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
             {(activeCategory !== "all" || onlyFreeTrial) && (
               <button
                 onClick={resetFilters}
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-300 dark:border-white/20 bg-white/90 dark:bg-[#0c0e14]/90 hover:border-lime-500 dark:hover:border-[#d4ff00]/60 hover:bg-lime-50 dark:hover:bg-[#d4ff00]/10 text-xs font-semibold text-slate-800 dark:text-slate-200 hover:text-black dark:hover:text-[#d4ff00] backdrop-blur-md shadow-sm transition-all cursor-pointer group"
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-300 dark:border-white/20 bg-white/90 dark:bg-[#0c0e14]/90 hover:border-[#d4ff00]/60 dark:hover:border-[#d4ff00]/60 hover:bg-[#d4ff00]/10 text-xs font-semibold text-slate-800 dark:text-slate-200 hover:text-black dark:hover:text-[#d4ff00] backdrop-blur-md shadow-sm transition-all cursor-pointer group"
               >
-                <RotateCcw className="w-3.5 h-3.5 text-lime-600 dark:text-[#d4ff00] group-hover:rotate-[-45deg] transition-transform duration-200" />
+                <RotateCcw className="w-3.5 h-3.5 text-[#d4ff00] group-hover:rotate-[-45deg] transition-transform duration-200" />
                 <span>Сбросить фильтры</span>
               </button>
             )}
@@ -249,7 +249,7 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
                         {/* Address & schedule */}
                         <div className="text-xs font-medium space-y-1.5">
                           <div className="flex items-center gap-1.5 text-slate-800 dark:text-slate-200">
-                            <MapPin className="w-3.5 h-3.5 text-lime-600 dark:text-[#d4ff00] shrink-0" />
+                            <MapPin className="w-3.5 h-3.5 text-[#d4ff00] shrink-0" />
                             <span>{club.address}</span>
                           </div>
                           <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">

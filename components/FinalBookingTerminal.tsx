@@ -106,7 +106,7 @@ export function FinalBookingTerminal() {
 
                 <h3 className="font-display text-3xl sm:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-[1.05]">
                   Активируй свой{" "}
-                  <span className="text-lime-600 dark:text-[#d4ff00]">пропуск</span> в любой клуб
+                  <span className="text-[#d4ff00]">пропуск</span> в любой клуб
                 </h3>
 
                 <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
@@ -115,7 +115,7 @@ export function FinalBookingTerminal() {
 
                 <div className="space-y-3 pt-2 text-xs font-medium text-slate-600 dark:text-slate-300">
                   <div className="flex items-center gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-lime-600 dark:text-[#d4ff00] shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-[#d4ff00] shrink-0" />
                     <span>Электронный QR-пропуск в Telegram / SMS</span>
                   </div>
                   <div className="flex items-center gap-3">

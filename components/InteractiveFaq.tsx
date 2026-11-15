@@ -42,7 +42,7 @@ export function InteractiveFaq() {
             className="absolute -inset-x-10 -inset-y-8 rounded-[50px] bg-[radial-gradient(ellipse_at_center,_rgba(248,250,252,0.92)_0%,_rgba(248,250,252,0.6)_50%,_transparent_100%)] dark:bg-[radial-gradient(ellipse_at_center,_rgba(7,8,10,0.92)_0%,_rgba(7,8,10,0.65)_55%,_transparent_100%)] blur-2xl pointer-events-none -z-10"
           />
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-300 dark:border-[#d4ff00]/30 bg-white/80 dark:bg-[#d4ff00]/10 mb-3 shadow-sm">
-            <HelpCircle className="w-3.5 h-3.5 text-lime-600 dark:text-[#d4ff00]" />
+            <HelpCircle className="w-3.5 h-3.5 text-[#d4ff00]" />
             <span className="telemetry-chip text-slate-700 dark:text-[#d4ff00]">FAQ & ПРАВИЛА ПЛАТФОРМЫ</span>
           </div>
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-tight drop-shadow-[0_2px_15px_rgba(0,0,0,0.8)]">
@@ -66,11 +66,11 @@ export function InteractiveFaq() {
                     haptic.click();
                     setOpenIndex(isOpen ? null : idx);
                   }}
-                  className="w-full p-6 text-left flex items-center justify-between gap-4 font-black uppercase tracking-tight text-base sm:text-lg text-slate-900 dark:text-white hover:text-lime-600 dark:hover:text-[#d4ff00] transition-colors"
+                  className="w-full p-6 text-left flex items-center justify-between gap-4 font-black uppercase tracking-tight text-base sm:text-lg text-slate-900 dark:text-white hover:text-[#d4ff00] transition-colors"
                 >
                   <span>{faq.q}</span>
                   <ChevronDown
-                    className={`w-5 h-5 text-lime-600 dark:text-[#d4ff00] shrink-0 transition-transform duration-300 ${
+                    className={`w-5 h-5 text-[#d4ff00] shrink-0 transition-transform duration-300 ${
                       isOpen ? "rotate-180" : ""
                     }`}
                   />

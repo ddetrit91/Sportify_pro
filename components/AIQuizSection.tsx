@@ -416,13 +416,13 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
             className="absolute -inset-x-12 -inset-y-8 rounded-[50px] bg-[radial-gradient(ellipse_at_center,_rgba(248,250,252,0.92)_0%,_rgba(248,250,252,0.6)_50%,_transparent_100%)] dark:bg-[radial-gradient(ellipse_at_center,_rgba(7,8,10,0.92)_0%,_rgba(7,8,10,0.65)_55%,_transparent_100%)] blur-2xl pointer-events-none -z-10"
           />
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-300 dark:border-[#d4ff00]/30 bg-white/80 dark:bg-[#d4ff00]/10 mb-3.5 shadow-sm">
-            <Sparkles className="w-3.5 h-3.5 text-lime-600 dark:text-[#d4ff00]" />
+            <Sparkles className="w-3.5 h-3.5 text-[#d4ff00]" />
             <span className="telemetry-chip text-slate-700 dark:text-[#d4ff00]">
               NEURAL MATCHING ENGINE // УМНЫЙ ИИ-ПОМОЩНИК
             </span>
           </div>
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white drop-shadow-[0_2px_15px_rgba(0,0,0,0.8)]">
-            Интерактивный Квиз & <span className="text-lime-600 dark:text-[#d4ff00]">ИИ-Подбор</span>
+            Интерактивный Квиз & <span className="text-[#d4ff00]">ИИ-Подбор</span>
           </h2>
           <p className="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
             Пройдите быстрый 4-шаговый визуальный квиз, получите консультацию с помощью ИИ или используйте экспресс-синтезатор параметров.
