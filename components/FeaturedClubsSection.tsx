@@ -81,9 +81,9 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
 
         {/* Filter Controls Bar with Live Telemetry Count */}
         <div className="flex flex-col gap-4 pb-6 border-b border-slate-200 dark:border-white/10 mb-10">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-            {/* Category Tabs with Animated Pill Physics & Hidden Native Scrollbars */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-2 lg:pb-0 scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+          <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
+            {/* Category Tabs: Flex Wrap ensures all sport disciplines are 100% visible and accessible without getting cut off */}
+            <div className="flex flex-wrap items-center gap-2">
               {categories.map((cat) => {
                 const isActive = activeCategory === cat.id;
                 return (
@@ -111,7 +111,7 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
                 haptic.toggle();
                 setOnlyFreeTrial(!onlyFreeTrial);
               }}
-              className={`px-4 py-2.5 rounded-xl border text-xs font-bold tracking-wide flex items-center gap-2.5 transition-all self-start lg:self-auto shrink-0 backdrop-blur-md cursor-pointer ${
+              className={`px-4 py-2.5 rounded-xl border text-xs font-bold tracking-wide flex items-center gap-2.5 transition-all self-start xl:self-auto shrink-0 backdrop-blur-md cursor-pointer ${
                 onlyFreeTrial
                   ? "border-lime-500 dark:border-[#d4ff00] bg-lime-100 dark:bg-[#d4ff00]/20 text-lime-800 dark:text-[#d4ff00] shadow-sm dark:shadow-[0_0_15px_-3px_rgba(212,255,0,0.3)] ring-1 ring-lime-400/40 dark:ring-[#d4ff00]/40 scale-[1.02]"
                   : "border-slate-300 dark:border-white/10 bg-white/80 dark:bg-[#0c0e14]/85 text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white hover:border-slate-400 dark:hover:border-white/25 shadow-sm"
