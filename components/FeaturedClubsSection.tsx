@@ -39,14 +39,14 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
   return (
     <section id="clubs" className="py-24 relative overflow-hidden bg-transparent text-slate-900 dark:text-white transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header & Filter Console in Protected Frosted Glass Card */}
-        <div className="relative rounded-3xl p-6 sm:p-8 mb-12 border border-slate-200/90 dark:border-white/12 bg-white/90 dark:bg-[#080b12]/90 backdrop-blur-2xl shadow-[0_16px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/30 dark:before:via-white/15 before:to-transparent overflow-hidden">
+        {/* Header & Filter Console in Protected Liquid Glass Card with Volt Rim */}
+        <div className="relative rounded-3xl p-6 sm:p-8 mb-12 border border-slate-200/90 dark:border-[#d4ff00]/25 bg-white/80 dark:bg-[#08090b]/65 backdrop-blur-xl shadow-[0_16px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8),0_0_25px_-5px_rgba(212,255,0,0.12)] before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[#d4ff00]/70 dark:before:via-[#d4ff00]/80 before:to-transparent overflow-hidden">
           {/* Top Row: Title, Subtitle, CTA */}
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-6">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-300 dark:border-white/10 bg-white/80 dark:bg-white/5 mb-3 shadow-sm">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-300 dark:border-[#d4ff00]/30 bg-white/80 dark:bg-[#d4ff00]/10 mb-3 shadow-sm">
                 <Sparkles className="w-3.5 h-3.5 text-[#d4ff00]" />
-                <span className="telemetry-chip text-slate-700 dark:text-white/80">ТОПОВЫЕ КЛУБЫ ТАШКЕНТА // RATED 4.88+</span>
+                <span className="telemetry-chip text-slate-700 dark:text-[#d4ff00]">ТОПОВЫЕ КЛУБЫ ТАШКЕНТА // RATED 4.88+</span>
               </div>
               <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-tight">
                 Спортивные клубы <span className="text-[#d4ff00]">Ташкента</span>
@@ -58,7 +58,7 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
 
             <a
               href="#booking"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-300 dark:border-white/10 hover:border-[#d4ff00] bg-white dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-xs font-bold tracking-wide text-slate-800 dark:text-slate-200 hover:text-black dark:hover:text-white transition-all self-start md:self-end shadow-sm shrink-0"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-300 dark:border-[#d4ff00]/30 hover:border-[#d4ff00] bg-white dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-[#d4ff00]/15 text-xs font-bold tracking-wide text-slate-800 dark:text-slate-200 hover:text-black dark:hover:text-[#d4ff00] transition-all self-start md:self-end shadow-sm shrink-0"
             >
               <span>Оформить пропуск 0 UZS</span>
               <ArrowRight className="w-4 h-4 text-[#d4ff00]" />
@@ -114,7 +114,7 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
               className="h-full"
             >
               <TiltCard maxTilt={5} glareOpacity={0.25} className="rounded-3xl">
-                <div className="relative h-full rounded-3xl border border-slate-200/90 dark:border-white/15 bg-white/90 dark:bg-[#0c0e14]/90 backdrop-blur-2xl flex flex-col group hover:border-[#d4ff00]/70 dark:hover:border-[#d4ff00]/80 transition-all duration-300 shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.25)] before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent before:z-20 overflow-hidden">
+                <div className="relative h-full rounded-3xl border border-slate-200/90 dark:border-[#d4ff00]/25 bg-white/90 dark:bg-[#0c0e14]/75 backdrop-blur-xl flex flex-col group hover:border-[#d4ff00]/80 dark:hover:border-[#d4ff00] transition-all duration-300 shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8),0_0_20px_-5px_rgba(212,255,0,0.15)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.35)] before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[#d4ff00]/60 dark:before:via-[#d4ff00]/70 before:to-transparent before:z-20 overflow-hidden">
                   {/* Top Club of the Week Border Beam */}
                   {idx === 0 && (
                     <BorderBeam duration={7} borderWidth={1.5} colorFrom="#d4ff00" />

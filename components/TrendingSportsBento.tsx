@@ -17,13 +17,13 @@ export function TrendingSportsBento({ sports }: TrendingSportsBentoProps) {
   return (
     <section id="sports" className="py-24 relative overflow-hidden bg-transparent text-slate-900 dark:text-white transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header in Protected Frosted Glass Card */}
-        <div className="relative rounded-3xl p-6 sm:p-8 mb-12 border border-slate-200/90 dark:border-white/12 bg-white/90 dark:bg-[#080b12]/90 backdrop-blur-2xl shadow-[0_16px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/30 dark:before:via-white/15 before:to-transparent overflow-hidden">
+        {/* Section Header in Protected Liquid Glass Card with Volt Rim */}
+        <div className="relative rounded-3xl p-6 sm:p-8 mb-12 border border-slate-200/90 dark:border-[#d4ff00]/25 bg-white/80 dark:bg-[#08090b]/65 backdrop-blur-xl shadow-[0_16px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8),0_0_25px_-5px_rgba(212,255,0,0.12)] before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[#d4ff00]/70 dark:before:via-[#d4ff00]/80 before:to-transparent overflow-hidden">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-3">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-300 dark:border-white/15 bg-white/80 dark:bg-white/5 backdrop-blur-md shadow-sm">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-300 dark:border-[#d4ff00]/30 bg-white/80 dark:bg-[#d4ff00]/10 backdrop-blur-md shadow-sm">
                 <Activity className="w-3.5 h-3.5 text-[#d4ff00]" />
-                <span className="telemetry-chip text-slate-800 dark:text-white/90">ДИСЦИПЛИНЫ ТАШКЕНТА // 2026</span>
+                <span className="telemetry-chip text-slate-800 dark:text-[#d4ff00]">ДИСЦИПЛИНЫ ТАШКЕНТА // 2026</span>
               </div>
               <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-tight">
                 Популярные виды спорта <span className="text-[#d4ff00]">в Ташкенте</span>
@@ -35,7 +35,7 @@ export function TrendingSportsBento({ sports }: TrendingSportsBentoProps) {
 
             <a
               href="#clubs"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-300 dark:border-white/15 hover:border-[#d4ff00] bg-white/80 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 hover:text-black dark:hover:text-white transition-all self-start md:self-end shadow-sm backdrop-blur-md shrink-0"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-300 dark:border-[#d4ff00]/30 hover:border-[#d4ff00] bg-white/80 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-[#d4ff00]/15 text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 hover:text-black dark:hover:text-[#d4ff00] transition-all self-start md:self-end shadow-sm backdrop-blur-md shrink-0"
             >
               <span>Смотреть все локации</span>
               <ArrowUpRight className="w-4 h-4 text-[#d4ff00]" />

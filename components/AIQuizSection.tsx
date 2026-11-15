@@ -408,11 +408,11 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[#d4ff00]/5 rounded-full blur-[180px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header in Protected Frosted Glass Card */}
-        <div className="relative rounded-3xl p-6 sm:p-8 mb-10 border border-slate-200/90 dark:border-white/12 bg-white/90 dark:bg-[#080b12]/90 backdrop-blur-2xl shadow-[0_16px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/30 dark:before:via-white/15 before:to-transparent overflow-hidden text-center max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-300 dark:border-white/10 bg-white/80 dark:bg-white/5 mb-3.5 shadow-sm">
+        {/* Section Header in Protected Liquid Glass Card with Volt Rim */}
+        <div className="relative rounded-3xl p-6 sm:p-8 mb-10 border border-slate-200/90 dark:border-[#d4ff00]/25 bg-white/80 dark:bg-[#08090b]/65 backdrop-blur-xl shadow-[0_16px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8),0_0_25px_-5px_rgba(212,255,0,0.12)] before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[#d4ff00]/70 dark:before:via-[#d4ff00]/80 before:to-transparent overflow-hidden text-center max-w-4xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-300 dark:border-[#d4ff00]/30 bg-white/80 dark:bg-[#d4ff00]/10 mb-3.5 shadow-sm">
             <Sparkles className="w-3.5 h-3.5 text-[#d4ff00]" />
-            <span className="telemetry-chip text-slate-700 dark:text-white/90">
+            <span className="telemetry-chip text-slate-700 dark:text-[#d4ff00]">
               NEURAL MATCHING ENGINE // УМНЫЙ ИИ-ПОМОЩНИК
             </span>
           </div>
@@ -474,7 +474,7 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
             TAB 1: INTERACTIVE 4-STEP QUIZ WITH VISUAL SPORTS PHOTO CARDS
            ========================================================================= */}
         {activeTab === "quiz" && (
-          <div className="relative rounded-3xl border border-slate-200/90 dark:border-white/15 bg-white/90 dark:bg-[#0c0e14]/90 backdrop-blur-2xl p-6 sm:p-10 shadow-[0_16px_50px_-15px_rgba(0,0,0,0.12)] dark:shadow-[0_24px_60px_-15px_rgba(0,0,0,0.85)] before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent text-slate-900 dark:text-white overflow-hidden">
+          <div className="relative rounded-3xl border border-slate-200/90 dark:border-[#d4ff00]/25 bg-white/90 dark:bg-[#0c0e14]/75 backdrop-blur-xl p-6 sm:p-10 shadow-[0_16px_50px_-15px_rgba(0,0,0,0.12)] dark:shadow-[0_24px_60px_-15px_rgba(0,0,0,0.85),0_0_25px_-5px_rgba(212,255,0,0.12)] before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[#d4ff00]/50 dark:before:via-[#d4ff00]/60 before:to-transparent text-slate-900 dark:text-white overflow-hidden">
             {/* Running Border Laser Beam */}
             <BorderBeam duration={9} borderWidth={1.5} colorFrom="#d4ff00" />
             {/* Progress Bar */}

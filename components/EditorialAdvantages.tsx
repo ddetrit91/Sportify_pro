@@ -33,11 +33,11 @@ export function EditorialAdvantages() {
     <section id="advantages" className="py-24 relative overflow-hidden bg-transparent text-slate-900 dark:text-white transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-          {/* Left Column: Protected Frosted Statement Card */}
-          <div className="lg:col-span-5 space-y-6 p-6 sm:p-8 rounded-3xl bg-white/90 dark:bg-[#080b12]/90 backdrop-blur-2xl border border-slate-200/90 dark:border-white/12 shadow-[0_16px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/30 dark:before:via-white/15 before:to-transparent relative overflow-hidden">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-300 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-md shadow-sm">
+          {/* Left Column: Protected Liquid Glass Statement Card with Volt Rim */}
+          <div className="lg:col-span-5 space-y-6 p-6 sm:p-8 rounded-3xl bg-white/80 dark:bg-[#08090b]/65 backdrop-blur-xl border border-slate-200/90 dark:border-[#d4ff00]/25 shadow-[0_16px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8),0_0_25px_-5px_rgba(212,255,0,0.12)] before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[#d4ff00]/70 dark:before:via-[#d4ff00]/80 before:to-transparent relative overflow-hidden">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-300 dark:border-[#d4ff00]/30 bg-white/80 dark:bg-[#d4ff00]/10 backdrop-blur-md shadow-sm">
               <ShieldCheck className="w-3.5 h-3.5 text-lime-600 dark:text-[#d4ff00]" />
-              <span className="telemetry-chip text-slate-800 dark:text-white/90">СТАНДАРТЫ SPORTIFY // ТАШКЕНТ</span>
+              <span className="telemetry-chip text-slate-800 dark:text-[#d4ff00]">СТАНДАРТЫ SPORTIFY // ТАШКЕНТ</span>
             </div>
 
             <h2 className="font-display text-3xl sm:text-4xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-[1.08]">
@@ -91,7 +91,7 @@ export function EditorialAdvantages() {
                 className="h-full"
               >
                 <TiltCard maxTilt={5} glareOpacity={0.2} className="h-full rounded-3xl">
-                  <div className="relative h-full p-6 sm:p-7 rounded-3xl border border-slate-200/90 dark:border-white/15 bg-white/90 dark:bg-[#0c0e14]/90 backdrop-blur-2xl hover:border-[#d4ff00]/70 dark:hover:border-[#d4ff00]/80 transition-all duration-300 group shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.25)] before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent overflow-hidden flex flex-col justify-between">
+                  <div className="relative h-full p-6 sm:p-7 rounded-3xl border border-slate-200/90 dark:border-[#d4ff00]/20 bg-white/90 dark:bg-[#0c0e14]/75 backdrop-blur-xl hover:border-[#d4ff00]/80 dark:hover:border-[#d4ff00] transition-all duration-300 group shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8),0_0_20px_-5px_rgba(212,255,0,0.12)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.3)] before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[#d4ff00]/50 dark:before:via-[#d4ff00]/60 before:to-transparent overflow-hidden flex flex-col justify-between">
                     <div>
                       {/* Top Bar: Athletic Large Number & Radar Dot */}
                       <div className="flex items-center justify-between mb-4">

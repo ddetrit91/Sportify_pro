@@ -57,13 +57,13 @@ export function AthleteStories() {
   return (
     <section id="reviews" className="py-24 relative overflow-hidden bg-transparent text-slate-900 dark:text-white border-b border-slate-200 dark:border-white/10 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header in Protected Frosted Glass Card */}
-        <div className="relative rounded-3xl p-6 sm:p-8 mb-12 border border-slate-200/90 dark:border-white/12 bg-white/90 dark:bg-[#080b12]/90 backdrop-blur-2xl shadow-[0_16px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/30 dark:before:via-white/15 before:to-transparent overflow-hidden">
+        {/* Section Header in Protected Liquid Glass Card with Volt Rim */}
+        <div className="relative rounded-3xl p-6 sm:p-8 mb-12 border border-slate-200/90 dark:border-[#d4ff00]/25 bg-white/80 dark:bg-[#08090b]/65 backdrop-blur-xl shadow-[0_16px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8),0_0_25px_-5px_rgba(212,255,0,0.12)] before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[#d4ff00]/70 dark:before:via-[#d4ff00]/80 before:to-transparent overflow-hidden">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-300 dark:border-white/15 bg-white/80 dark:bg-white/5 backdrop-blur-md mb-3 shadow-sm">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-300 dark:border-[#d4ff00]/30 bg-white/80 dark:bg-[#d4ff00]/10 mb-3 shadow-sm">
                 <Activity className="w-3.5 h-3.5 text-lime-600 dark:text-[#d4ff00]" />
-                <span className="telemetry-chip text-slate-800 dark:text-white/90">ATHLETE COMMUNITY STORIES // LIVE</span>
+                <span className="telemetry-chip text-slate-800 dark:text-[#d4ff00]">ATHLETE COMMUNITY STORIES // LIVE</span>
               </div>
               <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-[1.1]">
                 Реальные истории <span className="text-lime-600 dark:text-[#d4ff00]">атлетов Ташкента</span>
@@ -71,7 +71,7 @@ export function AthleteStories() {
             </div>
 
             {/* Subtitle Telemetry Pod */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-slate-100/80 dark:bg-white/[0.05] border border-slate-200 dark:border-white/10 max-w-md shrink-0">
+            <div className="p-4 sm:p-5 rounded-2xl bg-slate-100/80 dark:bg-white/[0.05] border border-slate-200 dark:border-[#d4ff00]/25 max-w-md shrink-0">
               <p className="text-sm text-slate-900 dark:text-white font-medium leading-relaxed">
                 Более{" "}
                 <span className="text-lime-600 dark:text-[#d4ff00] font-black underline decoration-[#d4ff00]/40 underline-offset-4">
@@ -95,7 +95,7 @@ export function AthleteStories() {
               className="h-full"
             >
               <TiltCard maxTilt={5} glareOpacity={0.2} className="rounded-3xl">
-                <div className="relative h-full rounded-3xl border border-slate-200/90 dark:border-white/15 bg-white/90 dark:bg-[#0c0e14]/90 backdrop-blur-2xl p-6 sm:p-7 flex flex-col justify-between group hover:border-[#d4ff00]/70 dark:hover:border-[#d4ff00]/80 transition-all duration-300 shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.25)] before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent overflow-hidden">
+                <div className="relative h-full rounded-3xl border border-slate-200/90 dark:border-[#d4ff00]/20 bg-white/90 dark:bg-[#0c0e14]/75 backdrop-blur-xl p-6 sm:p-7 flex flex-col justify-between group hover:border-[#d4ff00]/80 dark:hover:border-[#d4ff00] transition-all duration-300 shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8),0_0_20px_-5px_rgba(212,255,0,0.12)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.3)] before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[#d4ff00]/50 dark:before:via-[#d4ff00]/60 before:to-transparent overflow-hidden">
                   {/* Luxury Background Watermark Quote Icon */}
                   <Quote className="w-16 h-16 text-slate-200/60 dark:text-white/[0.03] absolute -top-2 right-4 pointer-events-none group-hover:text-[#d4ff00]/10 transition-colors" />
 
