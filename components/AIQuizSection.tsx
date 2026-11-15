@@ -486,7 +486,7 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
             {step < 5 && (
               <div className="mb-8">
                 <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
-                  <span className="text-lime-600 dark:text-[#d4ff00]">ШАГ 0{step} / 04</span>
+                  <span className="text-[#d4ff00]">ШАГ 0{step} / 04</span>
                   <span>{step === 1 ? "25%" : step === 2 ? "50%" : step === 3 ? "75%" : "99%"}</span>
                 </div>
                 <div className="w-full h-1.5 bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden">
@@ -509,7 +509,7 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                   className="space-y-6"
                 >
                   <div>
-                    <span className="telemetry-chip text-lime-600 dark:text-[#d4ff00] block mb-1">ШАГ 01. ПРИОРИТЕТ ТРЕНИРОВОК</span>
+                    <span className="telemetry-chip text-[#d4ff00] block mb-1">ШАГ 01. ПРИОРИТЕТ ТРЕНИРОВОК</span>
                     <h3 className="font-display text-xl sm:text-2xl font-black uppercase text-slate-950 dark:text-white tracking-tight">
                       Какая главная цель ваших занятий в Ташкенте?
                     </h3>
@@ -563,7 +563,7 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                       <ArrowLeft className="w-5 h-5" />
                     </button>
                     <div>
-                      <span className="telemetry-chip text-lime-600 dark:text-[#d4ff00] block text-[10px]">ШАГ 02. ФОРМА & ОПЫТ</span>
+                      <span className="telemetry-chip text-[#d4ff00] block text-[10px]">ШАГ 02. ФОРМА & ОПЫТ</span>
                       <h3 className="font-display text-xl sm:text-2xl font-black uppercase text-slate-950 dark:text-white tracking-tight">
                         Ваш текущий уровень физической подготовки
                       </h3>
@@ -577,13 +577,13 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                         className="flex items-center justify-between p-5 rounded-2xl border border-slate-200 dark:border-white/10 hover:border-[#d4ff00] bg-slate-50 dark:bg-white/5 hover:bg-lime-50 dark:hover:bg-[#d4ff00]/10 text-left transition-all group"
                       >
                         <div>
-                          <span className="telemetry-chip text-lime-600 dark:text-[#d4ff00] text-[9px] block mb-0.5">{exp.tag}</span>
+                          <span className="telemetry-chip text-[#d4ff00] text-[9px] block mb-0.5">{exp.tag}</span>
                           <div className="font-extrabold text-slate-900 dark:text-white group-hover:text-lime-700 dark:group-hover:text-[#d4ff00] text-sm sm:text-base">
                             {exp.title}
                           </div>
                           <div className="text-xs text-slate-600 dark:text-slate-300 mt-1 font-medium">{exp.desc}</div>
                         </div>
-                        <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-lime-600 dark:group-hover:text-[#d4ff00] group-hover:translate-x-1 transition-all shrink-0 ml-4" />
+                        <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-[#d4ff00] dark:group-hover:text-[#d4ff00] group-hover:translate-x-1 transition-all shrink-0 ml-4" />
                       </button>
                     ))}
                   </div>
@@ -607,7 +607,7 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                       <ArrowLeft className="w-5 h-5" />
                     </button>
                     <div>
-                      <span className="telemetry-chip text-lime-600 dark:text-[#d4ff00] block text-[10px]">ШАГ 03. ДИСЦИПЛИНА</span>
+                      <span className="telemetry-chip text-[#d4ff00] block text-[10px]">ШАГ 03. ДИСЦИПЛИНА</span>
                       <h3 className="font-display text-xl sm:text-2xl font-black uppercase text-slate-950 dark:text-white tracking-tight">
                         Какое направление привлекает сильнее всего?
                       </h3>
@@ -664,7 +664,7 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                       <ArrowLeft className="w-5 h-5" />
                     </button>
                     <div>
-                      <span className="telemetry-chip text-lime-600 dark:text-[#d4ff00] block text-[10px]">ШАГ 04. БЮДЖЕТ</span>
+                      <span className="telemetry-chip text-[#d4ff00] block text-[10px]">ШАГ 04. БЮДЖЕТ</span>
                       <h3 className="font-display text-xl sm:text-2xl font-black uppercase text-slate-950 dark:text-white tracking-tight">
                         Комфортный бюджет тренировок в месяц (UZS)
                       </h3>
@@ -679,7 +679,7 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                         className="flex items-center justify-between p-5 rounded-2xl border border-slate-200 dark:border-white/10 hover:border-[#d4ff00] bg-slate-50 dark:bg-white/5 hover:bg-lime-50 dark:hover:bg-[#d4ff00]/10 text-left transition-all group disabled:opacity-50"
                       >
                         <div>
-                          <span className="telemetry-chip text-lime-600 dark:text-[#d4ff00] text-[9px] block mb-0.5">{b.badge}</span>
+                          <span className="telemetry-chip text-[#d4ff00] text-[9px] block mb-0.5">{b.badge}</span>
                           <div className="font-extrabold text-slate-900 dark:text-white group-hover:text-lime-700 dark:group-hover:text-[#d4ff00] text-sm sm:text-base">
                             {b.title}
                           </div>
@@ -688,7 +688,7 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                         {isSubmittingQuiz ? (
                           <Loader2 className="w-5 h-5 animate-spin text-[#d4ff00]" />
                         ) : (
-                          <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-lime-600 dark:group-hover:text-[#d4ff00] group-hover:translate-x-1 transition-all" />
+                          <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-[#d4ff00] dark:group-hover:text-[#d4ff00] group-hover:translate-x-1 transition-all" />
                         )}
                       </button>
                     ))}
@@ -852,7 +852,7 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
               ))}
 
               {isAiThinking && (
-                <div className="flex items-center gap-2 text-xs text-lime-600 dark:text-[#d4ff00] p-2 font-medium">
+                <div className="flex items-center gap-2 text-xs text-[#d4ff00] p-2 font-medium">
                   <Loader2 className="w-4 h-4 animate-spin text-[#d4ff00]" />
                   <span>Умный ИИ анализирует запрос и каталог залов Ташкента...</span>
                 </div>
@@ -912,13 +912,13 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
                 <span className="text-slate-500 dark:text-slate-400">Понравилась рекомендация? Забронируйте слот 0 UZS:</span>
                 <button
                   onClick={() => setChatLeadForm({ ...chatLeadForm, isOpen: !chatLeadForm.isOpen })}
-                  className="font-bold text-lime-600 dark:text-[#d4ff00] hover:underline"
+                  className="font-bold text-[#d4ff00] hover:underline"
                 >
                   {chatLeadForm.isOpen ? "Скрыть форму" : "Оставить контакты ⚡"}
                 </button>
               </div>
             ) : (
-              <div className="mt-2 text-xs text-lime-600 dark:text-[#d4ff00] font-bold text-center">
+              <div className="mt-2 text-xs text-[#d4ff00] font-bold text-center">
                 ✓ Контакты переданы в клуб и Telegram! Менеджер свяжется с вами.
               </div>
             )}
@@ -958,7 +958,7 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
         {activeTab === "synthesizer" && (
           <div className="rounded-3xl border border-slate-200/90 dark:border-[#d4ff00]/25 bg-white/90 dark:bg-[#0c0e14]/75 backdrop-blur-sm p-6 sm:p-10 shadow-xl dark:shadow-2xl space-y-6 text-slate-900 dark:text-white">
             <div className="space-y-3">
-              <label className="telemetry-chip text-lime-600 dark:text-[#d4ff00] block text-xs">
+              <label className="telemetry-chip text-[#d4ff00] block text-xs">
                 01. ГЛАВНЫЙ ЗАПРОС ТЕЛА И РАЗУМА:
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
@@ -986,7 +986,7 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
             <div className="space-y-2 pt-4 border-t border-slate-200 dark:border-white/10">
               <div className="flex justify-between items-center text-xs">
                 <span className="telemetry-chip text-slate-500 dark:text-slate-400">02. ТЕКУЩИЙ УРОВЕНЬ НАПРЯЖЕНИЯ / СТРЕССА:</span>
-                <span className="font-extrabold text-lime-600 dark:text-[#d4ff00]">{stressLevel} / 10</span>
+                <span className="font-extrabold text-[#d4ff00]">{stressLevel} / 10</span>
               </div>
               <input
                 type="range"
@@ -1000,7 +1000,7 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
 
             <div className="p-5 rounded-2xl bg-lime-500/10 dark:bg-[#d4ff00]/10 border border-lime-500/30 dark:border-[#d4ff00]/25 flex flex-col sm:flex-row items-center justify-between gap-4 mt-6">
               <div>
-                <span className="telemetry-chip text-lime-600 dark:text-[#d4ff00] block text-[10px]">ПОДОБРАННЫЙ СПОРТИВНЫЙ КЛУБ:</span>
+                <span className="telemetry-chip text-[#d4ff00] block text-[10px]">ПОДОБРАННЫЙ СПОРТИВНЫЙ КЛУБ:</span>
                 <div className="font-black text-lg text-slate-950 dark:text-white">
                   {synthGoals.find((g) => g.id === synthGoal)?.club}
                 </div>

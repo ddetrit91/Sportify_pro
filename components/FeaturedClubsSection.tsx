@@ -10,27 +10,29 @@ import { BorderBeam } from "./motion/BorderBeam";
 import { MagneticButton } from "./motion/MagneticButton";
 import { SonarPing } from "./motion/SonarPing";
 import { haptic } from "@/lib/haptics";
+import { useLanguage } from "@/lib/i18n";
 
 interface FeaturedClubsSectionProps {
   clubs: Club[];
 }
 
 export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
+  const { lang } = useLanguage();
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [onlyFreeTrial, setOnlyFreeTrial] = useState(false);
   const [bookingClub, setBookingClub] = useState<Club | null>(null);
 
   const categories = useMemo(
     () => [
-      { id: "all", label: "Все клубы Ташкента" },
-      { id: "rackets", label: "Падел & Теннис" },
-      { id: "martial_arts", label: "Бокс & ММА" },
-      { id: "fitness", label: "Кроссфит & Зал" },
-      { id: "swimming", label: "Бассейн 50м" },
-      { id: "yoga", label: "Реформер-пилатес" },
-      { id: "extreme", label: "Скалолазание" },
+      { id: "all", label: lang === "uz" ? "Barcha klublar" : "Все клубы Ташкента" },
+      { id: "rackets", label: lang === "uz" ? "Padel & Tennis" : "Падел & Теннис" },
+      { id: "martial_arts", label: lang === "uz" ? "Boks & MMA" : "Бокс & ММА" },
+      { id: "fitness", label: lang === "uz" ? "Krossfit & Zal" : "Кроссфит & Зал" },
+      { id: "swimming", label: lang === "uz" ? "Basseyn 50m" : "Бассейн 50м" },
+      { id: "yoga", label: lang === "uz" ? "Reformer-pilates" : "Реформер-пилатес" },
+      { id: "extreme", label: lang === "uz" ? "Qoyaga chiqish" : "Скалолазание" },
     ],
-    []
+    [lang]
   );
 
   // Dynamic filtering with multi-criteria support
@@ -59,13 +61,25 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
           />
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-300 dark:border-[#d4ff00]/30 bg-white/80 dark:bg-[#d4ff00]/10 mb-3 shadow-sm">
             <Sparkles className="w-3.5 h-3.5 text-[#d4ff00]" />
-            <span className="telemetry-chip text-slate-700 dark:text-[#d4ff00]">ТОПОВЫЕ КЛУБЫ ТАШКЕНТА // RATED 4.88+</span>
+            <span className="telemetry-chip text-slate-700 dark:text-[#d4ff00]">
+              {lang === "uz" ? "TOSHKENTNING TOP KLUBLARI // RATED 4.88+" : "ТОПОВЫЕ КЛУБЫ ТАШКЕНТА // RATED 4.88+"}
+            </span>
           </div>
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-tight drop-shadow-[0_2px_15px_rgba(0,0,0,0.8)]">
-            Спортивные клубы <span className="text-[#d4ff00]">Ташкента</span>
+            {lang === "uz" ? (
+              <>
+                Sport klublari <span className="text-[#d4ff00]">Toshkent</span>
+              </>
+            ) : (
+              <>
+                Спортивные клубы <span className="text-[#d4ff00]">Ташкента</span>
+              </>
+            )}
           </h2>
           <p className="mt-2 text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed">
-            Прямое бронирование в проверенные залы Ташкента. Честные цены без скрытых доплат и гарантированное первое занятие за 0 UZS.
+            {lang === "uz"
+              ? "Toshkentning eng yaxshi zallariga to'g'ridan-to'g'ri yozilish. Yashirin to'lovlarsiz halol narxlar va 0 UZS kafolatlangan birinchi mashg'ulot."
+              : "Прямое бронирование в проверенные залы Ташкента. Честные цены без скрытых доплат и гарантированное первое занятие за 0 UZS."}
           </p>
         </div>
 
@@ -107,7 +121,7 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
               href="#booking"
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-300 dark:border-[#d4ff00]/30 hover:border-[#d4ff00] bg-white dark:bg-[#0c0e14]/85 hover:bg-slate-200 dark:hover:bg-[#d4ff00]/15 text-xs font-bold tracking-wide text-slate-800 dark:text-slate-200 hover:text-black dark:hover:text-[#d4ff00] transition-all shadow-sm backdrop-blur-md shrink-0 self-start xl:self-auto"
             >
-              <span>Оформить пропуск 0 UZS</span>
+              <span>{lang === "uz" ? "0 UZS ruxsatnoma olish" : "Оформить пропуск 0 UZS"}</span>
               <ArrowRight className="w-4 h-4 text-[#d4ff00]" />
             </a>
           </div>
@@ -118,12 +132,15 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
             <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 font-mono">
               <span className="w-1.5 h-1.5 rounded-full bg-[#d4ff00] animate-pulse" />
               <span>
-                ПОКАЗАНО: <strong className="text-slate-900 dark:text-white font-bold">{filteredClubs.length}</strong> ИЗ{" "}
-                {clubs.length} КЛУБОВ
+                {lang === "uz"
+                  ? `KO'RSATILDI: `
+                  : `ПОКАЗАНО: `}
+                <strong className="text-slate-900 dark:text-white font-bold">{filteredClubs.length}</strong>{" "}
+                {lang === "uz" ? `/${clubs.length} TA KLUB` : `ИЗ ${clubs.length} КЛУБОВ`}
               </span>
               {onlyFreeTrial && (
                 <span className="text-black dark:text-[#d4ff00] bg-[#d4ff00]/25 dark:bg-[#d4ff00]/10 px-2 py-0.5 rounded border border-[#d4ff00]/40 text-[10px] uppercase font-sans font-black">
-                  Фильтр: 0 UZS
+                  {lang === "uz" ? "Filtr: 0 UZS" : "Фильтр: 0 UZS"}
                 </span>
               )}
             </div>
@@ -152,7 +169,7 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
                     }`}
                   />
                 </span>
-                <span>Только бесплатное (0 UZS)</span>
+                <span>{lang === "uz" ? "Faqat bepul (0 UZS)" : "Только бесплатное (0 UZS)"}</span>
               </button>
 
               {/* Reset Filters HUD Button */}
@@ -162,7 +179,7 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
                   className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-300 dark:border-white/20 bg-white/90 dark:bg-[#0c0e14]/90 hover:border-[#d4ff00]/60 dark:hover:border-[#d4ff00]/60 hover:bg-[#d4ff00]/10 text-xs font-semibold text-slate-800 dark:text-slate-200 hover:text-black dark:hover:text-[#d4ff00] backdrop-blur-md shadow-sm transition-all cursor-pointer group shrink-0"
                 >
                   <RotateCcw className="w-3.5 h-3.5 text-[#d4ff00] group-hover:rotate-[-45deg] transition-transform duration-200" />
-                  <span>Сбросить</span>
+                  <span>{lang === "uz" ? "Tozalash" : "Сбросить"}</span>
                 </button>
               )}
             </div>
@@ -284,12 +301,16 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
                         {/* Price and Action Buttons */}
                         <div className="pt-4 border-t border-slate-200 dark:border-white/10 flex items-center justify-between gap-3">
                           <div className="min-w-0">
-                            <span className="telemetry-chip text-slate-400 dark:text-slate-500 block">АБОНЕМЕНТ</span>
-                            <span className="text-base font-extrabold text-slate-950 dark:text-white truncate block">
-                              от {club.priceMonthly.toLocaleString("ru-RU")} UZS
+                            <span className="telemetry-chip text-slate-400 dark:text-slate-500 block">
+                              {lang === "uz" ? "OYLIK ABONEMENT" : "АБОНЕМЕНТ"}
                             </span>
-                            <span className="text-xs font-bold text-lime-600 dark:text-[#d4ff00] block mt-0.5 whitespace-nowrap">
-                              Пробное: {club.priceTrial === 0 ? "0 UZS (Бесплатно)" : `${club.priceTrial.toLocaleString("ru-RU")} UZS`}
+                            <span className="text-base font-extrabold text-slate-950 dark:text-white truncate block">
+                              {lang === "uz" ? `${club.priceMonthly.toLocaleString("uz-UZ")} UZS dan` : `от ${club.priceMonthly.toLocaleString("ru-RU")} UZS`}
+                            </span>
+                            <span className="text-xs font-bold text-[#d4ff00] block mt-0.5 whitespace-nowrap">
+                              {lang === "uz"
+                                ? `Sinov: ${club.priceTrial === 0 ? "0 UZS (Bepul)" : `${club.priceTrial.toLocaleString("uz-UZ")} UZS`}`
+                                : `Пробное: ${club.priceTrial === 0 ? "0 UZS (Бесплатно)" : `${club.priceTrial.toLocaleString("ru-RU")} UZS`}`}
                             </span>
                           </div>
 
@@ -301,7 +322,7 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
                             }}
                           >
                             <div className="px-4 py-2.5 rounded-xl bg-[#d4ff00] hover:bg-[#bbf200] text-black font-extrabold text-xs uppercase tracking-wider flex items-center gap-1.5 shrink-0 shadow-md shadow-[#d4ff00]/20 hover:shadow-[#d4ff00]/40 transition-all active:scale-95">
-                              <span>Записаться</span>
+                              <span>{lang === "uz" ? "Yozilish" : "Записаться"}</span>
                               <ArrowRight className="w-4 h-4 stroke-[2.5]" />
                             </div>
                           </MagneticButton>

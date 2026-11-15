@@ -78,7 +78,7 @@ export function AthleteStories() {
           <div className="p-4 sm:p-5 rounded-2xl bg-white/80 dark:bg-[#0c0e14]/75 border border-slate-200 dark:border-[#d4ff00]/25 max-w-md shrink-0 shadow-sm backdrop-blur-sm">
             <p className="text-sm text-slate-900 dark:text-white font-medium leading-relaxed">
               Более{" "}
-              <span className="text-lime-600 dark:text-[#d4ff00] font-black underline decoration-[#d4ff00]/40 underline-offset-4">
+              <span className="text-[#d4ff00] font-black underline decoration-[#d4ff00]/40 underline-offset-4">
                 <CounterNumber value={14800} /> жителей Ташкента
               </span>{" "}
               нашли свой спорт со SPORTIFY и тренируются в топовых клубах столицы.
@@ -106,7 +106,7 @@ export function AthleteStories() {
                     {/* Top Badge Tag */}
                     <div className="flex items-center justify-between mb-5">
                       <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-white/10">
-                        <Zap className="w-3 h-3 text-lime-600 dark:text-[#d4ff00]" />
+                        <Zap className="w-3 h-3 text-[#d4ff00]" />
                         <span>{story.tag}</span>
                       </span>
                       <div className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-amber-400/10 border border-amber-400/20 text-amber-500 dark:text-amber-400 text-xs font-black">
@@ -175,7 +175,7 @@ export function AthleteStories() {
                   {/* Card Footer: Verified Club & Location */}
                   <div className="mt-6 pt-4 border-t border-slate-200 dark:border-white/10 flex items-center justify-between text-xs font-semibold">
                     <div className="flex items-center gap-1.5 text-slate-900 dark:text-white truncate">
-                      <ShieldCheck className="w-4 h-4 text-lime-600 dark:text-[#d4ff00] shrink-0" />
+                      <ShieldCheck className="w-4 h-4 text-[#d4ff00] shrink-0" />
                       <span className="truncate">{story.club}</span>
                     </div>
                     <span className="text-[11px] text-slate-500 dark:text-slate-400 shrink-0 font-medium flex items-center gap-1">

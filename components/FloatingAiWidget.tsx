@@ -285,7 +285,7 @@ export function FloatingAiWidget() {
             ))}
 
             {isAiThinking && (
-              <div className="flex items-center gap-2 text-xs text-lime-600 dark:text-[#d4ff00] p-2 font-medium">
+              <div className="flex items-center gap-2 text-xs text-[#d4ff00] p-2 font-medium">
                 <Loader2 className="w-3.5 h-3.5 animate-spin text-[#d4ff00]" />
                 <span>ИИ анализирует залы Ташкента...</span>
               </div>

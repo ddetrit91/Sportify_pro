@@ -60,18 +60,18 @@ export function EditorialAdvantages() {
               </div>
               <div className="flex items-center justify-between text-xs">
                 <span className="text-slate-500 dark:text-slate-400 font-medium">СРЕДНИЙ РЕЙТИНГ КЛУБОВ:</span>
-                <span className="text-lime-600 dark:text-[#d4ff00] font-bold">4.94 ★</span>
+                <span className="text-[#d4ff00] font-bold">4.94 ★</span>
               </div>
               <div className="flex items-center justify-between text-xs">
                 <span className="text-slate-500 dark:text-slate-400 font-medium">ПЕРВАЯ ТРЕНИРОВКА:</span>
-                <span className="text-lime-600 dark:text-[#d4ff00] font-bold">0 UZS (БЕСПЛАТНО)</span>
+                <span className="text-[#d4ff00] font-bold">0 UZS (БЕСПЛАТНО)</span>
               </div>
             </div>
 
             <div className="pt-2">
               <a
                 href="#booking"
-                className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-lime-600 dark:text-[#d4ff00] hover:text-black dark:hover:text-white transition-colors group"
+                className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#d4ff00] hover:text-black dark:hover:text-white transition-colors group"
               >
                 <span>Забронировать пробный визит (0 UZS)</span>
                 <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -95,7 +95,7 @@ export function EditorialAdvantages() {
                     <div>
                       {/* Top Bar: Athletic Large Number & Radar Dot */}
                       <div className="flex items-center justify-between mb-4">
-                        <span className="font-display text-3xl sm:text-4xl font-black text-lime-600 dark:text-[#d4ff00] group-hover:scale-105 transition-transform">
+                        <span className="font-display text-3xl sm:text-4xl font-black text-[#d4ff00] group-hover:scale-105 transition-transform">
                           {item.num}
                         </span>
                         <span className="w-2 h-2 rounded-full bg-[#d4ff00] animate-pulse shadow-[0_0_8px_#d4ff00]" />

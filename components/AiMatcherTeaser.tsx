@@ -38,11 +38,11 @@ export function AiMatcherTeaser({ clubs }: { clubs: Club[] }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-14">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-300 dark:border-white/10 bg-white dark:bg-white/5 mb-3">
-            <Sparkles className="w-3.5 h-3.5 text-lime-600 dark:text-[#d4ff00]" />
+            <Sparkles className="w-3.5 h-3.5 text-[#d4ff00]" />
             <span className="telemetry-chip text-slate-700 dark:text-white/80">NEURAL ENGINE // TASHKENT SPORT SYNTHESIZER</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-tight">
-            AI Sport Matcher <span className="text-lime-600 dark:text-[#d4ff00]">в Ташкенте</span>
+            AI Sport Matcher <span className="text-[#d4ff00]">в Ташкенте</span>
           </h2>
           <p className="mt-2 text-sm sm:text-base text-slate-600 dark:text-slate-400">
             Настройте ключевые параметры — нейросеть мгновенно рассчитает наиболее эффективную дисциплину и клуб поблизости.
@@ -136,7 +136,7 @@ export function AiMatcherTeaser({ clubs }: { clubs: Club[] }) {
             >
               {/* Top Match Tag */}
               <div className="flex items-center justify-between">
-                <span className="telemetry-chip text-lime-600 dark:text-[#d4ff00] block">
+                <span className="telemetry-chip text-[#d4ff00] block">
                   РЕЗУЛЬТАТ AI-СИНТЕЗА
                 </span>
                 <span className="px-2.5 py-1 rounded-lg bg-[#d4ff00] text-black font-mono font-black text-xs">
@@ -173,7 +173,7 @@ export function AiMatcherTeaser({ clubs }: { clubs: Club[] }) {
                     <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-1">{matchedClub.description}</p>
                     <div className="pt-2 flex items-center justify-between text-xs font-mono">
                       <span className="text-slate-500 dark:text-slate-400">Первое занятие:</span>
-                      <span className="text-lime-600 dark:text-[#d4ff00] font-bold">
+                      <span className="text-[#d4ff00] font-bold">
                         {matchedClub.priceTrial === 0 ? "0 UZS (Бесплатно)" : `${matchedClub.priceTrial.toLocaleString("ru-RU")} UZS`}
                       </span>
                     </div>
