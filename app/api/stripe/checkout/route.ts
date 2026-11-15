@@ -35,18 +35,19 @@ export async function POST(request: NextRequest) {
     }
 
     // Determine host origin for redirect URLs
-    const hostHeader = request.headers.get("x-forwarded-host") || request.headers.get("host");
-    const protoHeader = request.headers.get("x-forwarded-proto") || (hostHeader?.includes("localhost") ? "http" : "https");
+    // Stripe Checkout operates on public HTTPS (checkout.stripe.com).
+    // Modern browsers (Chrome/Edge/Safari) enforce Private Network Access (PNA) and block
+    // top-frame redirects from public HTTPS to insecure private loopback addresses (http://localhost).
+    // Therefore, always use a public HTTPS origin (sportifypro.vercel.app) to guarantee seamless redirects.
+    const productionOrigin = "https://sportifypro.vercel.app";
     const originHeader = request.headers.get("origin");
     const refererHeader = request.headers.get("referer");
 
-    let origin = "https://sportifypro.vercel.app";
-    if (originHeader && originHeader.startsWith("http")) {
+    let origin = productionOrigin;
+    if (originHeader && originHeader.startsWith("https://")) {
       origin = originHeader;
-    } else if (refererHeader && refererHeader.startsWith("http")) {
+    } else if (refererHeader && refererHeader.startsWith("https://")) {
       origin = refererHeader.split("/").slice(0, 3).join("/");
-    } else if (hostHeader) {
-      origin = `${protoHeader}://${hostHeader}`;
     }
 
     // Generate unique Pass Code for this customer

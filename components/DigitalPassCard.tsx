@@ -77,6 +77,16 @@ export function DigitalPassCard({
 
   return (
     <div className="w-full max-w-md mx-auto space-y-4 animate-in fade-in zoom-in-95 duration-300">
+      {/* Prominent Acceptance & Payment Confirmation Banner */}
+      <div className="p-3.5 rounded-2xl bg-[#d4ff00]/15 border border-[#d4ff00]/50 flex items-center justify-center gap-2.5 text-center shadow-[0_0_25px_rgba(212,255,0,0.2)]">
+        <CheckCircle2 className="w-5 h-5 text-[#d4ff00] shrink-0" />
+        <span className="text-xs sm:text-sm font-black uppercase tracking-tight text-[#d4ff00]">
+          {lang === "uz"
+            ? "To'lov muvaffaqiyatli o'tdi // Ariza qabul qilindi"
+            : "Оплата прошла успешно // Заявка принята"}
+        </span>
+      </div>
+
       {/* Success Headline */}
       <div className="text-center space-y-1">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#d4ff00]/15 border border-[#d4ff00]/40 text-[#d4ff00] text-[11px] font-black uppercase tracking-wider">
