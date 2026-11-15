@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ShieldCheck, Zap, Sparkles, Check, ArrowUpRight, MapPin } from "lucide-react";
+import { ShieldCheck, ArrowUpRight } from "lucide-react";
 import { TiltCard } from "./motion/TiltCard";
 import { CounterNumber } from "./motion/CounterNumber";
 
@@ -10,29 +10,21 @@ export function EditorialAdvantages() {
     {
       num: "01",
       title: "НИКАКИХ КАБАЛЬНЫХ ГОДОВЫХ КАРТ",
-      tagline: "Свобода передвижения по Ташкенту",
-      icon: MapPin,
       desc: "Забудьте о покупке дорогих годовых карт за 12 000 000 UZS, которые сгорают без пользы. В SPORTIFY вы платите помесячно или за разовые визиты и свободно меняете клубы между Мирабадским, Юнусабадским и Чиланзарским районами.",
     },
     {
       num: "02",
       title: "ИНСПЕКЦИЯ 100% КЛУБОВ И ТРЕНЕРОВ",
-      tagline: "Только сертифицированные пространства",
-      icon: ShieldCheck,
       desc: "Каждый зал проходит аудит: многоступенчатая озоновая очистка воды в бассейнах, высота потолков от 6 метров, оригинальное американское и европейское оборудование (Rogue, Eleiko, Balanced Body) и дипломированные мастера спорта Узбекистана.",
     },
     {
       num: "03",
       title: "AI-МАТЧИНГ С УЧЕТОМ БИОМЕТРИИ",
-      tagline: "Спорт в удовольствие, а не на износ",
-      icon: Sparkles,
       desc: "Нейросеть учитывает сидячую офисную работу, состояние позвоночника, суставов и уровень стресса в течение дня, подбирая нагрузку без риска травм и перетренированности.",
     },
     {
       num: "04",
       title: "ОНЛАЙН-ЗАПИСЬ ЗА 10 СЕКУНД БЕЗ ЗВОНКОВ",
-      tagline: "Zero-spam гарантия платформы",
-      icon: Zap,
       desc: "Никаких назойливых звонков от менеджеров отделов продаж. Бронирование слота происходит онлайн в один клик с моментальным подтверждением в Telegram.",
     },
   ];
@@ -40,15 +32,15 @@ export function EditorialAdvantages() {
   return (
     <section id="advantages" className="py-24 relative overflow-hidden bg-transparent text-slate-900 dark:text-white transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
-          {/* Left Column: Editorial Statement */}
-          <div className="lg:col-span-5 space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+          {/* Left Column: Protected Frosted Statement Card */}
+          <div className="lg:col-span-5 space-y-6 p-6 sm:p-8 rounded-3xl bg-white/90 dark:bg-[#080b12]/90 backdrop-blur-2xl border border-slate-200/90 dark:border-white/12 shadow-[0_16px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/30 dark:before:via-white/15 before:to-transparent relative overflow-hidden">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-300 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-md shadow-sm">
               <ShieldCheck className="w-3.5 h-3.5 text-lime-600 dark:text-[#d4ff00]" />
               <span className="telemetry-chip text-slate-800 dark:text-white/90">СТАНДАРТЫ SPORTIFY // ТАШКЕНТ</span>
             </div>
 
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-[1.05]">
+            <h2 className="font-display text-3xl sm:text-4xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-[1.08]">
               Новая культура спорта:{" "}
               <span className="text-lime-600 dark:text-[#d4ff00]">
                 без рутины и навязывания.
@@ -87,7 +79,7 @@ export function EditorialAdvantages() {
             </div>
           </div>
 
-          {/* Right Column: 2x2 Grid of Numbered Editorial Cards - All 4 visible simultaneously */}
+          {/* Right Column: Clean, Spacious 2x2 Editorial Cards */}
           <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-5">
             {pillars.map((item, idx) => (
               <motion.div
@@ -99,32 +91,20 @@ export function EditorialAdvantages() {
                 className="h-full"
               >
                 <TiltCard maxTilt={5} glareOpacity={0.2} className="h-full rounded-3xl">
-                  <div className="relative h-full p-6 sm:p-7 rounded-3xl border border-slate-200/90 dark:border-white/15 bg-white/90 dark:bg-[#0c0e14]/85 backdrop-blur-2xl hover:border-[#d4ff00]/70 dark:hover:border-[#d4ff00]/80 transition-all duration-300 group shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.25)] before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent overflow-hidden flex flex-col justify-between">
+                  <div className="relative h-full p-6 sm:p-7 rounded-3xl border border-slate-200/90 dark:border-white/15 bg-white/90 dark:bg-[#0c0e14]/90 backdrop-blur-2xl hover:border-[#d4ff00]/70 dark:hover:border-[#d4ff00]/80 transition-all duration-300 group shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.25)] before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent overflow-hidden flex flex-col justify-between">
                     <div>
-                      {/* Top Bar: Big Athletic Number & Thematic Icon in Frosted Glass Squircle */}
+                      {/* Top Bar: Athletic Large Number & Radar Dot */}
                       <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center gap-2">
-                          <span className="font-display text-3xl sm:text-4xl font-black text-lime-600 dark:text-[#d4ff00] group-hover:scale-105 transition-transform">
-                            {item.num}
-                          </span>
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#d4ff00] animate-pulse opacity-80" />
-                        </div>
-
-                        <div className="w-10 h-10 rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 group-hover:border-[#d4ff00]/60 group-hover:bg-[#d4ff00]/10 flex items-center justify-center text-slate-700 dark:text-slate-300 group-hover:text-lime-600 dark:group-hover:text-[#d4ff00] transition-all shadow-sm">
-                          <item.icon className="w-5 h-5 stroke-[2]" />
-                        </div>
+                        <span className="font-display text-3xl sm:text-4xl font-black text-lime-600 dark:text-[#d4ff00] group-hover:scale-105 transition-transform">
+                          {item.num}
+                        </span>
+                        <span className="w-2 h-2 rounded-full bg-[#d4ff00] animate-pulse shadow-[0_0_8px_#d4ff00]" />
                       </div>
 
                       {/* Main Title */}
-                      <h3 className="text-base sm:text-lg font-black uppercase tracking-tight text-slate-950 dark:text-white mb-2 leading-snug">
+                      <h3 className="text-base sm:text-lg font-black uppercase tracking-tight text-slate-950 dark:text-white mb-2.5 leading-snug">
                         {item.title}
                       </h3>
-
-                      {/* Clean Value Proposition Tagline with Checkmark (No cramped boxes!) */}
-                      <div className="inline-flex items-center gap-1.5 text-xs font-bold text-lime-600 dark:text-[#d4ff00] mb-3">
-                        <Check className="w-3.5 h-3.5 stroke-[2.5]" />
-                        <span>{item.tagline}</span>
-                      </div>
 
                       {/* Paragraph Description */}
                       <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
