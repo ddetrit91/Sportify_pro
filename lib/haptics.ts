@@ -57,6 +57,13 @@ class HapticAudioEngine {
   }
 
   /**
+   * Subtle soft click
+   */
+  public light() {
+    this.click();
+  }
+
+  /**
    * Soft dual-tone toggle click (theme switch, mode change)
    */
   public toggle(isUp: boolean = true) {

@@ -45,6 +45,19 @@ export async function initDb() {
       CREATE INDEX IF NOT EXISTS idx_leads_created_at ON leads(created_at DESC);
     `;
 
+    // Добавляем новые колонки для тарифа, оплаты и чека
+    try {
+      await sql`ALTER TABLE leads ADD COLUMN IF NOT EXISTS pass_code VARCHAR(100);`;
+      await sql`ALTER TABLE leads ADD COLUMN IF NOT EXISTS plan_type VARCHAR(50);`;
+      await sql`ALTER TABLE leads ADD COLUMN IF NOT EXISTS payment_method VARCHAR(50);`;
+      await sql`ALTER TABLE leads ADD COLUMN IF NOT EXISTS receipt_url TEXT;`;
+      await sql`ALTER TABLE leads ADD COLUMN IF NOT EXISTS receipt_name VARCHAR(255);`;
+      await sql`ALTER TABLE leads ADD COLUMN IF NOT EXISTS amount_uzs NUMERIC;`;
+      await sql`ALTER TABLE leads ADD COLUMN IF NOT EXISTS language VARCHAR(10);`;
+    } catch (migErr) {
+      console.warn("Neon DB migration columns notice:", migErr);
+    }
+
     isInitialized = true;
   } catch (error) {
     console.error("Neon DB schema initialization error:", error);
@@ -72,6 +85,13 @@ export async function dbGetLeads(): Promise<Lead[]> {
       ai_summary as "aiSummary",
       notes,
       status,
+      pass_code as "passCode",
+      plan_type as "planType",
+      payment_method as "paymentMethod",
+      receipt_url as "receiptUrl",
+      receipt_name as "receiptName",
+      amount_uzs as "amountUzs",
+      language,
       created_at as "createdAt"
     FROM leads
     ORDER BY created_at DESC;
@@ -89,6 +109,13 @@ export async function dbGetLeads(): Promise<Lead[]> {
     aiSummary: r.aiSummary || undefined,
     notes: r.notes || undefined,
     status: (r.status as LeadStatus) || "new",
+    passCode: r.passCode || undefined,
+    planType: r.planType || undefined,
+    paymentMethod: r.paymentMethod || undefined,
+    receiptUrl: r.receiptUrl || undefined,
+    receiptName: r.receiptName || undefined,
+    amountUzs: r.amountUzs ? Number(r.amountUzs) : undefined,
+    language: r.language || undefined,
     createdAt: r.createdAt ? new Date(r.createdAt).toISOString() : new Date().toISOString(),
   }));
 }
@@ -114,6 +141,13 @@ export async function dbSaveLead(lead: Lead): Promise<Lead> {
       ai_summary,
       notes,
       status,
+      pass_code,
+      plan_type,
+      payment_method,
+      receipt_url,
+      receipt_name,
+      amount_uzs,
+      language,
       created_at
     ) VALUES (
       ${lead.id},
@@ -127,6 +161,13 @@ export async function dbSaveLead(lead: Lead): Promise<Lead> {
       ${lead.aiSummary || null},
       ${lead.notes || null},
       ${lead.status || "new"},
+      ${lead.passCode || null},
+      ${lead.planType || null},
+      ${lead.paymentMethod || null},
+      ${lead.receiptUrl || null},
+      ${lead.receiptName || null},
+      ${lead.amountUzs || null},
+      ${lead.language || null},
       ${lead.createdAt ? new Date(lead.createdAt).toISOString() : new Date().toISOString()}
     );
   `;

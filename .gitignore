@@ -61,3 +61,7 @@ desktop.ini
 # Vercel
 .vercel
 .neon
+
+# User uploaded receipts
+public/uploads/receipts/*
+!public/uploads/receipts/.gitkeep

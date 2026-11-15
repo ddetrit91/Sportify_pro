@@ -64,6 +64,8 @@ export interface Sport {
 
 export type LeadStatus = 'new' | 'contacted' | 'enrolled' | 'cancelled';
 export type LeadSource = 'quiz' | 'catalog' | 'landing_form' | 'ai_chat' | 'matcher' | 'club_page';
+export type PlanType = 'trial' | 'membership';
+export type PaymentMethod = 'free' | 'click_payme' | 'stripe';
 
 export interface Lead {
   id: string;
@@ -81,6 +83,13 @@ export interface Lead {
   notes?: string;
   bookingDate?: string;
   bookingTime?: string;
+  planType?: PlanType;
+  paymentMethod?: PaymentMethod;
+  receiptUrl?: string;
+  receiptName?: string;
+  passCode?: string;
+  amountUzs?: number;
+  language?: 'ru' | 'uz';
 }
 
 export interface QuizAnswers {

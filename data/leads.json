@@ -1,1 +1,39 @@
-[]
+[
+  {
+    "id": "lead-1794750299682-u0pqc",
+    "name": "Азиз Тестовый",
+    "phone": "+998 90 777 66 55",
+    "clubName": "Apex Performance Tashkent",
+    "budget": "850 000 UZS (Абонемент)",
+    "source": "landing_form",
+    "planType": "membership",
+    "paymentMethod": "click_payme",
+    "receiptUrl": "/uploads/receipts/receipt_SPT-2026-1807_1794750298288_receipt_payme_test.png",
+    "receiptName": "receipt_payme_test.png",
+    "passCode": "SPT-2026-1807",
+    "amountUzs": 850000,
+    "language": "ru",
+    "status": "new",
+    "createdAt": "2026-11-15T13:44:59.682Z"
+  },
+  {
+    "id": "lead-1794750220840-bp46t",
+    "name": "Тест Сардор",
+    "phone": "+998 90 999 88 77",
+    "sportInterest": "Фитнес & Кроссфит",
+    "clubId": "club-1",
+    "clubName": "Apex Performance Tashkent",
+    "budget": "0 UZS (Бесплатный визит)",
+    "source": "catalog",
+    "aiSummary": "Бронирование в \"Apex Performance Tashkent\" (м. Ойбек, Ташкент). Тариф: Вводный визит (0 UZS). Желаемая дата: Ближайшая, время: 19:00 - Вечерний слот.",
+    "bookingDate": "Ближайшая дата",
+    "bookingTime": "19:00 - Вечерний слот",
+    "planType": "trial",
+    "paymentMethod": "free",
+    "passCode": "SPT-2026-9686",
+    "amountUzs": 0,
+    "language": "ru",
+    "status": "new",
+    "createdAt": "2026-11-15T13:43:40.840Z"
+  }
+]

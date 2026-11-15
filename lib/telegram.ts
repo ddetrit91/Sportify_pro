@@ -1,3 +1,5 @@
+import fs from "fs";
+import path from "path";
 import { Lead } from "./types";
 
 interface TelegramSendResult {
@@ -7,7 +9,11 @@ interface TelegramSendResult {
   skipped?: boolean;
 }
 
-export async function sendTelegramNotification(lead: Lead): Promise<TelegramSendResult> {
+export async function sendTelegramNotification(
+  lead: Lead,
+  receiptFilePath?: string,
+  receiptMimeType?: string
+): Promise<TelegramSendResult> {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
 
@@ -30,7 +36,7 @@ export async function sendTelegramNotification(lead: Lead): Promise<TelegramSend
   };
 
   const formattedDate = new Date(lead.createdAt).toLocaleString("ru-RU", {
-    timeZone: "Europe/Moscow",
+    timeZone: "Asia/Tashkent",
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
@@ -38,33 +44,84 @@ export async function sendTelegramNotification(lead: Lead): Promise<TelegramSend
     minute: "2-digit",
   });
 
-  const text = `
-🔥 <b>НОВАЯ ЗАЯВКА В SPOTIFY!</b>
+  const planLabel =
+    lead.planType === "membership"
+      ? `💎 Месячный абонемент (${lead.amountUzs ? Number(lead.amountUzs).toLocaleString("ru-RU") + " UZS" : lead.budget || "Тариф клуба"})`
+      : `🟢 Бесплатный вводный визит (0 UZS)`;
+
+  const paymentLabel =
+    lead.paymentMethod === "click_payme"
+      ? `📲 Перевод Click / Payme ${receiptFilePath ? "📎 [ЧЕК ПРИКРЕПЛЕН]" : ""}`
+      : lead.paymentMethod === "stripe"
+      ? `💳 Онлайн-оплата картой (Stripe)`
+      : `🎫 Бесплатный пропуск (0 UZS)`;
+
+  const passCodeLabel = lead.passCode || `SPT-${new Date().getFullYear()}-${lead.id.slice(-4)}`;
+
+  const captionText = `
+⚡ <b>НОВАЯ ЗАЯВКА И ОПЛАТА // SPORTIFY</b>
 ━━━━━━━━━━━━━━━━━━
+🎫 <b>ПРОПУСК:</b> <code>#${escapeHtml(passCodeLabel)}</code>
 👤 <b>Клиент:</b> ${escapeHtml(lead.name)}
 📞 <b>Телефон:</b> <code>${escapeHtml(lead.phone)}</code>
-🏆 <b>Направление:</b> ${escapeHtml(lead.sportInterest || "Не указано")}
+🏆 <b>Спорт / Направление:</b> ${escapeHtml(lead.sportInterest || "Не указано")}
 📍 <b>Клуб:</b> ${escapeHtml(lead.clubName || "Не выбран (подбор)")}
-💰 <b>Бюджет:</b> ${escapeHtml(lead.budget || "Не указан")}
-🎯 <b>Источник:</b> ${escapeHtml(sourceLabels[lead.source] || lead.source)}
-🕒 <b>Время:</b> ${formattedDate} МСК
+💳 <b>Тариф:</b> ${escapeHtml(planLabel)}
+💰 <b>Оплата:</b> ${escapeHtml(paymentLabel)}
+🌐 <b>Язык:</b> ${lead.language === "uz" ? "🇺🇿 O'zbekcha" : "🇷🇺 Русский"}
+🕒 <b>Время:</b> ${formattedDate} (Ташкент)
 
-💡 <b>AI-Профиль / Детали:</b>
-<i>${escapeHtml(lead.aiSummary || "Прямая заявка без расширенного опроса")}</i>
+💡 <b>Детали бронирования:</b>
+<i>${escapeHtml(lead.aiSummary || "Прямая запись на тренировку")}</i>
 ━━━━━━━━━━━━━━━━━━
-📊 <i>Статус: Новая | ID: ${lead.id}</i>
+📊 <i>ID: ${lead.id} | Статус: ${lead.status.toUpperCase()}</i>
 `.trim();
 
   try {
+    // 1. Если прикреплен файл чека (картинка или PDF)
+    if (receiptFilePath && fs.existsSync(receiptFilePath)) {
+      const fileBuffer = fs.readFileSync(receiptFilePath);
+      const filename = path.basename(receiptFilePath);
+      const isPdf =
+        receiptMimeType === "application/pdf" ||
+        filename.toLowerCase().endsWith(".pdf");
+
+      const formData = new FormData();
+      formData.append("chat_id", chatId);
+      formData.append("caption", captionText);
+      formData.append("parse_mode", "HTML");
+
+      const blob = new Blob([fileBuffer], {
+        type: isPdf ? "application/pdf" : receiptMimeType || "image/jpeg",
+      });
+
+      if (isPdf) {
+        formData.append("document", blob, filename);
+        const url = `https://api.telegram.org/bot${token}/sendDocument`;
+        const response = await fetch(url, { method: "POST", body: formData });
+        const data = await response.json();
+        if (response.ok && data.ok) {
+          return { success: true, message: "Чек (PDF) успешно отправлен в Telegram" };
+        }
+      } else {
+        formData.append("photo", blob, filename);
+        const url = `https://api.telegram.org/bot${token}/sendPhoto`;
+        const response = await fetch(url, { method: "POST", body: formData });
+        const data = await response.json();
+        if (response.ok && data.ok) {
+          return { success: true, message: "Чек (Фото) успешно отправлен в Telegram" };
+        }
+      }
+    }
+
+    // 2. Стандартная отправка текстового сообщения (если чека нет или отправка фото дала сбой)
     const url = `https://api.telegram.org/bot${token}/sendMessage`;
     const response = await fetch(url, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         chat_id: chatId,
-        text: text,
+        text: captionText,
         parse_mode: "HTML",
         disable_web_page_preview: true,
       }),
@@ -108,7 +165,7 @@ export async function sendTelegramTestMessage(): Promise<TelegramSendResult> {
 ⚡ <b>SPOTIFY — ТЕСТОВОЕ УВЕДОМЛЕНИЕ</b>
 ━━━━━━━━━━━━━━━━━━
 Интеграция с Telegram успешно настроена и активна!
-Все новые заявки с лендинга и AI-квиза будут мгновенно поступать в этот чат.
+Все новые заявки, оплаты Click/Payme и чеки будут мгновенно поступать в этот чат.
 🕒 <i>Время проверки: ${new Date().toLocaleTimeString("ru-RU")}</i>
 `.trim();
 

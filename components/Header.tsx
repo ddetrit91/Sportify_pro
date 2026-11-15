@@ -2,13 +2,15 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Zap, Sun, Moon, Menu, X, ArrowRight, Lock, Sparkles } from "lucide-react";
+import { Zap, Sun, Moon, Menu, X, ArrowRight, Lock, Sparkles, Globe } from "lucide-react";
 import { AmbientSoundController } from "./AmbientSoundController";
 import { MagneticButton } from "./motion/MagneticButton";
 import { SonarPing } from "./motion/SonarPing";
 import { haptic } from "@/lib/haptics";
+import { useLanguage } from "@/lib/i18n";
 
 export function Header() {
+  const { lang, setLang, t } = useLanguage();
   const [isDark, setIsDark] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -39,12 +41,12 @@ export function Header() {
   };
 
   const navLinks = [
-    { label: "Клубы Ташкента", href: "#clubs", highlight: false },
-    { label: "Виды спорта", href: "#sports", highlight: false },
-    { label: "AI Matcher", href: "#ai-matcher", highlight: true },
-    { label: "Преимущества", href: "#advantages", highlight: false },
-    { label: "Отзывы", href: "#reviews", highlight: false },
-    { label: "FAQ", href: "#faq", highlight: false },
+    { label: t("navClubs"), href: "#clubs", highlight: false },
+    { label: t("navSports"), href: "#sports", highlight: false },
+    { label: t("navAiMatcher"), href: "#ai-matcher", highlight: true },
+    { label: t("navAdvantages"), href: "#advantages", highlight: false },
+    { label: t("navReviews"), href: "#reviews", highlight: false },
+    { label: t("navFaq"), href: "#faq", highlight: false },
   ];
 
   return (
@@ -59,10 +61,10 @@ export function Header() {
       >
         <span className="inline-flex items-center gap-2 truncate">
           <SonarPing size="sm" color="bg-[#d4ff00]" />
-          <span className="truncate">SPORTIFY LIVE // ТАШКЕНТ: 18 СЛОТОВ ОТКРЫТО СЕГОДНЯ</span>
+          <span className="truncate">{t("navTicker1")}</span>
         </span>
         <span className="hidden sm:inline text-white/30">|</span>
-        <span className="hidden sm:inline text-white/90 font-medium">ПЕРВАЯ ТРЕНИРОВКА 0 UZS (БЕСПЛАТНО)</span>
+        <span className="hidden sm:inline text-white/90 font-medium">{t("navTicker2")}</span>
         <span className="hidden sm:inline text-white/30">|</span>
         <span className="hidden sm:inline-flex items-center gap-1.5 text-slate-200 font-medium">
           <span className="text-[#ff2d55]">📞</span>
@@ -127,6 +129,38 @@ export function Header() {
               <AmbientSoundController />
             </div>
 
+            {/* Language Switcher Capsule RU | UZ */}
+            <div className="flex items-center rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-100/90 dark:bg-[#11141c]/90 p-1 text-[11px] font-mono font-bold">
+              <button
+                onClick={() => {
+                  haptic.light();
+                  setLang("ru");
+                }}
+                className={`px-2 py-1 rounded-xl transition-all ${
+                  lang === "ru"
+                    ? "bg-[#d4ff00] text-black shadow-sm font-black"
+                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                }`}
+                title="Русский язык"
+              >
+                RU
+              </button>
+              <button
+                onClick={() => {
+                  haptic.light();
+                  setLang("uz");
+                }}
+                className={`px-2 py-1 rounded-xl transition-all ${
+                  lang === "uz"
+                    ? "bg-[#d4ff00] text-black shadow-sm font-black"
+                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                }`}
+                title="O'zbek tili"
+              >
+                UZ
+              </button>
+            </div>
+
             {/* Theme Toggle Button */}
             <button
               onClick={toggleTheme}
@@ -155,7 +189,7 @@ export function Header() {
                 href="#booking"
                 className="inline-flex items-center gap-2 h-10 px-6 rounded-full text-xs font-black uppercase tracking-wider bg-gradient-to-r from-[#d4ff00] via-[#cbf200] to-[#b4f000] hover:from-[#bbf200] hover:to-[#9ee600] text-black shadow-[0_0_20px_rgba(212,255,0,0.4)] hover:shadow-[0_0_28px_rgba(212,255,0,0.6)] transition-all active:scale-95 shrink-0"
               >
-                <span>Записаться 0 UZS</span>
+                <span>{t("navBookTrial")}</span>
                 <ArrowRight className="w-4 h-4 stroke-[2.5]" />
               </a>
             </MagneticButton>
@@ -207,6 +241,31 @@ export function Header() {
               </Link>
             </div>
 
+            <div className="pt-2 sm:hidden border-t border-slate-200 dark:border-white/10 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Globe className="w-4 h-4 text-slate-500" />
+                <span className="text-xs font-mono text-slate-400">Язык / Til:</span>
+              </div>
+              <div className="flex items-center rounded-xl border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-[#11141c] p-1 text-xs font-mono font-bold">
+                <button
+                  onClick={() => setLang("ru")}
+                  className={`px-3 py-1 rounded-lg ${
+                    lang === "ru" ? "bg-[#d4ff00] text-black font-black" : "text-slate-400"
+                  }`}
+                >
+                  Русский
+                </button>
+                <button
+                  onClick={() => setLang("uz")}
+                  className={`px-3 py-1 rounded-lg ${
+                    lang === "uz" ? "bg-[#d4ff00] text-black font-black" : "text-slate-400"
+                  }`}
+                >
+                  O'zbekcha
+                </button>
+              </div>
+            </div>
+
             <div className="pt-2 sm:hidden border-t border-slate-200 dark:border-white/10">
               <AmbientSoundController />
             </div>
@@ -217,7 +276,7 @@ export function Header() {
                 onClick={() => setMobileMenuOpen(false)}
                 className="w-full flex items-center justify-center gap-2 h-11 rounded-full text-xs font-black uppercase tracking-wider bg-gradient-to-r from-[#d4ff00] to-[#bbf200] text-black shadow-[0_0_20px_rgba(212,255,0,0.35)] active:scale-95 transition-all"
               >
-                <span>Забронировать 0 UZS</span>
+                <span>{t("navBookTrial")}</span>
                 <ArrowRight className="w-4 h-4 stroke-[2.5]" />
               </a>
             </div>

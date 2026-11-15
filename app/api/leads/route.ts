@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import fs from "fs";
+import path from "path";
 import { getLeads, saveLead, updateLead, deleteLead } from "@/lib/storage";
 import { dbGetLeads, dbSaveLead, dbUpdateLead, dbDeleteLead, getDb } from "@/lib/db";
 import { uploadToStorage, deleteFromStorage } from "@/lib/storage-s3";
 import { sendTelegramNotification } from "@/lib/telegram";
-import { Lead, LeadStatus } from "@/lib/types";
+import { Lead, LeadStatus, PlanType, PaymentMethod } from "@/lib/types";
 
 export async function GET(request: NextRequest) {
   try {
@@ -38,8 +40,99 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const { name, phone, sportInterest, clubId, clubName, budget, source, aiSummary, notes } = body;
+    const contentType = request.headers.get("content-type") || "";
+
+    let name = "";
+    let phone = "";
+    let sportInterest: string | undefined;
+    let clubId: string | undefined;
+    let clubName: string | undefined;
+    let budget: string | undefined;
+    let source: any = "landing_form";
+    let aiSummary: string | undefined;
+    let notes: string | undefined;
+    let bookingDate: string | undefined;
+    let bookingTime: string | undefined;
+    let planType: PlanType = "trial";
+    let paymentMethod: PaymentMethod | undefined;
+    let amountUzs: number | undefined;
+    let language: "ru" | "uz" = "ru";
+
+    let savedReceiptPath: string | undefined;
+    let receiptUrl: string | undefined;
+    let receiptName: string | undefined;
+    let receiptMimeType: string | undefined;
+
+    // Генерируем уникальный ID пропуска, чтобы клиенты никогда не смешивались
+    const randomSuffix = Math.floor(1000 + Math.random() * 9000);
+    const passCode = `SPT-2026-${randomSuffix}`;
+
+    if (contentType.includes("multipart/form-data")) {
+      const formData = await request.formData();
+      name = String(formData.get("name") || "").trim();
+      phone = String(formData.get("phone") || "").trim();
+      sportInterest = (formData.get("sportInterest") as string) || undefined;
+      clubId = (formData.get("clubId") as string) || undefined;
+      clubName = (formData.get("clubName") as string) || undefined;
+      budget = (formData.get("budget") as string) || undefined;
+      source = (formData.get("source") as any) || "landing_form";
+      aiSummary = (formData.get("aiSummary") as string) || undefined;
+      notes = (formData.get("notes") as string) || undefined;
+      bookingDate = (formData.get("bookingDate") as string) || undefined;
+      bookingTime = (formData.get("bookingTime") as string) || undefined;
+      planType = ((formData.get("planType") as string) === "membership" ? "membership" : "trial");
+      paymentMethod = (formData.get("paymentMethod") as PaymentMethod) || (planType === "trial" ? "free" : "click_payme");
+      
+      const parsedAmount = formData.get("amountUzs");
+      if (parsedAmount) {
+        amountUzs = Number(parsedAmount);
+      }
+      
+      const langVal = formData.get("language") as string;
+      if (langVal === "uz" || langVal === "ru") {
+        language = langVal;
+      }
+
+      // Обработка файла чека
+      const receiptFile = formData.get("receipt") as File | null;
+      if (receiptFile && typeof receiptFile === "object" && "arrayBuffer" in receiptFile && receiptFile.size > 0) {
+        receiptName = receiptFile.name;
+        receiptMimeType = receiptFile.type || "image/jpeg";
+
+        const uploadDir = path.join(process.cwd(), "public", "uploads", "receipts");
+        if (!fs.existsSync(uploadDir)) {
+          fs.mkdirSync(uploadDir, { recursive: true });
+        }
+
+        const ext = path.extname(receiptFile.name) || (receiptFile.type === "application/pdf" ? ".pdf" : ".jpg");
+        const safeBase = path.basename(receiptFile.name, ext).replace(/[^a-zA-Z0-9_-]/g, "_").slice(0, 30);
+        const savedFileName = `receipt_${passCode}_${Date.now()}_${safeBase}${ext}`;
+        savedReceiptPath = path.join(uploadDir, savedFileName);
+
+        const bytes = await receiptFile.arrayBuffer();
+        fs.writeFileSync(savedReceiptPath, Buffer.from(bytes));
+        receiptUrl = `/uploads/receipts/${savedFileName}`;
+      }
+    } else {
+      const body = await request.json();
+      name = String(body.name || "").trim();
+      phone = String(body.phone || "").trim();
+      sportInterest = body.sportInterest ? String(body.sportInterest).trim() : undefined;
+      clubId = body.clubId ? String(body.clubId).trim() : undefined;
+      clubName = body.clubName ? String(body.clubName).trim() : undefined;
+      budget = body.budget ? String(body.budget).trim() : undefined;
+      source = body.source || "landing_form";
+      aiSummary = body.aiSummary ? String(body.aiSummary).trim() : undefined;
+      notes = body.notes ? String(body.notes).trim() : undefined;
+      bookingDate = body.bookingDate ? String(body.bookingDate).trim() : undefined;
+      bookingTime = body.bookingTime ? String(body.bookingTime).trim() : undefined;
+      planType = body.planType === "membership" ? "membership" : "trial";
+      paymentMethod = body.paymentMethod || (planType === "trial" ? "free" : "click_payme");
+      amountUzs = body.amountUzs ? Number(body.amountUzs) : undefined;
+      language = body.language === "uz" ? "uz" : "ru";
+      receiptUrl = body.receiptUrl || undefined;
+      receiptName = body.receiptName || undefined;
+    }
 
     if (!name || !phone) {
       return NextResponse.json(
@@ -48,19 +141,28 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Создаем объект лида
+    // Создаем объект лида с персональным passCode
     const leadId = `lead-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
     const newLead: Lead = {
       id: leadId,
-      name: String(name).trim(),
-      phone: String(phone).trim(),
-      sportInterest: sportInterest ? String(sportInterest).trim() : undefined,
-      clubId: clubId ? String(clubId).trim() : undefined,
-      clubName: clubName ? String(clubName).trim() : undefined,
-      budget: budget ? String(budget).trim() : undefined,
-      source: source || "landing_form",
-      aiSummary: aiSummary ? String(aiSummary).trim() : undefined,
-      notes: notes ? String(notes).trim() : undefined,
+      name,
+      phone,
+      sportInterest,
+      clubId,
+      clubName,
+      budget: budget || (planType === "trial" ? "0 UZS (Бесплатный визит)" : `${amountUzs ? Number(amountUzs).toLocaleString("ru-RU") : "850 000"} UZS (Абонемент)`),
+      source,
+      aiSummary,
+      notes,
+      bookingDate,
+      bookingTime,
+      planType,
+      paymentMethod,
+      receiptUrl,
+      receiptName,
+      passCode,
+      amountUzs: amountUzs || (planType === "trial" ? 0 : 850000),
+      language,
       status: "new",
       createdAt: new Date().toISOString(),
     };
@@ -95,12 +197,13 @@ export async function POST(request: NextRequest) {
       console.warn("Local storage write notice:", fileErr);
     }
 
-    // 4. Отправляем моментальное уведомление в Telegram
-    const telegramResult = await sendTelegramNotification(newLead);
+    // 4. Отправляем моментальное уведомление в Telegram (с файлом чека при наличии)
+    const telegramResult = await sendTelegramNotification(newLead, savedReceiptPath, receiptMimeType);
 
     return NextResponse.json({
       success: true,
       lead: newLead,
+      passCode: newLead.passCode,
       storage: {
         neonPostgres: pgSaved,
         neonObjectStorage: s3Saved,

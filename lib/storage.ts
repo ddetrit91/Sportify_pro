@@ -28,15 +28,16 @@ export function getLeads(): Lead[] {
   }
 }
 
-export function saveLead(newLead: Omit<Lead, "id" | "createdAt" | "status">): Lead {
+export function saveLead(newLead: Partial<Lead> & { name: string; phone: string }): Lead {
   ensureDirectoryExists();
   const leads = getLeads();
   
   const lead: Lead = {
     ...newLead,
-    id: `lead-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
-    createdAt: new Date().toISOString(),
-    status: "new",
+    id: newLead.id || `lead-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+    createdAt: newLead.createdAt || new Date().toISOString(),
+    status: newLead.status || "new",
+    source: newLead.source || "landing_form",
   };
 
   leads.unshift(lead);

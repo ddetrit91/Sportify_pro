@@ -186,12 +186,36 @@ export default function AdminPage() {
 
   const exportCSV = () => {
     if (leads.length === 0) return;
-    const headers = ["ID", "Дата", "Имя", "Телефон", "Спорт", "Клуб", "Бюджет", "Источник", "Статус", "AI Детали", "Заметки"];
+    const headers = [
+      "ID",
+      "Пропуск ID",
+      "Дата",
+      "Имя",
+      "Телефон",
+      "Тариф",
+      "Оплата",
+      "Сумма UZS",
+      "Чек URL",
+      "Язык",
+      "Спорт",
+      "Клуб",
+      "Бюджет",
+      "Источник",
+      "Статус",
+      "AI Детали",
+      "Заметки",
+    ];
     const rows = leads.map((l) => [
       l.id,
+      `"#${l.passCode || ""}"`,
       new Date(l.createdAt).toLocaleString("ru-RU"),
       `"${l.name}"`,
       `"${l.phone}"`,
+      `"${l.planType || "trial"}"`,
+      `"${l.paymentMethod || ""}"`,
+      `"${l.amountUzs || 0}"`,
+      `"${l.receiptUrl || ""}"`,
+      `"${l.language || "ru"}"`,
       `"${l.sportInterest || ""}"`,
       `"${l.clubName || ""}"`,
       `"${l.budget || ""}"`,
@@ -500,10 +524,12 @@ export default function AdminPage() {
             <table className="w-full text-left text-xs font-mono">
               <thead className="bg-black/60 text-slate-400 uppercase tracking-wider font-semibold border-b border-white/10">
                 <tr>
+                  <th className="py-3.5 px-4">Пропуск ID</th>
                   <th className="py-3.5 px-4">Клиент</th>
                   <th className="py-3.5 px-4">Телефон</th>
                   <th className="py-3.5 px-4">Направление / Клуб</th>
-                  <th className="py-3.5 px-4">Источник</th>
+                  <th className="py-3.5 px-4">Тариф / Оплата</th>
+                  <th className="py-3.5 px-4">Чек</th>
                   <th className="py-3.5 px-4">Дата</th>
                   <th className="py-3.5 px-4">Статус</th>
                   <th className="py-3.5 px-4 text-right">Действия</th>
@@ -512,6 +538,9 @@ export default function AdminPage() {
               <tbody className="divide-y divide-white/5">
                 {filteredLeads.map((lead) => (
                   <tr key={lead.id} className="hover:bg-white/[0.02] transition-colors">
+                    <td className="py-3.5 px-4 font-bold text-[#d4ff00]">
+                      #{lead.passCode || `SPT-${lead.id.slice(-4)}`}
+                    </td>
                     <td className="py-3.5 px-4 font-bold text-white">
                       {lead.name}
                     </td>
@@ -528,8 +557,32 @@ export default function AdminPage() {
                         </div>
                       )}
                     </td>
-                    <td className="py-3.5 px-4 text-slate-400 uppercase text-[10px]">
-                      {lead.source}
+                    <td className="py-3.5 px-4">
+                      {lead.planType === "membership" ? (
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#d4ff00]/15 text-[#d4ff00] border border-[#d4ff00]/30 whitespace-nowrap">
+                          {lead.amountUzs ? `${Number(lead.amountUzs).toLocaleString("ru-RU")} UZS` : "Абонемент"} • {lead.paymentMethod === "stripe" ? "Stripe" : "Click/Payme"}
+                        </span>
+                      ) : (
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-white/10 text-slate-300 whitespace-nowrap">
+                          0 UZS (Пробное)
+                        </span>
+                      )}
+                    </td>
+                    <td className="py-3.5 px-4">
+                      {lead.receiptUrl ? (
+                        <a
+                          href={lead.receiptUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-[#d4ff00] text-black font-black text-[10px] hover:bg-[#bbf200] transition-colors whitespace-nowrap shadow-sm"
+                          title="Открыть прикрепленный чек"
+                        >
+                          <span>📎 Чек</span>
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      ) : (
+                        <span className="text-slate-600 text-[10px]">—</span>
+                      )}
                     </td>
                     <td className="py-3.5 px-4 text-slate-400">
                       {new Date(lead.createdAt).toLocaleString("ru-RU", {
@@ -599,10 +652,38 @@ export default function AdminPage() {
 
             <div className="space-y-2 text-xs font-mono">
               <div className="flex justify-between">
+                <span className="text-slate-400">Пропуск ID:</span>
+                <span className="text-[#d4ff00] font-black">#{selectedLead.passCode || `SPT-${selectedLead.id.slice(-4)}`}</span>
+              </div>
+              <div className="flex justify-between">
                 <span className="text-slate-400">Телефон:</span>
                 <a href={`tel:${selectedLead.phone}`} className="text-[#d4ff00] font-bold">
                   {selectedLead.phone}
                 </a>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-400">Тариф / Сумма:</span>
+                <span className="text-white font-bold">
+                  {selectedLead.planType === "membership"
+                    ? `${selectedLead.amountUzs ? Number(selectedLead.amountUzs).toLocaleString("ru-RU") : "850 000"} UZS (Абонемент)`
+                    : "0 UZS (Пробное занятие)"}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-400">Оплата:</span>
+                <span className="text-slate-200">
+                  {selectedLead.paymentMethod === "stripe"
+                    ? "💳 Stripe (Онлайн картой)"
+                    : selectedLead.paymentMethod === "click_payme"
+                    ? "📲 Перевод Click / Payme"
+                    : "🎫 0 UZS (Бесплатно)"}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-400">Язык заявки:</span>
+                <span className="text-slate-200">
+                  {selectedLead.language === "uz" ? "🇺🇿 O'zbekcha" : "🇷🇺 Русский"}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-400">Интерес:</span>
@@ -619,6 +700,26 @@ export default function AdminPage() {
                 </span>
               </div>
             </div>
+
+            {selectedLead.receiptUrl && (
+              <div className="p-3.5 rounded-xl bg-[#d4ff00]/10 border border-[#d4ff00]/30 flex items-center justify-between text-xs font-mono">
+                <div className="flex items-center gap-2 truncate">
+                  <FileSpreadsheet className="w-4 h-4 text-[#d4ff00] shrink-0" />
+                  <span className="font-bold text-white truncate">
+                    Чек: {selectedLead.receiptName || "Файл оплаты"}
+                  </span>
+                </div>
+                <a
+                  href={selectedLead.receiptUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-3 py-1.5 rounded-lg bg-[#d4ff00] hover:bg-[#bbf200] text-black font-black text-xs flex items-center gap-1.5 transition-colors shrink-0 shadow-md shadow-[#d4ff00]/20"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Открыть чек</span>
+                </a>
+              </div>
+            )}
 
             {selectedLead.aiSummary && (
               <div className="p-4 rounded-xl bg-black/50 border border-white/5 text-xs font-mono">
