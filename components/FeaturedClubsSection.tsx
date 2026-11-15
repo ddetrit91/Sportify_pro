@@ -114,7 +114,7 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
               className="h-full"
             >
               <TiltCard maxTilt={5} glareOpacity={0.25} className="rounded-3xl">
-                <div className="relative h-full rounded-3xl border border-slate-200/90 dark:border-white/15 bg-white/90 dark:bg-[#0c0e14]/92 backdrop-blur-2xl flex flex-col group hover:border-[#d4ff00]/70 dark:hover:border-[#d4ff00]/80 transition-all duration-300 shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.25)] before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent before:z-20 overflow-hidden">
+                <div className="relative h-full rounded-3xl border border-slate-200/90 dark:border-white/15 bg-white/90 dark:bg-[#0c0e14]/90 backdrop-blur-2xl flex flex-col group hover:border-[#d4ff00]/70 dark:hover:border-[#d4ff00]/80 transition-all duration-300 shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.25)] before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent before:z-20 overflow-hidden">
                   {/* Top Club of the Week Border Beam */}
                   {idx === 0 && (
                     <BorderBeam duration={7} borderWidth={1.5} colorFrom="#d4ff00" />

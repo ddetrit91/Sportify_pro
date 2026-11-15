@@ -54,7 +54,7 @@ export function InteractiveFaq() {
             return (
               <div
                 key={idx}
-                className="relative rounded-2xl border border-slate-200/90 dark:border-white/15 bg-white/90 dark:bg-[#0c0e14]/92 backdrop-blur-2xl overflow-hidden transition-all duration-300 shadow-[0_8px_30px_-10px_rgba(0,0,0,0.1)] dark:shadow-[0_12px_40px_-12px_rgba(0,0,0,0.7)] hover:border-[#d4ff00]/60 dark:hover:border-[#d4ff00]/70 hover:-translate-y-1 hover:shadow-[0_16px_45px_-10px_rgba(212,255,0,0.18)] before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent"
+                className="relative rounded-2xl border border-slate-200/90 dark:border-white/15 bg-white/90 dark:bg-[#0c0e14]/90 backdrop-blur-2xl overflow-hidden transition-all duration-300 shadow-[0_8px_30px_-10px_rgba(0,0,0,0.1)] dark:shadow-[0_12px_40px_-12px_rgba(0,0,0,0.7)] hover:border-[#d4ff00]/60 dark:hover:border-[#d4ff00]/70 hover:-translate-y-1 hover:shadow-[0_16px_45px_-10px_rgba(212,255,0,0.18)] before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent"
               >
                 <button
                   onClick={() => {

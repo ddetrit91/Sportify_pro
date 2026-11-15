@@ -474,7 +474,7 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
             TAB 1: INTERACTIVE 4-STEP QUIZ WITH VISUAL SPORTS PHOTO CARDS
            ========================================================================= */}
         {activeTab === "quiz" && (
-          <div className="relative rounded-3xl border border-slate-200/90 dark:border-white/15 bg-white/90 dark:bg-[#0c0e14]/92 backdrop-blur-2xl p-6 sm:p-10 shadow-[0_16px_50px_-15px_rgba(0,0,0,0.12)] dark:shadow-[0_24px_60px_-15px_rgba(0,0,0,0.85)] before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent text-slate-900 dark:text-white overflow-hidden">
+          <div className="relative rounded-3xl border border-slate-200/90 dark:border-white/15 bg-white/90 dark:bg-[#0c0e14]/90 backdrop-blur-2xl p-6 sm:p-10 shadow-[0_16px_50px_-15px_rgba(0,0,0,0.12)] dark:shadow-[0_24px_60px_-15px_rgba(0,0,0,0.85)] before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent text-slate-900 dark:text-white overflow-hidden">
             {/* Running Border Laser Beam */}
             <BorderBeam duration={9} borderWidth={1.5} colorFrom="#d4ff00" />
             {/* Progress Bar */}
