@@ -6,7 +6,7 @@
 | `/` | `app/page.tsx` | Public | **Флагманский single-page лендинг Ташкента**: Hero с зацикленным рандомизированным YouTube видеофоном, телеметрией Ташкента (+998), Bento-сеткой дисциплин, клубами столицы, AI Matcher, преимуществами, отзывами, FAQ и терминалом бронирования (0 UZS) |
 | `/#sports` | `components/TrendingSportsBento.tsx` | Public | Bento-каталог спортивных дисциплин (Падел, Бокс, Кроссфит, Реформер-пилатес, Олимпийский бассейн, Скалолазание) |
 | `/#clubs` | `components/FeaturedClubsSection.tsx` | Public | Премиальные спортклубы Ташкента (Apex Nukusskaya, Buka Boxing Abaya, Aquaterra Babura, Padel Arena Yunusabad, Prana Pilates Mustakillik, Climbing Hub Chilonzor) с ценами в UZS |
-| `/#ai-matcher` | `components/AiMatcherTeaser.tsx` | Public | Интеллектуальный синтезатор спорта в Ташкенте (подбор по биометрии, уровню стресса и целям) |
+| `/#ai-matcher` | `components/AIQuizSection.tsx` | Public | Интерактивный 4-шаговый визуальный квиз и AI-консультант (подбор по биометрии, целям и бюджету) |
 | `/#advantages` | `components/EditorialAdvantages.tsx` | Public | Редакционные преимущества SPORTIFY (0 UZS пробное, единая подписка, Telegram QR-пропуск) |
 | `/#reviews` | `components/AthleteStories.tsx` | Public | Истории атлетов Ташкента (IT Park, Tashkent City, Buka Boxing) |
 | `/#faq` | `components/InteractiveFaq.tsx` | Public | Интерактивный аккордеон с правилами сервиса и ответами на вопросы |
