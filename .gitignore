@@ -65,3 +65,6 @@ desktop.ini
 # User uploaded receipts
 public/uploads/receipts/*
 !public/uploads/receipts/.gitkeep
+
+.vercel
+.env*

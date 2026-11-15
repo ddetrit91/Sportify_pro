@@ -24,6 +24,9 @@ import {
   Zap,
   Database,
   Cloud,
+  ImageIcon,
+  X,
+  ZoomIn,
 } from "lucide-react";
 import { Lead, LeadStatus } from "@/lib/types";
 
@@ -37,6 +40,19 @@ export default function AdminPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
+  const [viewingReceipt, setViewingReceipt] = useState<Lead | null>(null);
+  const [isZoomed, setIsZoomed] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setViewingReceipt(null);
+        setSelectedLead(null);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   // Telegram test state
   const [isTestingTelegram, setIsTestingTelegram] = useState(false);
@@ -529,7 +545,7 @@ export default function AdminPage() {
                   <th className="py-3.5 px-4">Телефон</th>
                   <th className="py-3.5 px-4">Направление / Клуб</th>
                   <th className="py-3.5 px-4">Тариф / Оплата</th>
-                  <th className="py-3.5 px-4">Чек</th>
+                  <th className="py-3.5 px-4">Чек оплаты</th>
                   <th className="py-3.5 px-4">Дата</th>
                   <th className="py-3.5 px-4">Статус</th>
                   <th className="py-3.5 px-4 text-right">Действия</th>
@@ -570,18 +586,34 @@ export default function AdminPage() {
                     </td>
                     <td className="py-3.5 px-4">
                       {lead.receiptUrl ? (
-                        <a
-                          href={lead.receiptUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-[#d4ff00] text-black font-black text-[10px] hover:bg-[#bbf200] transition-colors whitespace-nowrap shadow-sm"
-                          title="Открыть прикрепленный чек"
-                        >
-                          <span>📎 Чек</span>
-                          <ExternalLink className="w-3 h-3" />
-                        </a>
+                        <div className="flex items-center gap-1.5">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setIsZoomed(false);
+                              setViewingReceipt(lead);
+                            }}
+                            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-sky-500/15 hover:bg-sky-500/25 border border-sky-500/35 text-sky-400 hover:text-sky-300 font-bold text-[11px] transition-all hover:scale-[1.02] shadow-sm whitespace-nowrap cursor-pointer active:scale-95"
+                            title="Открыть чек на странице"
+                          >
+                            <ImageIcon className="w-3.5 h-3.5 text-sky-400" />
+                            <span>Фото чека</span>
+                            <Eye className="w-3.5 h-3.5 opacity-80" />
+                          </button>
+                          <a
+                            href={lead.receiptUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="p-1.5 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
+                            title="Открыть оригинал в новой вкладке"
+                          >
+                            <ExternalLink className="w-3.5 h-3.5" />
+                          </a>
+                        </div>
                       ) : (
-                        <span className="text-slate-600 text-[10px]">—</span>
+                        <span className="text-slate-500 text-xs italic">
+                          Не прикреплен
+                        </span>
                       )}
                     </td>
                     <td className="py-3.5 px-4 text-slate-400">
@@ -702,22 +734,35 @@ export default function AdminPage() {
             </div>
 
             {selectedLead.receiptUrl && (
-              <div className="p-3.5 rounded-xl bg-[#d4ff00]/10 border border-[#d4ff00]/30 flex items-center justify-between text-xs font-mono">
+              <div className="p-3.5 rounded-xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-between text-xs font-mono">
                 <div className="flex items-center gap-2 truncate">
-                  <FileSpreadsheet className="w-4 h-4 text-[#d4ff00] shrink-0" />
+                  <ImageIcon className="w-4 h-4 text-sky-400 shrink-0" />
                   <span className="font-bold text-white truncate">
                     Чек: {selectedLead.receiptName || "Файл оплаты"}
                   </span>
                 </div>
-                <a
-                  href={selectedLead.receiptUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="px-3 py-1.5 rounded-lg bg-[#d4ff00] hover:bg-[#bbf200] text-black font-black text-xs flex items-center gap-1.5 transition-colors shrink-0 shadow-md shadow-[#d4ff00]/20"
-                >
-                  <Download className="w-3.5 h-3.5" />
-                  <span>Открыть чек</span>
-                </a>
+                <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsZoomed(false);
+                      setViewingReceipt(selectedLead);
+                    }}
+                    className="px-3 py-1.5 rounded-lg bg-sky-500 hover:bg-sky-400 text-black font-black text-xs flex items-center gap-1.5 transition-colors shadow-md shadow-sky-500/20 active:scale-95 cursor-pointer"
+                  >
+                    <Eye className="w-3.5 h-3.5" />
+                    <span>Смотреть здесь</span>
+                  </button>
+                  <a
+                    href={selectedLead.receiptUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="p-1.5 rounded-lg border border-white/10 hover:bg-white/10 text-slate-300 hover:text-white transition-colors"
+                    title="В новой вкладке"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                </div>
               </div>
             )}
 
@@ -757,6 +802,146 @@ export default function AdminPage() {
               >
                 Закрыть
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* In-Page Receipt Lightbox / Modal */}
+      {viewingReceipt && viewingReceipt.receiptUrl && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md animate-in fade-in duration-200"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setViewingReceipt(null);
+            }
+          }}
+        >
+          <div className="rounded-3xl max-w-4xl w-full border border-white/15 bg-[#0b0e14] shadow-2xl overflow-hidden flex flex-col max-h-[92vh] animate-in zoom-in-95 duration-200 text-white">
+            {/* Header */}
+            <div className="p-4 sm:p-5 border-b border-white/10 flex items-center justify-between gap-4 bg-white/[0.02]">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-10 h-10 rounded-xl bg-sky-500/15 border border-sky-500/30 text-sky-400 flex items-center justify-center shrink-0">
+                  <ImageIcon className="w-5 h-5" />
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="telemetry-chip text-sky-400">ЧЕК ОБ ОПЛАТЕ</span>
+                    <span className="text-[#d4ff00] font-mono font-bold text-xs">
+                      #{viewingReceipt.passCode || `SPT-${viewingReceipt.id.slice(-4)}`}
+                    </span>
+                    <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-white/10 text-slate-300">
+                      {viewingReceipt.paymentMethod === "stripe" ? "Stripe Онлайн" : "Click / Payme Перевод"}
+                    </span>
+                  </div>
+                  <h3 className="text-base sm:text-lg font-black uppercase text-white truncate mt-0.5">
+                    {viewingReceipt.name} • <span className="text-slate-400 font-normal">{viewingReceipt.phone}</span>
+                  </h3>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => setIsZoomed(!isZoomed)}
+                  className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-white/10 hover:bg-white/5 text-xs text-slate-300 transition-colors font-mono cursor-pointer"
+                  title="Масштабировать"
+                >
+                  <ZoomIn className="w-3.5 h-3.5 text-[#d4ff00]" />
+                  <span>{isZoomed ? "100%" : "По размеру"}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setViewingReceipt(null)}
+                  className="w-9 h-9 rounded-xl border border-white/10 hover:border-white/20 bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white flex items-center justify-center transition-colors cursor-pointer"
+                  title="Закрыть (ESC)"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+
+            {/* Document / Image Viewer Area */}
+            <div className="flex-1 overflow-auto p-4 sm:p-6 bg-black/60 flex items-center justify-center min-h-[300px] relative">
+              {viewingReceipt.receiptUrl.toLowerCase().endsWith(".pdf") ||
+              viewingReceipt.receiptName?.toLowerCase().endsWith(".pdf") ? (
+                <iframe
+                  src={viewingReceipt.receiptUrl}
+                  className="w-full h-[65vh] rounded-xl border border-white/10 bg-slate-900"
+                  title="PDF Чек об оплате"
+                />
+              ) : (
+                <div
+                  className={`relative transition-all duration-200 ${
+                    isZoomed ? "w-full max-w-none cursor-zoom-out" : "max-h-[65vh] max-w-full flex items-center justify-center cursor-zoom-in"
+                  }`}
+                  onClick={() => setIsZoomed(!isZoomed)}
+                >
+                  <img
+                    src={viewingReceipt.receiptUrl}
+                    alt={`Чек оплаты ${viewingReceipt.name}`}
+                    className={`rounded-xl border border-white/10 shadow-2xl object-contain mx-auto transition-transform ${
+                      isZoomed ? "max-w-none scale-125 my-8" : "max-h-[65vh] max-w-full"
+                    }`}
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Footer Toolbar */}
+            <div className="p-4 sm:p-5 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/[0.02]">
+              <div className="flex items-center gap-3 text-xs font-mono">
+                <span className="text-slate-400">Сумма:</span>
+                <span className="text-base font-black text-[#d4ff00]">
+                  {Number(viewingReceipt.amountUzs || 850000).toLocaleString("ru-RU")} UZS
+                </span>
+                <span className="text-slate-500">•</span>
+                <span className="text-slate-400 truncate max-w-[200px]" title={viewingReceipt.receiptName || "Файл чека"}>
+                  {viewingReceipt.receiptName || "receipt.png"}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2 flex-wrap">
+                {viewingReceipt.status !== "enrolled" && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      handleStatusChange(viewingReceipt.id, "enrolled");
+                      setViewingReceipt({ ...viewingReceipt, status: "enrolled" });
+                    }}
+                    className="px-4 py-2 rounded-xl bg-[#d4ff00] hover:bg-[#bbf200] text-black font-black text-xs uppercase flex items-center gap-1.5 shadow-md shadow-[#d4ff00]/25 transition-all cursor-pointer"
+                  >
+                    <CheckCircle2 className="w-4 h-4" />
+                    <span>Подтвердить оплату</span>
+                  </button>
+                )}
+
+                <a
+                  href={viewingReceipt.receiptUrl}
+                  download={viewingReceipt.receiptName || "sportify-receipt"}
+                  className="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-slate-300 hover:text-white flex items-center gap-1.5 transition-colors"
+                >
+                  <Download className="w-3.5 h-3.5 text-[#d4ff00]" />
+                  <span>Скачать</span>
+                </a>
+
+                <a
+                  href={viewingReceipt.receiptUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-slate-300 hover:text-white flex items-center gap-1.5 transition-colors"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  <span>В новой вкладке</span>
+                </a>
+
+                <button
+                  type="button"
+                  onClick={() => setViewingReceipt(null)}
+                  className="px-4 py-2 rounded-xl border border-white/10 hover:bg-white/5 text-xs font-mono uppercase text-slate-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  Закрыть
+                </button>
+              </div>
             </div>
           </div>
         </div>
