@@ -17,6 +17,10 @@ import {
 } from "lucide-react";
 import confetti from "canvas-confetti";
 import { QuizAnswers, Club } from "@/lib/types";
+import { BorderBeam } from "./motion/BorderBeam";
+import { CounterNumber } from "./motion/CounterNumber";
+import { MagneticButton } from "./motion/MagneticButton";
+import { haptic } from "@/lib/haptics";
 
 const cleanAiText = (txt?: string) => {
   if (!txt) return "";
@@ -210,21 +214,25 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
   ];
 
   const handleGoalSelect = (goalTitle: string) => {
+    haptic.select();
     setAnswers((prev) => ({ ...prev, goal: goalTitle }));
     setStep(2);
   };
 
   const handleExpSelect = (expTitle: string) => {
+    haptic.select();
     setAnswers((prev) => ({ ...prev, experience: expTitle }));
     setStep(3);
   };
 
   const handleSportSelect = (sportTitle: string) => {
+    haptic.select();
     setAnswers((prev) => ({ ...prev, sportType: sportTitle }));
     setStep(4);
   };
 
   const handleFinishQuiz = async (budgetTitle: string) => {
+    haptic.success();
     const updatedAnswers = { ...answers, budget: budgetTitle };
     setAnswers(updatedAnswers);
     setIsSubmittingQuiz(true);
@@ -418,7 +426,10 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
           {/* Mode Switcher Tabs */}
           <div className="mt-8 inline-flex p-1.5 rounded-2xl bg-slate-200/80 dark:bg-black/70 border border-slate-300 dark:border-white/15 backdrop-blur-md shadow-lg dark:shadow-2xl">
             <button
-              onClick={() => setActiveTab("quiz")}
+              onClick={() => {
+                haptic.select();
+                setActiveTab("quiz");
+              }}
               className={`flex items-center gap-2 px-5 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold uppercase tracking-wider transition-all ${
                 activeTab === "quiz"
                   ? "bg-[#d4ff00] text-slate-950 shadow-lg shadow-[#d4ff00]/25"
@@ -429,7 +440,10 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
               <span>1. Интерактивный Квиз</span>
             </button>
             <button
-              onClick={() => setActiveTab("chat")}
+              onClick={() => {
+                haptic.select();
+                setActiveTab("chat");
+              }}
               className={`flex items-center gap-2 px-5 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold uppercase tracking-wider transition-all ${
                 activeTab === "chat"
                   ? "bg-[#d4ff00] text-slate-950 shadow-lg shadow-[#d4ff00]/25"
@@ -440,7 +454,10 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
               <span>2. Консультация с помощью ИИ</span>
             </button>
             <button
-              onClick={() => setActiveTab("synthesizer")}
+              onClick={() => {
+                haptic.select();
+                setActiveTab("synthesizer");
+              }}
               className={`hidden md:flex items-center gap-2 px-5 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold uppercase tracking-wider transition-all ${
                 activeTab === "synthesizer"
                   ? "bg-[#d4ff00] text-slate-950 shadow-lg shadow-[#d4ff00]/25"
@@ -458,6 +475,8 @@ export function AIQuizSection({ clubs = [] }: { clubs?: Club[] }) {
            ========================================================================= */}
         {activeTab === "quiz" && (
           <div className="relative rounded-3xl border border-slate-200/90 dark:border-white/15 bg-white/90 dark:bg-[#0c0e14]/85 backdrop-blur-2xl p-6 sm:p-10 shadow-[0_16px_50px_-15px_rgba(0,0,0,0.12)] dark:shadow-[0_24px_60px_-15px_rgba(0,0,0,0.85)] before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent text-slate-900 dark:text-white overflow-hidden">
+            {/* Running Border Laser Beam */}
+            <BorderBeam duration={9} borderWidth={1.5} colorFrom="#d4ff00" />
             {/* Progress Bar */}
             {step < 5 && (
               <div className="mb-8">

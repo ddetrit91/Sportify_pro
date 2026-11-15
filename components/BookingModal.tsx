@@ -4,6 +4,7 @@ import { useState } from "react";
 import { X, Check, Loader2, Sparkles, MapPin, Calendar, Clock, ShieldCheck, Flame } from "lucide-react";
 import confetti from "canvas-confetti";
 import { Club } from "@/lib/types";
+import { haptic } from "@/lib/haptics";
 
 interface BookingModalProps {
   club: Club | null;
@@ -45,6 +46,7 @@ export function BookingModal({ club, isOpen, onClose }: BookingModalProps) {
       });
 
       if (response.ok) {
+        haptic.success();
         setIsSuccess(true);
         confetti({
           particleCount: 120,

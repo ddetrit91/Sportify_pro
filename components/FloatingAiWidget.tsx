@@ -14,6 +14,9 @@ import {
   Minimize2,
 } from "lucide-react";
 import confetti from "canvas-confetti";
+import { MagneticButton } from "./motion/MagneticButton";
+import { SonarPing } from "./motion/SonarPing";
+import { haptic } from "@/lib/haptics";
 
 const cleanAiText = (txt: string) => {
   if (!txt) return "";
@@ -132,25 +135,26 @@ export function FloatingAiWidget() {
 
   return (
     <>
-      {/* 1. Floating Toggle Button (Bottom-Right) */}
+      {/* 1. Floating Toggle Button with Magnetic Physics & Sonar Beacon */}
       <div className="fixed bottom-6 right-6 z-50">
         {!isOpen && (
-          <button
-            onClick={() => setIsOpen(true)}
-            className="group relative flex items-center gap-2.5 px-4 py-3 rounded-full bg-[#d4ff00] hover:bg-[#bbf200] text-slate-950 font-extrabold text-xs uppercase tracking-wider shadow-2xl shadow-[#d4ff00]/40 transition-all hover:scale-105 active:scale-95 border-2 border-black"
+          <MagneticButton
+            onClick={() => {
+              haptic.click();
+              setIsOpen(true);
+            }}
           >
-            {/* Green Online Dot */}
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-600 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-600" />
-            </span>
+            <div className="group relative flex items-center gap-2.5 px-4 py-3 rounded-full bg-[#d4ff00] hover:bg-[#bbf200] text-slate-950 font-extrabold text-xs uppercase tracking-wider shadow-2xl shadow-[#d4ff00]/40 transition-all hover:scale-105 active:scale-95 border-2 border-black">
+              {/* Sonar Radar Ping Beacon */}
+              <SonarPing size="sm" color="bg-emerald-600" />
 
-            <Sparkles className="w-4 h-4 fill-slate-950" />
-            <span>ИИ-Помощник</span>
+              <Sparkles className="w-4 h-4 fill-slate-950" />
+              <span>ИИ-Помощник</span>
 
-            {/* Notification Pulse Ring */}
-            <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-black" />
-          </button>
+              {/* Notification Pulse Ring */}
+              <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-black" />
+            </div>
+          </MagneticButton>
         )}
       </div>
 

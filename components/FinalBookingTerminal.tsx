@@ -4,6 +4,9 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Sparkles, ArrowRight, Check, Loader2, ShieldCheck, Gift, CheckCircle2, QrCode } from "lucide-react";
 import confetti from "canvas-confetti";
+import { BorderBeam } from "./motion/BorderBeam";
+import { MagneticButton } from "./motion/MagneticButton";
+import { haptic } from "@/lib/haptics";
 
 export function FinalBookingTerminal() {
   const [formData, setFormData] = useState({
@@ -62,6 +65,7 @@ export function FinalBookingTerminal() {
 
       const data = await response.json();
       if (response.ok && data.success) {
+        haptic.success();
         setIsSuccess(true);
         confetti({
           particleCount: 140,
@@ -86,6 +90,8 @@ export function FinalBookingTerminal() {
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="relative rounded-3xl border border-slate-200/90 dark:border-white/20 bg-white/90 dark:bg-[#0c0e14]/85 backdrop-blur-2xl p-8 sm:p-14 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.12)] dark:shadow-[0_24px_70px_-15px_rgba(0,0,0,0.9)] before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/25 before:to-transparent overflow-hidden text-slate-900 dark:text-white">
+          {/* Laser Tracing Perimeter Beam */}
+          <BorderBeam duration={8} borderWidth={1.5} colorFrom="#d4ff00" />
           {/* Subtle volt top border */}
           <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#d4ff00] via-lime-400 to-[#d4ff00]" />
 
@@ -212,21 +218,23 @@ export function FinalBookingTerminal() {
                   </div>
 
                   <div className="pt-2">
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-full py-4 rounded-xl bg-[#d4ff00] hover:bg-[#bbf200] text-slate-950 font-black text-sm uppercase tracking-wider flex items-center justify-center gap-3 shadow-[0_4px_25px_rgba(212,255,0,0.4),inset_0_1px_2px_rgba(255,255,255,0.6)] hover:shadow-[0_6px_30px_rgba(212,255,0,0.55),inset_0_1px_2px_rgba(255,255,255,0.8)] transition-all active:scale-95"
-                    >
-                      {isSubmitting ? (
-                        <Loader2 className="w-5 h-5 animate-spin" />
-                      ) : (
-                        <>
-                          <Sparkles className="w-4 h-4 text-slate-950" />
-                          <span>Получить бесплатный пропуск (0 UZS)</span>
-                          <ArrowRight className="w-4 h-4" />
-                        </>
-                      )}
-                    </button>
+                    <MagneticButton className="w-full">
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="w-full py-4 rounded-xl bg-[#d4ff00] hover:bg-[#bbf200] text-slate-950 font-black text-sm uppercase tracking-wider flex items-center justify-center gap-3 shadow-[0_4px_25px_rgba(212,255,0,0.4),inset_0_1px_2px_rgba(255,255,255,0.6)] hover:shadow-[0_6px_30px_rgba(212,255,0,0.55),inset_0_1px_2px_rgba(255,255,255,0.8)] transition-all active:scale-95"
+                      >
+                        {isSubmitting ? (
+                          <Loader2 className="w-5 h-5 animate-spin" />
+                        ) : (
+                          <>
+                            <Sparkles className="w-4 h-4 text-slate-950" />
+                            <span>Получить бесплатный пропуск (0 UZS)</span>
+                            <ArrowRight className="w-4 h-4" />
+                          </>
+                        )}
+                      </button>
+                    </MagneticButton>
                   </div>
 
                   <div className="flex items-center justify-center gap-2 text-[11px] text-slate-500 dark:text-slate-400 font-medium text-center pt-2">

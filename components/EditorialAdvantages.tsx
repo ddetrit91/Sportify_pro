@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import { ShieldCheck, Zap, HeartPulse, RefreshCw, Sparkles, Check, ArrowUpRight } from "lucide-react";
+import { TiltCard } from "./motion/TiltCard";
+import { CounterNumber } from "./motion/CounterNumber";
 
 export function EditorialAdvantages() {
   const pillars = [
@@ -56,7 +58,9 @@ export function EditorialAdvantages() {
             <div className="pt-4 border-t border-slate-200 dark:border-white/10 space-y-3">
               <div className="flex items-center justify-between text-xs">
                 <span className="text-slate-500 dark:text-slate-400 font-medium">АКТИВНЫХ АТЛЕТОВ В ТАШКЕНТЕ:</span>
-                <span className="text-slate-950 dark:text-white font-bold">12 400+</span>
+                <span className="text-slate-950 dark:text-white font-bold">
+                  <CounterNumber value={12400} suffix="+" />
+                </span>
               </div>
               <div className="flex items-center justify-between text-xs">
                 <span className="text-slate-500 dark:text-slate-400 font-medium">СРЕДНИЙ РЕЙТИНГ КЛУБОВ:</span>
@@ -78,7 +82,7 @@ export function EditorialAdvantages() {
             </div>
           </div>
 
-          {/* Right Column: Numbered Editorial Cards */}
+          {/* Right Column: Numbered Editorial Cards with 3D Tilt */}
           <div className="lg:col-span-7 space-y-8">
             {pillars.map((item) => (
               <motion.div
@@ -86,25 +90,28 @@ export function EditorialAdvantages() {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                whileHover={{ y: -6 }}
-                className="relative p-8 rounded-3xl border border-slate-200/90 dark:border-white/15 bg-white/90 dark:bg-[#0c0e14]/85 backdrop-blur-2xl hover:border-[#d4ff00]/70 dark:hover:border-[#d4ff00]/80 transition-all duration-300 group shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.25)] before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent overflow-hidden"
+                className="h-full"
               >
-                <div className="flex items-start justify-between mb-4">
-                  <span className="font-display text-3xl sm:text-4xl font-black text-lime-600 dark:text-[#d4ff00]/80 group-hover:text-black dark:group-hover:text-[#d4ff00] transition-colors">
-                    {item.num}
-                  </span>
-                  <span className="telemetry-chip text-slate-400 dark:text-slate-500">
-                    {item.tagline}
-                  </span>
-                </div>
+                <TiltCard maxTilt={4} glareOpacity={0.18} className="rounded-3xl">
+                  <div className="relative p-8 rounded-3xl border border-slate-200/90 dark:border-white/15 bg-white/90 dark:bg-[#0c0e14]/85 backdrop-blur-2xl hover:border-[#d4ff00]/70 dark:hover:border-[#d4ff00]/80 transition-all duration-300 group shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.25)] before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent overflow-hidden">
+                    <div className="flex items-start justify-between mb-4">
+                      <span className="font-display text-3xl sm:text-4xl font-black text-lime-600 dark:text-[#d4ff00]/80 group-hover:text-black dark:group-hover:text-[#d4ff00] transition-colors">
+                        {item.num}
+                      </span>
+                      <span className="telemetry-chip text-slate-400 dark:text-slate-500">
+                        {item.tagline}
+                      </span>
+                    </div>
 
-                <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-slate-950 dark:text-white mb-3">
-                  {item.title}
-                </h3>
+                    <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-slate-950 dark:text-white mb-3">
+                      {item.title}
+                    </h3>
 
-                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
-                  {item.desc}
-                </p>
+                    <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
+                      {item.desc}
+                    </p>
+                  </div>
+                </TiltCard>
               </motion.div>
             ))}
           </div>

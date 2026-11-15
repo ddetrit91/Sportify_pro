@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Zap, Sun, Moon, Menu, X, ArrowRight, Lock } from "lucide-react";
 import { AmbientSoundController } from "./AmbientSoundController";
+import { MagneticButton } from "./motion/MagneticButton";
+import { SonarPing } from "./motion/SonarPing";
+import { haptic } from "@/lib/haptics";
 
 export function Header() {
   const [isDark, setIsDark] = useState(true);
@@ -23,6 +26,7 @@ export function Header() {
   }, []);
 
   const toggleTheme = () => {
+    haptic.toggle(!isDark);
     if (isDark) {
       document.documentElement.classList.remove("dark");
       localStorage.setItem("spotify-theme", "light");
@@ -53,8 +57,8 @@ export function Header() {
             : "max-h-8 py-1.5 px-4 opacity-100"
         }`}
       >
-        <span className="inline-flex items-center gap-1.5 truncate">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#d4ff00] animate-pulse shrink-0" />
+        <span className="inline-flex items-center gap-2 truncate">
+          <SonarPing size="sm" color="bg-[#d4ff00]" />
           <span className="truncate">SPORTIFY LIVE // ТАШКЕНТ: 18 СЛОТОВ ОТКРЫТО СЕГОДНЯ</span>
         </span>
         <span className="hidden sm:inline text-white/30">|</span>
@@ -137,14 +141,16 @@ export function Header() {
               <Lock className="w-4 h-4" />
             </Link>
 
-            {/* Primary Action Button */}
-            <a
-              href="#booking"
-              className="hidden sm:inline-flex items-center gap-2 h-10 px-6 rounded-full text-xs font-black uppercase tracking-wider bg-[#d4ff00] hover:bg-[#bbf200] text-black shadow-[0_0_20px_rgba(212,255,0,0.4)] hover:shadow-[0_0_28px_rgba(212,255,0,0.6)] hover:-translate-y-0.5 transition-all active:translate-y-0 active:scale-95 shrink-0"
-            >
-              <span>Записаться 0 UZS</span>
-              <ArrowRight className="w-4 h-4 stroke-[2.5]" />
-            </a>
+            {/* Primary Action Button with Magnetic Pull Physics */}
+            <MagneticButton className="hidden sm:inline-block">
+              <a
+                href="#booking"
+                className="inline-flex items-center gap-2 h-10 px-6 rounded-full text-xs font-black uppercase tracking-wider bg-[#d4ff00] hover:bg-[#bbf200] text-black shadow-[0_0_20px_rgba(212,255,0,0.4)] hover:shadow-[0_0_28px_rgba(212,255,0,0.6)] transition-all active:scale-95 shrink-0"
+              >
+                <span>Записаться 0 UZS</span>
+                <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+              </a>
+            </MagneticButton>
 
             {/* Mobile Menu Hamburger */}
             <button
