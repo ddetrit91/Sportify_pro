@@ -171,19 +171,19 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
 
                 {/* Price and Action Buttons */}
                 <div className="pt-4 border-t border-slate-200 dark:border-white/10 flex items-center justify-between gap-3">
-                  <div>
+                  <div className="min-w-0">
                     <span className="telemetry-chip text-slate-400 dark:text-slate-500 block">АБОНЕМЕНТ</span>
-                    <span className="text-base font-extrabold text-slate-950 dark:text-white">
+                    <span className="text-base font-extrabold text-slate-950 dark:text-white truncate block">
                       от {club.priceMonthly.toLocaleString("ru-RU")} UZS
                     </span>
-                    <span className="text-xs font-bold text-lime-600 dark:text-[#d4ff00] block mt-0.5">
+                    <span className="text-xs font-bold text-lime-600 dark:text-[#d4ff00] block mt-0.5 whitespace-nowrap">
                       Пробное: {club.priceTrial === 0 ? "0 UZS (Бесплатно)" : `${club.priceTrial.toLocaleString("ru-RU")} UZS`}
                     </span>
                   </div>
 
                   <button
                     onClick={() => setBookingClub(club)}
-                    className="px-5 py-2.5 rounded-xl bg-[#d4ff00] hover:bg-[#bbf200] text-black font-extrabold text-xs uppercase tracking-wider flex items-center gap-2 shadow-md shadow-[#d4ff00]/20 hover:shadow-[#d4ff00]/40 transition-all active:scale-95"
+                    className="px-4 py-2.5 rounded-xl bg-[#d4ff00] hover:bg-[#bbf200] text-black font-extrabold text-xs uppercase tracking-wider flex items-center gap-1.5 shrink-0 shadow-md shadow-[#d4ff00]/20 hover:shadow-[#d4ff00]/40 transition-all active:scale-95"
                   >
                     <span>Записаться</span>
                     <ArrowRight className="w-4 h-4 stroke-[2.5]" />

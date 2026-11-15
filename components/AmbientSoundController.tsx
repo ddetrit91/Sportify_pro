@@ -91,10 +91,10 @@ export function AmbientSoundController() {
           ? "Выключить: Dark Cinematic Ambient Beat (Rockot)"
           : "Включить: Dark Cinematic Ambient Beat (Rockot)"
       }
-      className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all text-xs font-semibold ${
+      className={`inline-flex items-center gap-2 h-9 px-3.5 rounded-full border transition-all text-xs font-semibold ${
         isPlaying
           ? "border-[#d4ff00] bg-[#d4ff00]/15 text-[#d4ff00] shadow-[0_0_14px_rgba(212,255,0,0.35)]"
-          : "border-slate-300 dark:border-white/10 hover:border-slate-400 dark:hover:border-white/30 bg-white/70 dark:bg-black/40 text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white"
+          : "border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/30 bg-slate-100/90 dark:bg-[#121620]/90 text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white"
       }`}
     >
       {isPlaying ? (
