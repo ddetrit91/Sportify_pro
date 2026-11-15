@@ -26,11 +26,11 @@ export function TrendingSportsBento({ sports }: TrendingSportsBentoProps) {
               className="absolute -inset-x-8 -inset-y-6 rounded-[40px] bg-[radial-gradient(ellipse_at_center,_rgba(248,250,252,0.9)_0%,_rgba(248,250,252,0.6)_50%,_transparent_100%)] dark:bg-[radial-gradient(ellipse_at_center,_rgba(7,8,10,0.92)_0%,_rgba(7,8,10,0.65)_55%,_transparent_100%)] blur-2xl pointer-events-none -z-10"
             />
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-300 dark:border-[#d4ff00]/30 bg-white/80 dark:bg-[#d4ff00]/10 backdrop-blur-sm shadow-sm">
-              <Activity className="w-3.5 h-3.5 text-[#d4ff00]" />
+              <Activity className="w-3.5 h-3.5 text-lime-600 dark:text-[#d4ff00]" />
               <span className="telemetry-chip text-slate-800 dark:text-[#d4ff00]">ДИСЦИПЛИНЫ ТАШКЕНТА // 2026</span>
             </div>
             <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-tight drop-shadow-[0_2px_15px_rgba(0,0,0,0.8)]">
-              Популярные виды спорта <span className="text-[#d4ff00]">в Ташкенте</span>
+              Популярные виды спорта <span className="text-lime-600 dark:text-[#d4ff00]">в Ташкенте</span>
             </h2>
             <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed">
               Исследуйте ключевые спортивные направления с доказанной эффективностью. Узнайте энергозатраты и выберите подходящий клуб для первого бесплатного визита.
@@ -42,7 +42,7 @@ export function TrendingSportsBento({ sports }: TrendingSportsBentoProps) {
             className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-300 dark:border-[#d4ff00]/30 hover:border-[#d4ff00] bg-white/80 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-[#d4ff00]/15 text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 hover:text-black dark:hover:text-[#d4ff00] transition-all self-start md:self-end shadow-sm backdrop-blur-sm shrink-0"
           >
             <span>Смотреть все локации</span>
-            <ArrowUpRight className="w-4 h-4 text-[#d4ff00]" />
+            <ArrowUpRight className="w-4 h-4 text-lime-600 dark:text-[#d4ff00]" />
           </a>
         </div>
 
