@@ -27,7 +27,7 @@ export function FinalBookingTerminal() {
   const { t, lang } = useLanguage();
 
   const [planType, setPlanType] = useState<"trial" | "membership">("trial");
-  const [paymentMethod, setPaymentMethod] = useState<"click_payme" | "stripe">("click_payme");
+  const [paymentMethod, setPaymentMethod] = useState<"click_payme" | "stripe">("stripe");
 
   const [formData, setFormData] = useState({
     name: "",

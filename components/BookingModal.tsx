@@ -33,7 +33,7 @@ export function BookingModal({ club, isOpen, onClose }: BookingModalProps) {
   const { t, lang } = useLanguage();
 
   const [planType, setPlanType] = useState<"trial" | "membership">("trial");
-  const [paymentMethod, setPaymentMethod] = useState<"click_payme" | "stripe">("click_payme");
+  const [paymentMethod, setPaymentMethod] = useState<"click_payme" | "stripe">("stripe");
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
