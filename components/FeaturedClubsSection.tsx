@@ -52,63 +52,64 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
     <section id="clubs" className="py-24 relative overflow-hidden bg-transparent text-slate-900 dark:text-white transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header with Soft Ambient Radial Shadow */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-6">
-          <div className="relative">
-            <div
-              aria-hidden="true"
-              className="absolute -inset-x-8 -inset-y-6 rounded-[40px] bg-[radial-gradient(ellipse_at_center,_rgba(248,250,252,0.9)_0%,_rgba(248,250,252,0.6)_50%,_transparent_100%)] dark:bg-[radial-gradient(ellipse_at_center,_rgba(7,8,10,0.92)_0%,_rgba(7,8,10,0.65)_55%,_transparent_100%)] blur-2xl pointer-events-none -z-10"
-            />
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-300 dark:border-[#d4ff00]/30 bg-white/80 dark:bg-[#d4ff00]/10 mb-3 shadow-sm">
-              <Sparkles className="w-3.5 h-3.5 text-[#d4ff00]" />
-              <span className="telemetry-chip text-slate-700 dark:text-[#d4ff00]">ТОПОВЫЕ КЛУБЫ ТАШКЕНТА // RATED 4.88+</span>
-            </div>
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-tight drop-shadow-[0_2px_15px_rgba(0,0,0,0.8)]">
-              Спортивные клубы <span className="text-[#d4ff00]">Ташкента</span>
-            </h2>
-            <p className="mt-2 text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed">
-              Прямое бронирование в проверенные залы Ташкента. Честные цены без скрытых доплат и гарантированное первое занятие за 0 UZS.
-            </p>
+        <div className="mb-8 relative">
+          <div
+            aria-hidden="true"
+            className="absolute -inset-x-8 -inset-y-6 rounded-[40px] bg-[radial-gradient(ellipse_at_center,_rgba(248,250,252,0.9)_0%,_rgba(248,250,252,0.6)_50%,_transparent_100%)] dark:bg-[radial-gradient(ellipse_at_center,_rgba(7,8,10,0.92)_0%,_rgba(7,8,10,0.65)_55%,_transparent_100%)] blur-2xl pointer-events-none -z-10"
+          />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-300 dark:border-[#d4ff00]/30 bg-white/80 dark:bg-[#d4ff00]/10 mb-3 shadow-sm">
+            <Sparkles className="w-3.5 h-3.5 text-[#d4ff00]" />
+            <span className="telemetry-chip text-slate-700 dark:text-[#d4ff00]">ТОПОВЫЕ КЛУБЫ ТАШКЕНТА // RATED 4.88+</span>
           </div>
-
-          <a
-            href="#booking"
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-300 dark:border-[#d4ff00]/30 hover:border-[#d4ff00] bg-white dark:bg-[#0c0e14]/85 hover:bg-slate-200 dark:hover:bg-[#d4ff00]/15 text-xs font-bold tracking-wide text-slate-800 dark:text-slate-200 hover:text-black dark:hover:text-[#d4ff00] transition-all self-start md:self-end shadow-sm backdrop-blur-md shrink-0"
-          >
-            <span>Оформить пропуск 0 UZS</span>
-            <ArrowRight className="w-4 h-4 text-[#d4ff00]" />
-          </a>
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-tight drop-shadow-[0_2px_15px_rgba(0,0,0,0.8)]">
+            Спортивные клубы <span className="text-[#d4ff00]">Ташкента</span>
+          </h2>
+          <p className="mt-2 text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed">
+            Прямое бронирование в проверенные залы Ташкента. Честные цены без скрытых доплат и гарантированное первое занятие за 0 UZS.
+          </p>
         </div>
 
         {/* Filter Controls Bar with Live Telemetry Count */}
         <div className="flex flex-col gap-4 pb-6 border-b border-slate-200 dark:border-white/10 mb-10">
-          {/* Row 1: Monolithic Sport Category Stream across full width (All 7 in 1 row) */}
-          <div
-            className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden w-full"
-            onWheel={(e) => {
-              if (e.deltaY !== 0) {
-                e.currentTarget.scrollLeft += e.deltaY;
-              }
-            }}
-          >
-            {categories.map((cat) => {
-              const isActive = activeCategory === cat.id;
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() => {
-                    haptic.select();
-                    setActiveCategory(cat.id);
-                  }}
-                  className={`relative px-4 py-2.5 rounded-xl text-xs font-bold tracking-wide whitespace-nowrap transition-all duration-200 cursor-pointer ${
-                    isActive
-                      ? "border border-black/15 dark:border-transparent bg-[#d4ff00] text-black font-black shadow-sm dark:shadow-md dark:shadow-[#d4ff00]/25 scale-[1.02]"
-                      : "border border-slate-300 dark:border-white/10 bg-white/80 dark:bg-[#0c0e14]/75 text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 backdrop-blur-sm shadow-sm"
-                  }`}
-                >
-                  <span>{cat.label}</span>
-                </button>
-              );
-            })}
+          {/* Row 1: Sport Categories & CTA Pass Button together in the EXACT same row */}
+          <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-3">
+            <div
+              className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+              onWheel={(e) => {
+                if (e.deltaY !== 0) {
+                  e.currentTarget.scrollLeft += e.deltaY;
+                }
+              }}
+            >
+              {categories.map((cat) => {
+                const isActive = activeCategory === cat.id;
+                return (
+                  <button
+                    key={cat.id}
+                    onClick={() => {
+                      haptic.select();
+                      setActiveCategory(cat.id);
+                    }}
+                    className={`relative px-4 py-2.5 rounded-xl text-xs font-bold tracking-wide whitespace-nowrap transition-all duration-200 cursor-pointer ${
+                      isActive
+                        ? "border border-black/15 dark:border-transparent bg-[#d4ff00] text-black font-black shadow-sm dark:shadow-md dark:shadow-[#d4ff00]/25 scale-[1.02]"
+                        : "border border-slate-300 dark:border-white/10 bg-white/80 dark:bg-[#0c0e14]/75 text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 backdrop-blur-sm shadow-sm"
+                    }`}
+                  >
+                    <span>{cat.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* In the EXACT same row as categories: CTA Button to #booking */}
+            <a
+              href="#booking"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-300 dark:border-[#d4ff00]/30 hover:border-[#d4ff00] bg-white dark:bg-[#0c0e14]/85 hover:bg-slate-200 dark:hover:bg-[#d4ff00]/15 text-xs font-bold tracking-wide text-slate-800 dark:text-slate-200 hover:text-black dark:hover:text-[#d4ff00] transition-all shadow-sm backdrop-blur-md shrink-0 self-start xl:self-auto"
+            >
+              <span>Оформить пропуск 0 UZS</span>
+              <ArrowRight className="w-4 h-4 text-[#d4ff00]" />
+            </a>
           </div>
 
           {/* Row 2: Balanced Live Telemetry & Quick Action Controls */}
