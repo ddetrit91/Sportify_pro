@@ -59,12 +59,17 @@ export function AthleteStories() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-          <div>
+          <div className="relative">
+            {/* Soft Ambient Radial Shadow: gracefully dims background kinetic lines without any harsh borders */}
+            <div
+              aria-hidden="true"
+              className="absolute -inset-x-8 -inset-y-6 rounded-[40px] bg-[radial-gradient(ellipse_at_center,_rgba(248,250,252,0.9)_0%,_rgba(248,250,252,0.6)_50%,_transparent_100%)] dark:bg-[radial-gradient(ellipse_at_center,_rgba(7,8,10,0.92)_0%,_rgba(7,8,10,0.65)_55%,_transparent_100%)] blur-2xl pointer-events-none -z-10"
+            />
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-300 dark:border-[#d4ff00]/30 bg-white/80 dark:bg-[#d4ff00]/10 mb-3 shadow-sm">
               <Activity className="w-3.5 h-3.5 text-lime-600 dark:text-[#d4ff00]" />
               <span className="telemetry-chip text-slate-800 dark:text-[#d4ff00]">ATHLETE COMMUNITY STORIES // LIVE</span>
             </div>
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-[1.1]">
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-[1.1] drop-shadow-[0_2px_15px_rgba(0,0,0,0.8)]">
               Реальные истории <span className="text-lime-600 dark:text-[#d4ff00]">атлетов Ташкента</span>
             </h2>
           </div>
