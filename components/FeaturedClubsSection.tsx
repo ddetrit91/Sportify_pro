@@ -39,67 +39,64 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
   return (
     <section id="clubs" className="py-24 relative overflow-hidden bg-transparent text-slate-900 dark:text-white transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header & Filter Console in Protected Liquid Glass Card with Volt Rim */}
-        <div className="relative rounded-3xl p-6 sm:p-8 mb-12 border border-slate-200/90 dark:border-[#d4ff00]/25 bg-white/80 dark:bg-[#08090b]/65 backdrop-blur-xl shadow-[0_16px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8),0_0_25px_-5px_rgba(212,255,0,0.12)] before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[#d4ff00]/70 dark:before:via-[#d4ff00]/80 before:to-transparent overflow-hidden">
-          {/* Top Row: Title, Subtitle, CTA */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-6">
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-300 dark:border-[#d4ff00]/30 bg-white/80 dark:bg-[#d4ff00]/10 mb-3 shadow-sm">
-                <Sparkles className="w-3.5 h-3.5 text-[#d4ff00]" />
-                <span className="telemetry-chip text-slate-700 dark:text-[#d4ff00]">ТОПОВЫЕ КЛУБЫ ТАШКЕНТА // RATED 4.88+</span>
-              </div>
-              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-tight">
-                Спортивные клубы <span className="text-[#d4ff00]">Ташкента</span>
-              </h2>
-              <p className="mt-2 text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-xl">
-                Прямое бронирование в проверенные залы Ташкента. Честные цены без скрытых доплат и гарантированное первое занятие за 0 UZS.
-              </p>
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-6">
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-300 dark:border-[#d4ff00]/30 bg-white/80 dark:bg-[#d4ff00]/10 mb-3 shadow-sm">
+              <Sparkles className="w-3.5 h-3.5 text-[#d4ff00]" />
+              <span className="telemetry-chip text-slate-700 dark:text-[#d4ff00]">ТОПОВЫЕ КЛУБЫ ТАШКЕНТА // RATED 4.88+</span>
             </div>
-
-            <a
-              href="#booking"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-300 dark:border-[#d4ff00]/30 hover:border-[#d4ff00] bg-white dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-[#d4ff00]/15 text-xs font-bold tracking-wide text-slate-800 dark:text-slate-200 hover:text-black dark:hover:text-[#d4ff00] transition-all self-start md:self-end shadow-sm shrink-0"
-            >
-              <span>Оформить пропуск 0 UZS</span>
-              <ArrowRight className="w-4 h-4 text-[#d4ff00]" />
-            </a>
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-tight">
+              Спортивные клубы <span className="text-[#d4ff00]">Ташкента</span>
+            </h2>
+            <p className="mt-2 text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-xl">
+              Прямое бронирование в проверенные залы Ташкента. Честные цены без скрытых доплат и гарантированное первое занятие за 0 UZS.
+            </p>
           </div>
 
-          {/* Filter Controls Bar */}
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pt-6 border-t border-slate-200/80 dark:border-white/10">
-            {/* Category Tabs */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-2 lg:pb-0 scrollbar-none">
-              {categories.map((cat) => (
-                <button
-                  key={cat.id}
-                  onClick={() => {
-                    haptic.select();
-                    setActiveCategory(cat.id);
-                  }}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold tracking-wide whitespace-nowrap transition-all ${
-                    activeCategory === cat.id
-                      ? "bg-[#d4ff00] text-black font-black shadow-md shadow-[#d4ff00]/20"
-                      : "border border-slate-300 dark:border-white/10 bg-white/60 dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 shadow-sm"
-                  }`}
-                >
-                  {cat.label}
-                </button>
-              ))}
-            </div>
+          <a
+            href="#booking"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-300 dark:border-[#d4ff00]/30 hover:border-[#d4ff00] bg-white dark:bg-[#0c0e14]/85 hover:bg-slate-200 dark:hover:bg-[#d4ff00]/15 text-xs font-bold tracking-wide text-slate-800 dark:text-slate-200 hover:text-black dark:hover:text-[#d4ff00] transition-all self-start md:self-end shadow-sm backdrop-blur-md shrink-0"
+          >
+            <span>Оформить пропуск 0 UZS</span>
+            <ArrowRight className="w-4 h-4 text-[#d4ff00]" />
+          </a>
+        </div>
 
-            {/* Quick Toggle: 0 UZS trial */}
-            <button
-              onClick={() => setOnlyFreeTrial(!onlyFreeTrial)}
-              className={`px-4 py-2 rounded-xl border text-xs font-bold tracking-wide flex items-center gap-2 transition-all self-start lg:self-auto shrink-0 ${
-                onlyFreeTrial
-                  ? "border-[#d4ff00] bg-[#d4ff00]/20 text-lime-700 dark:text-[#d4ff00]"
-                  : "border-slate-300 dark:border-white/10 bg-white/60 dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white shadow-sm"
-              }`}
-            >
-              <span className={`w-2 h-2 rounded-full ${onlyFreeTrial ? "bg-[#d4ff00] animate-ping" : "bg-slate-400 dark:bg-slate-600"}`} />
-              <span>Только бесплатное первое занятие (0 UZS)</span>
-            </button>
+        {/* Filter Controls Bar */}
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-white/10 mb-10">
+          {/* Category Tabs */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-2 lg:pb-0 scrollbar-none">
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => {
+                  haptic.select();
+                  setActiveCategory(cat.id);
+                }}
+                className={`px-4 py-2 rounded-xl text-xs font-bold tracking-wide whitespace-nowrap transition-all ${
+                  activeCategory === cat.id
+                    ? "bg-[#d4ff00] text-black font-black shadow-md shadow-[#d4ff00]/20"
+                    : "border border-slate-300 dark:border-white/10 bg-white/80 dark:bg-[#0c0e14]/75 text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 backdrop-blur-sm shadow-sm"
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
           </div>
+
+          {/* Quick Toggle: 0 UZS trial */}
+          <button
+            onClick={() => setOnlyFreeTrial(!onlyFreeTrial)}
+            className={`px-4 py-2 rounded-xl border text-xs font-bold tracking-wide flex items-center gap-2 transition-all self-start lg:self-auto shrink-0 backdrop-blur-md ${
+              onlyFreeTrial
+                ? "border-[#d4ff00] bg-[#d4ff00]/20 text-lime-700 dark:text-[#d4ff00]"
+                : "border-slate-300 dark:border-white/10 bg-white/80 dark:bg-[#0c0e14]/85 text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white shadow-sm"
+            }`}
+          >
+            <span className={`w-2 h-2 rounded-full ${onlyFreeTrial ? "bg-[#d4ff00] animate-ping" : "bg-slate-400 dark:bg-slate-600"}`} />
+            <span>Только бесплатное первое занятие (0 UZS)</span>
+          </button>
         </div>
 
         {/* Clubs Grid with 3D Mouse Tilt & Dynamic Glare */}
@@ -114,7 +111,7 @@ export function FeaturedClubsSection({ clubs }: FeaturedClubsSectionProps) {
               className="h-full"
             >
               <TiltCard maxTilt={5} glareOpacity={0.25} className="rounded-3xl">
-                <div className="relative h-full rounded-3xl border border-slate-200/90 dark:border-[#d4ff00]/25 bg-white/90 dark:bg-[#0c0e14]/75 backdrop-blur-xl flex flex-col group hover:border-[#d4ff00]/80 dark:hover:border-[#d4ff00] transition-all duration-300 shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8),0_0_20px_-5px_rgba(212,255,0,0.15)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.35)] before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[#d4ff00]/60 dark:before:via-[#d4ff00]/70 before:to-transparent before:z-20 overflow-hidden">
+                <div className="relative h-full rounded-3xl border border-slate-200/90 dark:border-[#d4ff00]/25 bg-white/90 dark:bg-[#0c0e14]/75 backdrop-blur-sm flex flex-col group hover:border-[#d4ff00]/80 dark:hover:border-[#d4ff00] transition-all duration-300 shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8),0_0_20px_-5px_rgba(212,255,0,0.15)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.35)] before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[#d4ff00]/60 dark:before:via-[#d4ff00]/70 before:to-transparent before:z-20 overflow-hidden">
                   {/* Top Club of the Week Border Beam */}
                   {idx === 0 && (
                     <BorderBeam duration={7} borderWidth={1.5} colorFrom="#d4ff00" />

@@ -17,30 +17,28 @@ export function TrendingSportsBento({ sports }: TrendingSportsBentoProps) {
   return (
     <section id="sports" className="py-24 relative overflow-hidden bg-transparent text-slate-900 dark:text-white transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header in Protected Liquid Glass Card with Volt Rim */}
-        <div className="relative rounded-3xl p-6 sm:p-8 mb-12 border border-slate-200/90 dark:border-[#d4ff00]/25 bg-white/80 dark:bg-[#08090b]/65 backdrop-blur-xl shadow-[0_16px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8),0_0_25px_-5px_rgba(212,255,0,0.12)] before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[#d4ff00]/70 dark:before:via-[#d4ff00]/80 before:to-transparent overflow-hidden">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <div className="space-y-3">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-300 dark:border-[#d4ff00]/30 bg-white/80 dark:bg-[#d4ff00]/10 backdrop-blur-md shadow-sm">
-                <Activity className="w-3.5 h-3.5 text-[#d4ff00]" />
-                <span className="telemetry-chip text-slate-800 dark:text-[#d4ff00]">ДИСЦИПЛИНЫ ТАШКЕНТА // 2026</span>
-              </div>
-              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-tight">
-                Популярные виды спорта <span className="text-[#d4ff00]">в Ташкенте</span>
-              </h2>
-              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-xl">
-                Исследуйте ключевые спортивные направления с доказанной эффективностью. Узнайте энергозатраты и выберите подходящий клуб для первого бесплатного визита.
-              </p>
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+          <div className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-300 dark:border-[#d4ff00]/30 bg-white/80 dark:bg-[#d4ff00]/10 backdrop-blur-sm shadow-sm">
+              <Activity className="w-3.5 h-3.5 text-[#d4ff00]" />
+              <span className="telemetry-chip text-slate-800 dark:text-[#d4ff00]">ДИСЦИПЛИНЫ ТАШКЕНТА // 2026</span>
             </div>
-
-            <a
-              href="#clubs"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-300 dark:border-[#d4ff00]/30 hover:border-[#d4ff00] bg-white/80 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-[#d4ff00]/15 text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 hover:text-black dark:hover:text-[#d4ff00] transition-all self-start md:self-end shadow-sm backdrop-blur-md shrink-0"
-            >
-              <span>Смотреть все локации</span>
-              <ArrowUpRight className="w-4 h-4 text-[#d4ff00]" />
-            </a>
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-slate-950 dark:text-white leading-tight">
+              Популярные виды спорта <span className="text-[#d4ff00]">в Ташкенте</span>
+            </h2>
+            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-xl">
+              Исследуйте ключевые спортивные направления с доказанной эффективностью. Узнайте энергозатраты и выберите подходящий клуб для первого бесплатного визита.
+            </p>
           </div>
+
+          <a
+            href="#clubs"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-300 dark:border-[#d4ff00]/30 hover:border-[#d4ff00] bg-white/80 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-[#d4ff00]/15 text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 hover:text-black dark:hover:text-[#d4ff00] transition-all self-start md:self-end shadow-sm backdrop-blur-sm shrink-0"
+          >
+            <span>Смотреть все локации</span>
+            <ArrowUpRight className="w-4 h-4 text-[#d4ff00]" />
+          </a>
         </div>
 
         {/* Bento Grid with 3D Mouse Tilt & Kinetic Telemetry */}
@@ -53,7 +51,7 @@ export function TrendingSportsBento({ sports }: TrendingSportsBentoProps) {
             className="md:col-span-2 lg:col-span-2 h-full"
           >
             <TiltCard maxTilt={4} glareOpacity={0.2} className="rounded-3xl">
-              <div className="relative h-full rounded-3xl overflow-hidden border border-slate-200/90 dark:border-white/15 group min-h-[380px] sm:min-h-[440px] flex flex-col justify-between p-6 sm:p-8 bg-white/90 dark:bg-[#0c0e14]/85 backdrop-blur-2xl shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.25)] hover:border-[#d4ff00]/70 dark:hover:border-[#d4ff00]/80 transition-all duration-300 before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent before:z-20">
+              <div className="relative h-full rounded-3xl overflow-hidden border border-slate-200/90 dark:border-[#d4ff00]/25 group min-h-[380px] sm:min-h-[440px] flex flex-col justify-between p-6 sm:p-8 bg-white/90 dark:bg-[#0c0e14]/75 backdrop-blur-sm shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8),0_0_20px_-5px_rgba(212,255,0,0.15)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.35)] hover:border-[#d4ff00]/80 dark:hover:border-[#d4ff00] transition-all duration-300 before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[#d4ff00]/60 dark:before:via-[#d4ff00]/70 before:to-transparent before:z-20">
                 <img
                   src="https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?q=80&w=1200&auto=format&fit=crop"
                   alt="Padel Tennis Tashkent"
@@ -107,7 +105,7 @@ export function TrendingSportsBento({ sports }: TrendingSportsBentoProps) {
             className="h-full"
           >
             <TiltCard maxTilt={5} glareOpacity={0.2} className="rounded-3xl">
-              <div className="relative h-full rounded-3xl overflow-hidden border border-slate-200/90 dark:border-white/15 group min-h-[380px] sm:min-h-[440px] flex flex-col justify-between p-6 sm:p-7 bg-white/90 dark:bg-[#0c0e14]/85 backdrop-blur-2xl shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.25)] hover:border-[#d4ff00]/70 dark:hover:border-[#d4ff00]/80 transition-all duration-300 before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent before:z-20">
+              <div className="relative h-full rounded-3xl overflow-hidden border border-slate-200/90 dark:border-[#d4ff00]/25 group min-h-[380px] sm:min-h-[440px] flex flex-col justify-between p-6 sm:p-7 bg-white/90 dark:bg-[#0c0e14]/75 backdrop-blur-sm shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8),0_0_20px_-5px_rgba(212,255,0,0.15)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.35)] hover:border-[#d4ff00]/80 dark:hover:border-[#d4ff00] transition-all duration-300 before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[#d4ff00]/60 dark:before:via-[#d4ff00]/70 before:to-transparent before:z-20">
                 <img
                   src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&w=900&auto=format&fit=crop"
                   alt="Boxing Training Tashkent"
@@ -155,7 +153,7 @@ export function TrendingSportsBento({ sports }: TrendingSportsBentoProps) {
             className="h-full"
           >
             <TiltCard maxTilt={5} glareOpacity={0.2} className="rounded-3xl">
-              <div className="relative h-full rounded-3xl overflow-hidden border border-slate-200/90 dark:border-white/15 group min-h-[380px] sm:min-h-[440px] flex flex-col justify-between p-6 sm:p-7 bg-white/90 dark:bg-[#0c0e14]/85 backdrop-blur-2xl shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.25)] hover:border-[#d4ff00]/70 dark:hover:border-[#d4ff00]/80 transition-all duration-300 before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent before:z-20">
+              <div className="relative h-full rounded-3xl overflow-hidden border border-slate-200/90 dark:border-[#d4ff00]/25 group min-h-[380px] sm:min-h-[440px] flex flex-col justify-between p-6 sm:p-7 bg-white/90 dark:bg-[#0c0e14]/75 backdrop-blur-sm shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8),0_0_20px_-5px_rgba(212,255,0,0.15)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.35)] hover:border-[#d4ff00]/80 dark:hover:border-[#d4ff00] transition-all duration-300 before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[#d4ff00]/60 dark:before:via-[#d4ff00]/70 before:to-transparent before:z-20">
                 <img
                   src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?q=80&w=900&auto=format&fit=crop"
                   alt="Pilates Reformer Tashkent"
@@ -203,7 +201,7 @@ export function TrendingSportsBento({ sports }: TrendingSportsBentoProps) {
             className="h-full"
           >
             <TiltCard maxTilt={5} glareOpacity={0.2} className="rounded-3xl">
-              <div className="relative h-full rounded-3xl overflow-hidden border border-slate-200/90 dark:border-white/15 group min-h-[320px] flex flex-col justify-between p-6 bg-white/90 dark:bg-[#0c0e14]/85 backdrop-blur-2xl shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.25)] hover:border-[#d4ff00]/70 dark:hover:border-[#d4ff00]/80 transition-all duration-300 before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent before:z-20">
+              <div className="relative h-full rounded-3xl overflow-hidden border border-slate-200/90 dark:border-[#d4ff00]/25 group min-h-[320px] flex flex-col justify-between p-6 bg-white/90 dark:bg-[#0c0e14]/75 backdrop-blur-sm shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8),0_0_20px_-5px_rgba(212,255,0,0.15)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.35)] hover:border-[#d4ff00]/80 dark:hover:border-[#d4ff00] transition-all duration-300 before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[#d4ff00]/60 dark:before:via-[#d4ff00]/70 before:to-transparent before:z-20">
                 <img
                   src="https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?q=80&w=900&auto=format&fit=crop"
                   alt="Olympic Swimming Tashkent"
@@ -247,7 +245,7 @@ export function TrendingSportsBento({ sports }: TrendingSportsBentoProps) {
             className="h-full"
           >
             <TiltCard maxTilt={5} glareOpacity={0.2} className="rounded-3xl">
-              <div className="relative h-full rounded-3xl overflow-hidden border border-slate-200/90 dark:border-white/15 group min-h-[320px] flex flex-col justify-between p-6 bg-white/90 dark:bg-[#0c0e14]/85 backdrop-blur-2xl shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.25)] hover:border-[#d4ff00]/70 dark:hover:border-[#d4ff00]/80 transition-all duration-300 before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent before:z-20">
+              <div className="relative h-full rounded-3xl overflow-hidden border border-slate-200/90 dark:border-[#d4ff00]/25 group min-h-[320px] flex flex-col justify-between p-6 bg-white/90 dark:bg-[#0c0e14]/75 backdrop-blur-sm shadow-[0_12px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8),0_0_20px_-5px_rgba(212,255,0,0.15)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.35)] hover:border-[#d4ff00]/80 dark:hover:border-[#d4ff00] transition-all duration-300 before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[#d4ff00]/60 dark:before:via-[#d4ff00]/70 before:to-transparent before:z-20">
                 <img
                   src="https://images.unsplash.com/photo-1522163182402-834f871fd851?q=80&w=900&auto=format&fit=crop"
                   alt="Bouldering Climbing Tashkent"
@@ -291,7 +289,7 @@ export function TrendingSportsBento({ sports }: TrendingSportsBentoProps) {
             className="md:col-span-2 h-full"
           >
             <TiltCard maxTilt={3} glareOpacity={0.18} className="rounded-3xl">
-              <div className="relative h-full rounded-3xl overflow-hidden border border-lime-500/30 dark:border-[#d4ff00]/40 p-6 sm:p-8 flex flex-col justify-between bg-gradient-to-br from-lime-50/95 via-white/95 to-slate-100/95 dark:from-[#12161b]/95 dark:via-[#0d1014]/90 dark:to-black/95 backdrop-blur-2xl shadow-[0_16px_50px_-15px_rgba(0,0,0,0.12)] dark:shadow-[0_24px_60px_-15px_rgba(0,0,0,0.85)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.3)] hover:border-[#d4ff00]/80 transition-all duration-300 before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 dark:before:via-white/20 before:to-transparent before:z-20">
+              <div className="relative h-full rounded-3xl overflow-hidden border border-lime-500/30 dark:border-[#d4ff00]/40 p-6 sm:p-8 flex flex-col justify-between bg-gradient-to-br from-lime-50/95 via-white/95 to-slate-100/95 dark:from-[#12161b]/95 dark:via-[#0d1014]/90 dark:to-black/95 backdrop-blur-sm shadow-[0_16px_50px_-15px_rgba(0,0,0,0.12)] dark:shadow-[0_24px_60px_-15px_rgba(0,0,0,0.85)] hover:shadow-[0_24px_60px_-15px_rgba(212,255,0,0.3)] hover:border-[#d4ff00]/80 transition-all duration-300 before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[#d4ff00]/60 dark:before:via-[#d4ff00]/70 before:to-transparent before:z-20">
                 {/* Circulating Laser Border Beam for AI */}
                 <BorderBeam duration={6} borderWidth={1.5} colorFrom="#d4ff00" />
 
